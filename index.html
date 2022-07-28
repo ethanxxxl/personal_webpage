@@ -1,7 +1,36 @@
 <!--DOCTYPE HTML -->
 <html>
   <head>
-    <h1>Ethan Smith!</h1>
+    <style type="text/css" media="screen">
+      .heading {
+          background-color: beige;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          border-spacing: 0 0;
+          z-index: 4;
+      }
+      nav {
+          padding: 1px;
+          border-top: 1px double black;
+          border-bottom: 1px solid black;
+      }
+    </style>
+
+    <title>Ethan Smith</title>
+    <div class="heading">
+        <h1 style="text-align: center">Ethan Smith!</h1>
+
+        <nav style="background: beige">
+        <a href="">Blogs</a> |
+        <a href="https://github.com/ethanxxxl">Github</a> |
+        <a href="">Religion</a> |
+        <a href="">Portfolio</a>
+        </nav>
+    </div>
   </head>
 
   <body>
@@ -15,20 +44,39 @@
           left: 0;
           background-color: darkkhaki;
           overflow-x: hidden;
-          padding-top: 60px;
+          padding-top: 100px;
           transition: 0.5s;
           border-right: 5px solid gray;
       }
+
+      .content {
+          height: 100%;
+          right: 100%;
+          margin-left: 196px;
+          margin-right: -10px;
+          border: 0
+          z-index: 0;
+          padding: 20px;
+          padding-top: 100px;
+          overflow-x: hidden;
+          overflow-wrap: break-word;
+          background-color: beige;
+        }
     </style>
 
-    <nav style="background: beige">
-      <a href="">Blogs</a> |
-      <a href="https://github.com/ethanxxxl">Github</a> |
-      <a href="">Religion</a> |
-      <a href="">Portfolio</a>
-    </nav>
 
-    <div style="background-color: khaki">
+    <div id="mySidenav" class="sidenav">
+    <ul>
+      <li>Growing Up</li>
+      <li>Computer Programming</li>
+      <li>Embedded Systems</li>
+      <li>Engineering at PSU</li>
+      <li>AFROTC</li>
+    </ul>
+
+    </div>
+
+    <div class="content">
         <h2>Overview</h2>
         <p>
         Hello and welcome to my website! Coming from the boondocks in Western Pennsylvania,
@@ -43,16 +91,6 @@
         </p>
     </div>
 
-    <div id="mySidenav" class="sidenav">
-    <ul>
-      <li>Growing Up</li>
-      <li>Computer Programming</li>
-      <li>Embedded Systems</li>
-      <li>Engineering at PSU</li>
-      <li>AFROTC</li>
-    </ul>
-
-    </div>
 
   </body>
 </html>
