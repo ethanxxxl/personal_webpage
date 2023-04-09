@@ -1,6 +1,8 @@
 #+title: Religion
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 
+#+OPTIONS: num:nil
+#+OPTIONS: ^:t
 
 #+BEGIN_EXPORT html
 <nav>
@@ -56,3 +58,95 @@ Romans 12:13
 
 Ethan Smith\\
 Mon Apr  3 04:11:15 2023
+
+
+* Faith Tested by Fire
+This is a study on the first few verses of 1 Peter.
+
+#+begin_quote
+‍^{1}Peter, an apostle of Jesus Christ, To those who are elect exiles of the
+Dispersion in Pontus, Galatia, Cappadocia, Asia, and Bithynia,‍ ‍^{2}according to the
+foreknowledge of God the Father, in the santification of the Spirit, for
+obedience to Jesus Christ and for sprinkling with his blood:\\
+  May grace and peace be multiplied to you
+#+end_quote
+
+We start out with a greeting. In the greeting we learn that:
+- Peter is an apostle, and has identified himself with Jesus.
+- He is writing to the displaced Christians in what is now Turkey.
+- That God is sovereign over their salvation (v2).
+- Their purpose is to be obedient to and sanctified by Christ.
+
+This prelude sets the tone of the first chapter. Peter will got one to discuss
+how and why we suffer as Christians. This was written to displaced peoples.
+People who may have been dispursed because of their faith. They may be wondering
+why God is allowing them to endure so much suffering. Peter casts light onto
+this.
+
+#+begin_quote
+‍^{3}Blessed be the God and Father of our Lord Jesus Christ! According to his great
+mercy, he has caused us to be born again to a living hope through the
+resurrection of Christ from the dead, ‍^{4}to an inheritance that is imperishable,
+undefiled, and unfading, kept in heaven for you, ‍^{5}who by God's power are being
+guarded through faith for a salvation ready to be revealed in the last time.
+#+end_quote
+
+Because of Christs death, we can have hope through our trials and suffering.
+This earth has been tainted by sin. Everything on this earth will pass away. It
+will fade into the obscure annals of history, forgotten. We can have hope,
+because we don't put our faith in the things of this world! Christ has promised
+us a treasure untainted by sin, permanent, and everlasting. This treasure is
+kept for us, by Christ, in heaven.
+
+Christ wants to see us collect our treasure from him in heaven. This is why
+Christ gave us the Spirit. God's power guards us agains the powers of this
+world. /I will not leave you as orphans; I will come to you --John 14:18/. We
+aren't left out to fend for ourselves. This was the whole point of the
+crucifiction: That we could wholly rely on the power of God to save and protect
+us from the sin of this world.
+
+One may ask, as I'm sure the recipients of this letter did: If God's provision
+for is so great, then why do we continue to suffer in this world? Why are we
+constantly railed by temptation and sin? If God loves us, why doesn't he just
+take away our suffering?
+
+#+begin_quote
+‍^{6}In this you rejoice, though now for a little while, if necessary, you have been
+grieved by various trials, ‍^{7}so that the tested genuiness of your faith--more
+precious than gold that perishes though it is tested by fire--may be found to
+result in praise and glory and honor at the revelation of Jesus Christ.
+#+end_quote
+
+The reason we are allowed to endure suffering is because God loves us. He is so
+concerned for the purity of our hearts, that he allows said purity to be tried
+and tested for a little while. Peter equates faith that stands firm to gold.
+Gold, once it has been refined and purified, is incredibly valuable. But the
+gold will pass away in the end. It does not last forever. Faith, once it has
+been purified, (that is, faith that will result in praise and glory and honor),
+does not perish. It resides in the same domain as the treasure Christ is holding
+for us in heaven. This faith is the most valuable thing that one can possess.
+
+Sincere faith is like an investment from God. Once we have accepted his gift of
+salvation, he starts the refining process. He desires to give us the most
+valuable gift he can bestow on us. And like any investment, this gift grows more
+valuable with time. As we endure suffering, parts of our character inconsistant
+with God's will are burned away. Purification is a hard, lifelong process, but
+it is necessary. God is not content for us to live with impurities. He allows us
+to endure trials so that we may see where our faith is weak and impure. /Count
+it all joy, my brothers, when you meet trials of various kinds, for you know
+that the testing of your faith produces steadfastness. And let steadfastness
+have its full effect, that you may be perfect and complete, lacking in nothing.
+--James 1:2-4/
+
+When we face trials, whether internal or external, either temptation of
+hardship, we can have joy and hope. So long as we have repentance, that trial
+will result in the purification of our hearts. If during the trial, we renege on
+our end of our covenant with God (ie, we fall into sin), God is faithful. The
+incongruities of our faith are made clear to us, and we can continue to pursue
+purity in Christ. /For I am sure that neither death nor life, nor angels nor
+rulers, nor things present nor things to come, nor powers, nor height nor depth,
+nor anything else in all creation, will be able to separate us from the love of
+God in Christ Jesus our Lord./
+
+Ethan Smith\\
+Sat Apr  8 16:15:09 2023
