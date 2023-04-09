@@ -10,6 +10,7 @@
 body {
     background-color: var(--secondary-light-color);
 }
+
 .outline-2 {
     position: relative;
     top: 60px;
