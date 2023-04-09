@@ -1,0 +1,44 @@
+#+title: Blogs
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+
+#+OPTIONS: num:nil
+#+OPTIONS: ^:t
+
+#+BEGIN_EXPORT html
+<nav>
+    <a href="./index.html">Home</a> |
+    <a href="./blogs.html">Blogs</a> |
+    <a href="https://github.com/ethanxxxl">Github</a> |
+    <a href="./religion.html">Religion</a> |
+    <a href="">Portfolio</a>
+</nav>
+#+END_EXPORT
+
+* First Entry
+this is my first real experience with web-dev stuff. Today I pulled the trigger
+an finally bought a hosting solution and domain name. I have been thinking about
+doing this for a while, but didn't know if I actually wanted to.
+
+I am surprised at how sleazy the web hosting market is. Every company involved
+in this market has the practice of offering incredibly cheap promotional rates,
+then standard rates which are 2-5x more expensive. This puts me in a bind,
+because it incentivizes spending more money than I have up front. I ultimately
+decided to go with the absolute cheapest option I could find, for the longest
+time period I could afford (hence the .cyou extension).
+
+It will be fun to get into some more web development type stuff. Right now, I
+github set up with a webhook which points to my website. Whenever I push a
+commit to my github repository, github will send an HTTP POST request to this
+website, telling it to update. This is all well and good, but I think I may want
+another way of submitting blog/religion entries. I'm not entirely sure of the
+best way to accomplish this, ideally it wouldn't involve using github as an
+intermediary.
+
+this task is further complicated by the fact that I am using emacs org mode.
+this allows me to write all of these posts in an ergonomic editor, with minimal
+formatting syntax, then export it to HTML that uses a stylesheet I created. I
+might be able to run the export software on the server, or find some other way
+to export and submit my documents. This certainly won't be much of a priority
+anytime soon though, the github method works just fine, and I really want to
+spend some time learning Haskell.
