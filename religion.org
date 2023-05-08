@@ -4,15 +4,7 @@
 #+OPTIONS: num:nil
 #+OPTIONS: ^:t
 
-#+BEGIN_EXPORT html
-<nav>
-    <a href="./index.html">Home</a> |
-    <a href="./blogs.html">Blogs</a> |
-    <a href="https://github.com/ethanxxxl">Github</a> |
-    <a href="./religion.html">Religion</a> |
-    <a href="">Portfolio</a>
-</nav>
-#+END_EXPORT
+#+INCLUDE: "./navbar.org"
 
 * Have Hope, You Are Sought Out
 Continuing with 1 Peter, these are my notes from a brief study I did on a short
