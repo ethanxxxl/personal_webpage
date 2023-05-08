@@ -1,9 +1,21 @@
 ;; this is the varialble used by the custom publish command in my doom config.
+;; this config is heavily influenced by DistroTube's configuration
 (setq org-publish-local-alist
-      '("personal_webpage" .
-        (:base-directory "~/Documents/personal_webpage/"
-         :publishing-directory "~/Documents/personal_webpage/html/" ; TODO make this automatically push to server
-         :base-extension "org"
-         :publishing-function org-html-publish-to-html
-         :preparation-function nil
-         :completion-function nil)))
+      '(("static"
+          :base-directory "./"
+          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+          :publishing-directory "./html"
+          :recursive t
+          :publishing-function org-publish-attachment)
+
+         ("org-files"
+          :base-directory "./"
+          :base-extension "org"
+          :publishing-directory "./html"
+          :recursive t
+          :publishing-function org-html-publish-to-html
+          :headline-levels 4            ; Just the default for this project.
+          :auto-preamble t)
+
+         ("personal_webpage"
+          :components ("org-files" "static"))))
