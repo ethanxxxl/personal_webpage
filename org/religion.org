@@ -4,7 +4,7 @@
 #+OPTIONS: num:nil
 #+OPTIONS: ^:t
 
-#+INCLUDE: "./navbar.org"
+#+INCLUDE: "./navbar.org::*Navbar"
 
 * Have Hope, You Are Sought Out
 Continuing with 1 Peter, these are my notes from a brief study I did on a short

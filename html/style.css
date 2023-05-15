@@ -57,7 +57,7 @@ blockquote {
     padding-left: 10px;
 }
 
-nav {
+#nav {
     background: var(--secondary-color);
     padding: 1px;
     border-top: 1px solid  black;

@@ -1,4 +1,6 @@
-#+BEGIN_EXPORT html
+#+OPTIONS: tags:nil
+
+#+BEGIN_EXPORT html :export none
 <head>
 <nav>
     <a href="./index.html">Home</a> |
@@ -9,3 +11,20 @@
 </nav>
 </head>
 #+END_EXPORT
+
+
+* Navbar
+:CUSTOM_ID: nav
+
+[[file:./org/index.org][Home |
+
+]][[file:./org/blogs.org][
+
+Blogs | ]][[https://github.com/ethanxxxl][
+
+Github | ]]
+[[file:./org/religion.org][
+
+Religion | ]][[file:./org/portfolio.org][
+
+Portfolio]]
