@@ -15,8 +15,8 @@
           :recursive t
           :publishing-function org-html-publish-to-html
           :headline-levels 4            ; Just the default for this project.
-          :auto-preamble t
-          :with-properties nil)
+          :with-properties nil
+          :with-tags nil)
 
          ("personal_webpage"
           :components ("org-files" "static"))))

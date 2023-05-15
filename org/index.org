@@ -1,11 +1,16 @@
 #+title: Ethan Smith
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+include: ./navbar.org
+#+OPTIONS: num:nil
+#+OPTIONS: ^:t
 
-#+options: tags: nil
+#+include: "navbar.org"
+
+#+options: tags:nil
+#+options: properties:nil
 * Overview
 :test:
+big test
 
 Hello and welcome to my website! I grew up in Western Pennsylvania with a
 passion for technology. I started teaching myself programming when I was in
