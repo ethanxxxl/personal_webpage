@@ -1,0 +1,22 @@
+#+options: tags:nil
+#+options: properties:nil
+
+#+BEGIN_EXPORT html export: none
+<head>
+<nav>
+    <a href="./index.html">Home</a> |
+    <a href="./blogs.html">Blogs</a> |
+    <a href="https://github.com/ethanxxxl">Github</a> |
+    <a href="./religion.html">Religion</a> |
+    <a href="">Portfolio</a>
+</nav>
+</head>
+#+END_EXPORT
+
+
+* Navbar
+:PROPERTIES:
+:CUSTOM_ID: nav
+:END:
+
+[[file:./index.org][Home]] | [[file:./blogs.org][Blogs]] | [[https://github.com/ethanxxxl][Github]] | [[file:./religion.org][Religion]] | [[file:./portfolio.org][Porfolio]]
