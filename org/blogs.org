@@ -5,7 +5,8 @@
 #+OPTIONS: num:nil
 #+OPTIONS: ^:t
 
-#+INCLUDE: "./navbar.org"
+#+include: "navbar.org"
+
 
 * First Entry
 this is my first real experience with web-dev stuff. Today I pulled the trigger

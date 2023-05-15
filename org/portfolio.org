@@ -1,1 +1,7 @@
 #+title: Portfolio
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+#+include: "navbar.org"
+
+#+include: "posts/test.org"
+#+include: "posts/test2.org"

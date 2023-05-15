@@ -4,7 +4,7 @@
 #+OPTIONS: num:nil
 #+OPTIONS: ^:t
 
-#+INCLUDE: "./navbar.org::*Navbar"
+#+include: "navbar.org"
 
 * Have Hope, You Are Sought Out
 Continuing with 1 Peter, these are my notes from a brief study I did on a short
@@ -255,3 +255,5 @@ Romans 12:13
 
 Ethan Smith\\
 Mon Apr  3 04:11:15 2023
+
+* Footnotes
