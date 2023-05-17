@@ -8,6 +8,8 @@
 #+include: "navbar.org"
 
 
+# surround the main content with a div so that you can format it properly.
+#+html: <div id="main-content">
 * First Entry
 this is my first real experience with web-dev stuff. Today I pulled the trigger
 an finally bought a hosting solution and domain name. I have been thinking about
@@ -35,3 +37,5 @@ might be able to run the export software on the server, or find some other way
 to export and submit my documents. This certainly won't be much of a priority
 anytime soon though, the github method works just fine, and I really want to
 spend some time learning Haskell.
+
+#+html: </div>

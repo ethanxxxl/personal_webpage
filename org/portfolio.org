@@ -3,5 +3,8 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 #+include: "navbar.org"
 
+# surround the main content with a div so that you can format it properly.
+#+html: <div id="main-content">
 #+include: "posts/test.org"
 #+include: "posts/test2.org"
+#+html: </div>
