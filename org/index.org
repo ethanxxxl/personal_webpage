@@ -6,10 +6,9 @@
 
 #+include: "navbar.org"
 
+# surround the main content with a div so that you can format it properly.
+#+html: <div id="main-content">
 * Overview
-:PROPERTIES:
-:test:
-:END:
 
 Hello and welcome to my website! I grew up in Western Pennsylvania with a
 passion for technology. I started teaching myself programming when I was in
@@ -27,3 +26,6 @@ point, I will be moving to Wright Patterson AFB (Ohio) to work at NASIC
 (National Air and Space Intelligence Center). I had the pleasure of staying at
 WPAFB last summer for a month long "Advance Cyber Education" program, which was
 very fun.
+
+# surround the main content with a div so that you can format it properly.
+#+html: </div>
