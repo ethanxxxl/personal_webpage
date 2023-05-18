@@ -1,7 +1,7 @@
 #+title: Procrastination
 #+include: "includes.org"
 
-#+html: <div class="main-content">
+#+html: <div class="blog-content">
 I often find myself procrastinating things. These things range from
 insignificant to crucial, time-critical tasks that must be completed or I will
 face severe consequences. I never understood why I procrastinated so much. After
