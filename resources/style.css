@@ -1,3 +1,12 @@
+/* Main CSS File.
+ *
+ * I have organized this file such that the highest level elements are styled
+ * first and lower level elements are styled later on.
+ *
+ * Towards the end, page specific syles are defined. These are marked with
+ * comments so that it isn't confusing where those styles begin and end.
+ **/
+
 :root {
     --secondary1-color: AntiqueWhite;
     --secondary2-color: Beige;
@@ -6,6 +15,42 @@
     --highlight-color:  #499F68;
 }
 
+html {
+    margin: 0;
+}
+body {
+    margin: 0;
+}
+
+/* org places all the content defined in an org file under a single element in
+ * the body. This element has a class and ID of "content". I really don't want
+ * to do anything special with this right now, so I am having it cover the
+ * viewport
+ *
+ * Since org includes some default styling for both the ID and class, I unset
+ * the properties of interest.
+ **/
+#content {
+    max-width: unset;
+    margin: unset;
+}
+.content {
+    max-width: unset;
+    margin: unset;
+    position: relative;
+
+    display:flex;
+    min-height: calc(100vh - 65px);
+    flex-direction: column;
+
+    width: calc(100% - 200px);
+    left: 200px;
+    top: 65px;
+}
+
+/* The title, nav, and table of contents are all children of the content
+ * element. Again, this is due to how org-export works.
+ **/
 .title {
     background-color: var(--secondary1-color);
     position: fixed;
@@ -20,13 +65,13 @@
 }
 
 nav {
-    background-color: var(--secondary1-color);
     position: fixed;
+    background-color: var(--secondary1-color);
     padding: 1px;
     border-top: 1px solid  black;
     border-bottom: 3px groove black;
-    top: 40px;
     left: 0;
+    top: 40px;
     width: 100%;
     height: 25px;
     box-sizing: border-box;
@@ -37,30 +82,12 @@ nav {
     z-index: 2;
 }
 
-/* org places all the content defined in an org file under a single element in
- * the body. This element has a class and ID of "content". I really don't want
- * to do anything special with this right now, so I am having it cover the
- * viewport
+/* Table of Contents formatting.
  *
- * Since org includes some default styling for both the ID and class, I unset
- * the properties of interest.*/
-
-#content {
-    max-width: unset;
-    margin: unset;
-}
-.content {
-    max-width: unset;
-    margin: unset;
-    position: relative;
-}
-
-body {
-    background-color: var(--secondary1-color);
-    margin: 0;
-}
-
-/*Table of Contents formatting*/
+ * since I want the table of contents to be located on the side, this is the
+ * only element which is statically positioned. All other elements are
+ * positioned in the document flow.
+ **/
 #table-of-contents {
     position: fixed;
     top: 65px;
@@ -73,7 +100,6 @@ body {
     box-sizing: border-box;
     z-index: 1;
 }
-
 #table-of-contents h2 {
     font-size: 17pt;
     margin-top: 0px;
@@ -85,11 +111,15 @@ body {
 */
 .main-content {
     position: relative;
-    display: grid;
-    justify-items: center;
-    left: 200px;
-    top: 65px;
-    width: calc(100% - 200px);
+    left: 0px;
+    top: 0px;
+    width: 100%;
+
+    flex: 1;
+
+    padding-bottom: 10px;
+
+    background-color: var(--secondary1-color);
     z-index: 1;
 }
 
@@ -100,6 +130,9 @@ body {
     top: 10px;
 
     margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
     padding: 20px;
     padding-top: 1px;
     border-radius: 15px;
@@ -114,8 +147,15 @@ body {
     transition: width 0.3s ease;
 }
 
+.main-content p {
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 0px;
+}
 
-/*customization for the religion page links*/
+/* Customization for the Religion page links
+ **/
+
 .link-map {
     display: block;
 }
@@ -145,10 +185,15 @@ body {
     transition: width 0.3s ease;
 }
 
-
-p {
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 18px;
+/* Customization for the Portfolio Page
+ **/
+.portfolio-content {
+    position: relative;
+    left: 200px;
+    width: calc(100% - 200px);
+    min-height: 100%;
+    z-index: 1;
+    background-color: var(--secondary3-color);
 }
 
 blockquote {
