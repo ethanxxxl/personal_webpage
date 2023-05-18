@@ -109,7 +109,7 @@ nav {
  * that their width can be adjusted properly. The table of contents on the side
  * makes scaling a little difficult.
 */
-.main-content {
+.blog-content {
     position: relative;
     left: 0px;
     top: 0px;
@@ -124,7 +124,7 @@ nav {
 }
 
 /* Blog post style for the headings. */
-.outline-2 {
+.blog-content .outline-2 {
     position: relative;
 
     top: 10px;
@@ -147,7 +147,7 @@ nav {
     transition: width 0.3s ease;
 }
 
-.main-content p {
+.blog-content p {
     font-family: Verdana, Tahoma, Arial, sans-serif;
     font-size: 18px;
     margin-bottom: 0px;
@@ -156,33 +156,41 @@ nav {
 /* Customization for the Religion page links
  **/
 
-.link-map {
+.link-list {
+    position: relative;
     display: block;
+    background-color: var(--secondary1-color);
+    flex: 1;
+
 }
 
-.link-map h2 {
+.link-list .outline-2 {
+    position: relative;
+
+    top: 10px;
+
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 1px solid black;
+    border-radius: 1px;
+    background-color: var(--secondary3-color);
+    padding: 5px;
+    margin-bottom: 10px;
+
+    text-align: left;
+    transition: width 0.3s ease;
+}
+
+.link-list h2 {
     margin: 0px;
     font-size: 14pt;
 }
 
-.link-map p {
+.link-list p {
     font-family: monospace;
     font-size: 10pt;
-}
-
-.link-map .outline-2 {
-    position: relative;
-
-    top: 10px;
-    left: 10px;
-
-    max-width: 750px;
-    border-radius: 1px;
-    background-color: var(--secondary3-color);
-    padding: 10px;
-
-    text-align: left;
-    transition: width 0.3s ease;
 }
 
 /* Customization for the Portfolio Page

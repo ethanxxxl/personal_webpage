@@ -2,7 +2,7 @@
 #+include: "includes.org"
 
 # surround the main content with a div so that you can format it properly.
-#+html: <div class="main-content">
+#+html: <div class="blog-content">
 * Overview
 :PROPERTIES:
 :CUSTOM_ID: introduction

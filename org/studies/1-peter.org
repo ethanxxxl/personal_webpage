@@ -1,7 +1,7 @@
 #+title: Study of 1 Peter
 #+include: "includes.org"
 
-#+html: <div class="main-content">
+#+html: <div class="blog-content">
 * Have Hope, You Are Sought Out
 Continuing with 1 Peter, these are my notes from a brief study I did on a short
 part of this book.
