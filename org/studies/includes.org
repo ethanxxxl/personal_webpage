@@ -1,0 +1,18 @@
+#+options: tags:nil
+#+options: properties:nil
+
+#+OPTIONS: num:nil
+#+OPTIONS: ^:t
+#+options:  hi
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style.css" />
+
+#+BEGIN_EXPORT html
+<nav>
+    <a href="../index.html">Home</a> |
+    <a href="../blogs.html">Blogs</a> |
+    <a href="https://github.com/ethanxxxl">Github</a> |
+    <a href="../religion.html">Religion</a> |
+    <a href="../portfolio.html">Portfolio</a>
+</nav>
+#+END_EXPORT

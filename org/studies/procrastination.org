@@ -1,0 +1,86 @@
+#+title: Procrastination
+#+include: "includes.org"
+
+#+html: <div class="main-content">
+I often find myself procrastinating things. These things range from
+insignificant to crucial, time-critical tasks that must be completed or I will
+face severe consequences. I never understood why I procrastinated so much. After
+everything was said and done, I typically tell myself that it was dumb to push
+that thing off so long and that if I had only started earlier, I would have been
+able to do a better job. As a college student, procrastination is seen as a
+given: it's how most students get the motivation to complete their assignments.
+I have often touted procrastination as the superior way of operating in the
+college environment. I thought I was more efficient with my time, completing
+assignments in a fraction of the time my peers did, if not only because I didn't
+allocate enough time in the first place.
+
+I am now finishing my time in school. I have had some time to reflect on my
+habits, and how those actions have affected me, physically, emotionally, and
+spiritually. I have come to view procrastination as a much more serious sin
+pattern. The root of procrastination is selfishness. What do I do when I
+procrastinate? I engage in various forms of self-indulgence. I seek ways to
+fulfill and gratify myself which are quicker and easier than the task at hand.
+This is a problem because God created man to work, to be productive:
+#+BEGIN_QUOTE
+The LORD God took the man and put him in the garden of Eden to work it and keep
+it.\\
+Genesis 2:15
+#+END_QUOTE
+
+When we participate in God's plan and will, we glorify him. God wants us to
+work, labor, and produce things to bless the people around us. How can I be
+blessing others when I am so focused on my pleasure? When I procrastinate, my
+actions are innately self-serving, and by definition, I am unable to fulfill my
+God-given charge to bless others through my work. I am no longer serving God!
+Instead, I serve and glorify myself.
+
+This selfishness is very infectious. Once I let my guard down, indulging in
+self-gratification for even a moment, that sin takes hold of me, which leads to
+more sin. Once I stray from God's grace, I am completely ineffective as an
+ambassador for Christ. I don't seek ways to serve others, I don't spend time in
+prayer, or even read my Bible. Only once I "cry out from the pit", realizing
+that God is my only method of escape can I be restored.
+
+#+BEGIN_QUOTE
+You have wrapped yourself with a cloud\\
+    so that no prayer can pass through.
+
+I called on your name, O LORD,\\
+    from the depths of the pit;\\
+you heard my plea, 'Do not close\\
+    your ear to my cry for help!'\\
+You came near when I called on you;\\
+    you said, 'Do not fear!'\\
+Lamentations 3:44; 55-57
+#+END_QUOTE
+
+This passage in Lamentations perfectly describes how I feel amid a season of
+selfishness. I feel that I am unable to talk to God or read my Bible. I struggle
+to do these things because I have not humbled myself before coming to God. I
+come to him, asking for his presence while I continue to glorify myself. How
+that must offend God! It is only once I repent of my sin, humble myself, and
+acknowledge God as the true source of my satisfaction and fulfillment that I can
+regain that close relationship with the Spirit.
+
+#+BEGIN_QUOTE
+The more they increased,\\
+    the more they sinned against me;\\
+    I will change their glory into shame.\\
+Hosea 4:7
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Do not be slothful in zeal, be fervent in spirit, serve the Lord.\\
+Romans 12:11
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Contribute to the needs of the saints and seek to show hospitality.\\
+Romans 12:13
+#+END_QUOTE
+
+Ethan Smith\\
+Mon Apr  3 04:11:15 2023
+
+# end of the main content div.
+#+html: </div>
