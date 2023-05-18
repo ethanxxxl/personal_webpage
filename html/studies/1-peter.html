@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-05-18 Thu 02:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study of 1 Peter</title>
+<meta name="author" content="Ethan Smith" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Study of 1 Peter</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org81285ed">Have Hope, You Are Sought Out</a></li>
+<li><a href="#org6b55de8">Faith Tested by Fire</a></li>
+</ul>
+</div>
+</div>
+<nav>
+    <a href="../index.html">Home</a> |
+    <a href="../blogs.html">Blogs</a> |
+    <a href="https://github.com/ethanxxxl">Github</a> |
+    <a href="../religion.html">Religion</a> |
+    <a href="../portfolio.html">Portfolio</a>
+</nav>
+
+<div class="main-content">
+<div id="outline-container-org81285ed" class="outline-2">
+<h2 id="org81285ed">Have Hope, You Are Sought Out</h2>
+<div class="outline-text-2" id="text-org81285ed">
+<p>
+Continuing with 1 Peter, these are my notes from a brief study I did on a short
+part of this book.
+</p>
+
+<p>
+In these verses, Peter directs his audience to set their minds on the things of
+heaven, rather than the things of earth. His audience consists of Christians who
+are likely Gentiles, who worshiped pagan gods before their conversions. While he
+instructs them to remember holy things, he doesn&rsquo;t leave them without
+motivation. He draws their attention to the work done by Christ on the cross,
+who in his suffering bore their shame so they wouldn&rsquo;t have to. While his
+audience most certainly has a different background than we do, we can certainly
+still find application in this passage today.
+</p>
+
+<blockquote>
+<p>
+‍<sup>13</sup>Therefore, preparing your minds for action, and being sober-minded, set
+your hope fully on the grace that will be brought to you at the revelation of
+Jesus Christ. ‍<sup>14</sup>As obedient children, do not be conformed to the passions of
+your former ignorance, ‍<sup>15</sup>but as he who called you is holy, you also be holy
+in all your conduct, ‍<sup>16</sup>since it is written, &ldquo;You shall be holy, for I am
+holy.&rdquo;
+</p>
+</blockquote>
+
+<p>
+First off, there is a &ldquo;Therefore.&rdquo; Peter is referring to the point he made
+previously, regarding the prophets of the Old Testament. These prophets
+prophesied things that they could not understand. They knew of God&rsquo;s promised
+plan for redemption but had no comprehension of how or when God would execute
+His plan. Yet, these gentiles who have lived lives so far removed from Judaism,
+and thus from knowledge of the One True God, have the privileged of a deep
+understanding of the gospel. An understanding deeper than that of even the
+prophets.
+</p>
+
+<p>
+This point, especially when you look at verse 12, strongly suggests that these
+early Christians aren&rsquo;t simply fortunate. God actively sought them out. First,
+he proclaims what he will do through the prophets. Then, he does what he said he
+would do. Finally, he sends his Holy Spirit, who directs people to be a witness
+to the nations, specifically the audience of Peters&rsquo;s letter! No matter how you
+came to Christ, you can surely be thankful for the ways that God sought you out,
+even before you were a thought in your parent&rsquo;s minds. Yes, you can trace back
+God&rsquo;s pursuit of you back to the fall, where God laid out his plan of salvation
+at the beginning of all human depravity.
+</p>
+
+<p>
+&ldquo;Therefore,&rdquo; our minds should be ready for action! What does this preparation
+look like? What action will we take? The answer to the first question lies in
+the next phrase: being sober-minded, with your hope set on God&rsquo;s Grace (brought
+at the revelation of Christ). What does it mean to be sober-minded? Well, the
+opposite of sober is drunkenness. When drunk, a person makes poor decisions,
+often to their detriment. Peter is calling us to weigh our decisions, be
+judicious, and consider what the most beneficial course of action may be. We are
+to do this in light of what is to come, which is grace revealed at the
+revelation of Christ. How can you be more self-preserving than by taking care of
+your soul, which lasts forever? This is why we hope in the grace which will be
+fully dispensed at Christ&rsquo;s second coming.
+</p>
+
+<p>
+But what about the action? What are we supposed to do? The rest of the passage
+is pretty clear on this. We are to be obedient as children! and like children,
+Peter says that we should imitate our Father. Just as he is Holy, so too must we
+be holy. I have heard people make the argument that Christians are fake; the
+only reason they do good is that they are afraid of going to hell. However, this
+isn&rsquo;t the image of Christianity Peter had! Peter puts forth that we should be
+Holy because our Father, who pursued and redeemed us, is Holy.
+</p>
+
+<p>
+So rather than living in fear and shame because of our evil, we can confidently
+pursue righteousness. We know that our Father loves us and has sought us out. We
+shouldn&rsquo;t be afraid of hell, we should be eagerly hoping for the return of our
+King!
+</p>
+
+<blockquote>
+<p>
+And they shall be called The Holy People,<br />
+    The Redeemed of the LORD;<br />
+and you shall be called Sought Out,<br />
+    A City Not Forsaken.<br />
+&#x2013;Isaiah 62:12
+</p>
+</blockquote>
+
+<p>
+Ethan Smith<br />
+Wed Apr 19 04:47:35 2023
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org6b55de8" class="outline-2">
+<h2 id="org6b55de8">Faith Tested by Fire</h2>
+<div class="outline-text-2" id="text-org6b55de8">
+<p>
+This is a study of the first few verses of 1 Peter.
+</p>
+
+<blockquote>
+<p>
+‍<sup>1</sup>Peter, an apostle of Jesus Christ, To those who are elect exiles of the
+Dispersion in Pontus, Galatia, Cappadocia, Asia, and Bithynia,‍ ‍<sup>2</sup>according to
+the foreknowledge of God the Father, in the sanctification of the Spirit, for
+obedience to Jesus Christ and for sprinkling with his blood:<br />
+  May grace and peace be multiplied to you
+</p>
+</blockquote>
+
+<p>
+We start with a greeting. In the greeting, we learn that:
+</p>
+<ul class="org-ul">
+<li>Peter is an apostle and has identified himself with Jesus.</li>
+<li>He is writing to the displaced Christians in what is now Turkey.</li>
+<li>That God is sovereign over their salvation (v2).</li>
+<li>Their purpose is to be obedient to and sanctified by Christ.</li>
+</ul>
+
+<p>
+This prelude sets the tone of the first chapter. Peter will go on to discuss how
+and why we suffer as Christians. This was written to displaced peoples. People
+who may have been dispersed because of their faith. They may be wondering why
+God is allowing them to endure so much suffering. Peter casts light on this.
+</p>
+
+<blockquote>
+<p>
+‍<sup>3</sup>Blessed be the God and Father of our Lord Jesus Christ! According to his
+great mercy, he has caused us to be born again to a living hope through the
+resurrection of Christ from the dead, ‍<sup>4</sup>to an inheritance that is
+imperishable, undefiled, and unfading, kept in heaven for you, ‍<sup>5</sup>who by God&rsquo;s
+power are being guarded through faith for a salvation ready to be revealed in
+the last time.
+</p>
+</blockquote>
+
+<p>
+Because of Christ&rsquo;s death, we can have hope through our trials and suffering.
+This earth has been tainted by sin. Everything on this earth will pass away. It
+will fade into the obscure annals of history, forgotten. We can have hope
+because we don&rsquo;t put our faith in the things of this world! Christ has promised
+us a treasure untainted by sin, permanent, and everlasting. This treasure is
+kept for us, by Christ, in Heaven.
+</p>
+
+<p>
+Christ wants to see us collect our treasure from him in heaven. This is why
+Christ gave us the Spirit. God&rsquo;s power guards us against the powers of this
+world. <i>I will not leave you as orphans; I will come to you &#x2013;John 14:18</i>. We
+aren&rsquo;t left out to fend for ourselves. This was the whole point of the
+crucifixion: That we could wholly rely on the power of God to save and protect
+us from the sin of this world.
+</p>
+
+<p>
+One may ask, as I&rsquo;m sure the recipients of this letter did: If God&rsquo;s provision
+is so great, then why do we continue to suffer in this world? Why are we
+constantly railed by temptation and sin? If God loves us, why doesn&rsquo;t he just
+take away our suffering?
+</p>
+
+<blockquote>
+<p>
+‍<sup>6</sup>In this you rejoice, though now for a little while, if necessary, you have
+been grieved by various trials, ‍<sup>7</sup>so that the tested genuineness of your
+faith&#x2013;more precious than gold that perishes though it is tested by fire&#x2013;may be
+found to result in praise and glory and honor at the revelation of Jesus Christ.
+</p>
+</blockquote>
+
+
+<p>
+The reason we are allowed to endure suffering is that God loves us. He is so
+concerned for the purity of our hearts, that he allows said purity to be tried
+and tested for a little while. Peter equates faith that stands firm to gold.
+Gold, once it has been refined and purified, is incredibly valuable. But the
+gold will pass away in the end. It does not last forever. Faith, once it has
+been purified, (that is, faith that will result in praise and glory and honor),
+does not perish. It resides in the same domain as the treasure Christ is holding
+for us in heaven. This faith is the most valuable thing that one can possess.
+</p>
+
+<p>
+Sincere faith is like an investment from God. Once we have accepted His gift of
+salvation, he starts the refining process. He desires to give us the most
+valuable gift he can bestow on us. And like any investment, this gift grows more
+valuable with time. As we endure suffering, parts of our character inconsistent
+with God&rsquo;s will are burned away. Purification is a hard, lifelong process, but
+it is necessary. God is not content for us to live with impurities. He allows us
+to endure trials so that we may see where our faith is weak and impure. <i>Count
+it all joy, my brothers, when you meet trials of various kinds, for you know
+that the testing of your faith produces steadfastness. And let steadfastness
+have its full effect, that you may be perfect and complete, lacking in nothing.
+&#x2013;James 1:2-4</i>
+</p>
+
+<p>
+When we face trials, whether internal or external, either temptation or
+hardship, we can have joy and hope. So long as we have repentance, that trial
+will result in the purification of our hearts. If during the trial, we renege on
+our covenant with God (ie, we fall into sin), God is faithful. The incongruities
+of our faith are made clear to us, and we can continue to pursue purity in
+Christ. <i>For I am sure that neither death nor life, nor angels nor rulers, nor
+things present nor things to come, nor powers, nor height nor depth, nor
+anything else in all creation, will be able to separate us from the love of God
+in Christ Jesus our Lord.</i>
+</p>
+
+<p>
+Ethan Smith<br />
+Sat Apr  8 16:15:09 2023
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
