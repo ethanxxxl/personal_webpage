@@ -37,5 +37,10 @@ While I attended college, I was part of a campus ministry, Disciplemakers. While
 God has blessed me with countless developmental opportunities, the biggest
 blessing was the increased faith and devotion that I found while in school.
 
+* Contact Information
+If you have any questions or comments for me, please direct them to my email:
+
+email: ethansmith.dev@gmail.com
+
 # surround the main content with a div so that you can format it properly.
 #+html: </div>
