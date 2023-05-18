@@ -78,7 +78,7 @@ body {
  * that their width can be adjusted properly. The table of contents on the side
  * makes scaling a little difficult.
 */
-#main-content {
+.main-content {
     position: relative;
     display: grid;
     justify-items: center;
@@ -119,4 +119,23 @@ blockquote {
     font-style: italic;
     border-left: 3px solid darkgray;
     padding-left: 10px;
+}
+
+/* Portfolio JS test
+ */
+.test-content {
+    display: block;
+}
+
+#red-block {
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    left: 80px;
+    top: 10px;
+
+    width: 75px;
+    height: 75px;
+    background-color: red;
 }

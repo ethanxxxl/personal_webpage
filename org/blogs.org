@@ -9,7 +9,7 @@
 
 
 # surround the main content with a div so that you can format it properly.
-#+html: <div id="main-content">
+#+html: <div class="main-content">
 * First Entry
 this is my first real experience with web-dev stuff. Today I pulled the trigger
 an finally bought a hosting solution and domain name. I have been thinking about

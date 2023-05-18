@@ -4,7 +4,14 @@
 #+include: "navbar.org"
 
 # surround the main content with a div so that you can format it properly.
-#+html: <div id="main-content">
-#+include: "posts/test.org"
-#+include: "posts/test2.org"
+#+html: <div class="main-content test-content">
+
+
+#+begin_export html
+<div id="red-block">click me!</div>
+#+end_export
+
+#+html: <script src="script.js"></script>
+* example heading
+
 #+html: </div>
