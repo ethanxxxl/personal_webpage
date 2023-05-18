@@ -7,25 +7,40 @@
 #+include: "navbar.org"
 
 # surround the main content with a div so that you can format it properly.
-#+html: <div id="main-content">
+#+html: <div class="main-content">
 * Overview
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
 
-Hello and welcome to my website! I grew up in Western Pennsylvania with a
-passion for technology. I started teaching myself programming when I was in
-middle school, an endeavor which continues to this day. During High School, I
-went to our local trade school and learned a little bit about electricity and
-circuits. I love the intersection of hardware and software, so much so that I
-decided to spend four years of my life at Penn State, studying Electrical
-Egineering, with a minor in Computer Engineering. I am currently a Senior, and
-am very excited to leave the education system (for a while at least). Going to
-college also afforded me the opportunity to join the United States Air Force
-through AFROTC. I am slated to commission in May 2023 (Lord willing) as a 2nd
-Lt, as an Electrical Developmental Engineer (62EX). I am told that I will be
-unecessary that I know /when/ I will be moving, I am told that at some
-point, I will be moving to Wright Patterson AFB (Ohio) to work at NASIC
-(National Air and Space Intelligence Center). I had the pleasure of staying at
-WPAFB last summer for a month long "Advance Cyber Education" program, which was
-very fun.
+Welcome to my website! This site contains my portfolio/resume and personal
+blogs. I am also using this site as a way to learn HTML/CSS and Javascript. If
+things don't work the way you think they should, the fault rests entirely on my
+lack of expertise and skill in web development!
+
+** About Me
+I grew up in Western Pennsylvania with a passion for technology. I have been
+teaching myself computers and programming since I was in middle school. When I
+was in high school, I had the option to attend a vocational school, so I chose
+to spend three years learning about electricity and electronics. I decided to
+continue my education at The Pennsylvania State University, where I received a
+B.S. in Electrical and Computer Engineering. I greatly appreciate the electrical
+side of my education, but my heart lies with software.
+
+While in school, I was an Air Force ROTC Cadet (720th Detachment). On 12 May
+2023, I was blessed with a commission in the U.S. Air Force as a 2nd Lieutenant.
+I will be working for them as a Developmental Engineer (AFSC: 62EE) at Wright
+Patterson AFB in Ohio.
+
+AFROTC offered many developmental opportunities. During the summer of 2022, I
+was privileged to go to the Air Force Institute of Technology to receive
+advanced education and training in cyber security. I have been interested in the
+topic ever since; I wish to set up a home lab to study the topic more in the
+future.
+
+While I attended college, I was part of a campus ministry, Disciplemakers. While
+God has blessed me with countless developmental opportunities, the biggest
+blessing was the increased faith and devotion that I found while in school.
 
 # surround the main content with a div so that you can format it properly.
 #+html: </div>
