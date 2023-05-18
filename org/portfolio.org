@@ -1,11 +1,9 @@
 #+title: Portfolio
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+include: "navbar.org"
+#+include: "includes.org"
 
 # surround the main content with a div so that you can format it properly.
 #+html: <div class="main-content test-content">
-
 
 #+begin_export html
 <div id="red-block">click me!</div>
