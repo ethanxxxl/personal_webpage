@@ -15,6 +15,7 @@
           :recursive t
           :publishing-function org-html-publish-to-html
           :headline-levels 4            ; Just the default for this project.
+          :html-postamble nil
           :with-properties nil
           :with-tags nil)
 

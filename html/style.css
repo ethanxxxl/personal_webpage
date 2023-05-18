@@ -1,14 +1,13 @@
 :root {
-    --secondary-light-color: #F5F5DC;
-    --secondary-dark-color: #5E5B52;
-    /*--primary-light-color: #6290C3;*/
-    --primary-light-color: #D3DFEE;
-    --primary-dark-color: #1A1B41;
-    --highlight-color: #499F68;
+    --secondary1-color: AntiqueWhite;
+    --secondary2-color: Beige;
+    --secondary3-color: white;
+    --primary-color:    WhiteSmoke;
+    --highlight-color:  #499F68;
 }
 
 .title {
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary1-color);
     position: fixed;
     top: 0;
     left: 0;
@@ -21,7 +20,7 @@
 }
 
 nav {
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary1-color);
     position: fixed;
     padding: 1px;
     border-top: 1px solid  black;
@@ -57,28 +56,34 @@ nav {
 }
 
 body {
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary1-color);
     margin: 0;
 }
 
+/*Table of Contents formatting*/
 #table-of-contents {
-    position: absolute;
-    top: 40px;
+    position: fixed;
+    top: 65px;
     left: 0;
     bottom: 0;
     width: 200px;
-    background-color: var(--secondary-color);
-    padding: 20px;
+    background-color: var(--secondary2-color);
+    padding: 5px;
     border-right: 1px dashed black;
     box-sizing: border-box;
     z-index: 1;
+}
+
+#table-of-contents h2 {
+    font-size: 17pt;
+    margin-top: 0px;
 }
 
 /* for the blog-post style pages, I put all the top level outlines in div so
  * that their width can be adjusted properly. The table of contents on the side
  * makes scaling a little difficult.
 */
-#main-content {
+.main-content {
     position: relative;
     display: grid;
     justify-items: center;
@@ -94,21 +99,52 @@ body {
 
     top: 10px;
 
-    margin-top: 0px;
-    margin-right: 0px;
     margin-bottom: 10px;
     padding: 20px;
     padding-top: 1px;
-    border-radius: 10px;
+    border-radius: 15px;
     box-sizing: border-box;
+    border: 1px solid black;
 
     max-width: 750px;
 
     left: 0;
     text-align: left;
-    background-color: var(--primary-light-color);
+    background-color: var(--secondary3-color);
     transition: width 0.3s ease;
 }
+
+
+/*customization for the religion page links*/
+.link-map {
+    display: block;
+}
+
+.link-map h2 {
+    margin: 0px;
+    font-size: 14pt;
+}
+
+.link-map p {
+    font-family: monospace;
+    font-size: 10pt;
+}
+
+.link-map .outline-2 {
+    position: relative;
+
+    top: 10px;
+    left: 10px;
+
+    max-width: 750px;
+    border-radius: 1px;
+    background-color: var(--secondary3-color);
+    padding: 10px;
+
+    text-align: left;
+    transition: width 0.3s ease;
+}
+
 
 p {
     font-family: Verdana, Tahoma, Arial, sans-serif;
@@ -119,4 +155,24 @@ blockquote {
     font-style: italic;
     border-left: 3px solid darkgray;
     padding-left: 10px;
+}
+
+
+/* Portfolio JS test
+ */
+.test-content {
+    display: block;
+}
+
+#red-block {
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    left: 80px;
+    top: 10px;
+
+    width: 75px;
+    height: 75px;
+    background-color: red;
 }
