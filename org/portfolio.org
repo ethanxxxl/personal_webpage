@@ -1,15 +1,14 @@
 #+title: Portfolio
-
 #+include: "includes.org"
+# surround the main content with a div so that you can format it properly.
+#+html: <div class="portfolio-content">
+
+* Introduction
+Here I have compiled a subset of the things I have worked on throughout my life.
+It is certainly not comprehensive and many projects are unfinished.
+
+* Some test huh?
+#+html: <img src="https://www.codewars.com/users/ethanxxxl/badges/large" alt="Codewars badge">
 
 # surround the main content with a div so that you can format it properly.
-#+html: <div class="main-content test-content">
-
-#+begin_export html
-<div id="red-block">click me!</div>
-#+end_export
-
-#+html: <script src="script.js"></script>
-* example heading
-
 #+html: </div>
