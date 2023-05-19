@@ -3,6 +3,7 @@
 
 #+OPTIONS: num:nil
 #+OPTIONS: ^:t
+#+OPTIONS: toc:2
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 
