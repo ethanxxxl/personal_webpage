@@ -4,8 +4,16 @@
 # surround the main content with a div so that you can format it properly.
 #+html: <div class="link-list">
 
-* [[file:studies/1-peter.org][Study of First Peter]]
+* [[file:studies/1-peter.org][1 Peter]]
+I study 1 Peter in depth.
 
 * [[file:studies/procrastination.org][Procrastination]]
+My (hopefully) biblically based musings on why I procrastinate so much.
+
+* Isaiah
+When I was in college, I led a bible study through Isaih. I plan to go through it again more thouroughly.
+
+* Inheritance
+Coming soon!
 
 #+html: </div>
