@@ -3,6 +3,8 @@
 
 #+html: <div class="blog-content">
 * Have Hope, You Are Sought Out
+[2023-04-19 Wed 04:47]
+
 Continuing with 1 Peter, these are my notes from a brief study I did on a short
 part of this book.
 
@@ -79,8 +81,9 @@ and you shall be called Sought Out,\\
 Ethan Smith\\
 Wed Apr 19 04:47:35 2023
 
-
 * Faith Tested by Fire
+[2023-04-08 Sat 16:15]
+
 This is a study of the first few verses of 1 Peter.
 
 #+begin_quote
@@ -171,4 +174,5 @@ in Christ Jesus our Lord./
 
 Ethan Smith\\
 Sat Apr  8 16:15:09 2023
+
 #+html: </div>
