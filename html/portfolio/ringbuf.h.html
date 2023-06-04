@@ -191,17 +191,136 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 <div id="content" class="content">
-<nav>
-    <a href="index.html">Home</a> |
-    <a href="blogs.html">Blogs</a> |
-    <a href="https://github.com/ethanxxxl">Github</a> |
-    <a href="religion.html">Religion</a> |
-    <a href="portfolio.html">Portfolio</a>
-</nav>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org36f9e57">1. Lock-Free thread messaging.</a></li>
+<li><a href="#org6152f2e">2. ring-buffer has designated producers and consumers. the read-head points to</a></li>
+<li><a href="#org578a6e2">3. the location of the next insertion, and the read-head points to the location</a></li>
+<li><a href="#orga67993c">4. before the next read.</a></li>
+<li><a href="#org35d72a2">5. every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</a></li>
+<li><a href="#orgd5260c3">6. incremented.</a></li>
+</ul>
+</div>
+</div>
+<p>
+#+begin<sub>src</sub> c
+</p>
+
+<p>
+#ifndef RINGBUF<sub>H</sub>
+#define RINGBUF<sub>H</sub>
+</p>
+
+<p>
+#include &lt;stdlib.h&gt;
+</p>
+
+<p>
+/*
+</p>
+<div id="outline-container-org36f9e57" class="outline-2">
+<h2 id="org36f9e57"><span class="section-number-2">1.</span> Lock-Free thread messaging.</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+**
+</p>
+</div>
+</div>
+<div id="outline-container-org6152f2e" class="outline-2">
+<h2 id="org6152f2e"><span class="section-number-2">2.</span> ring-buffer has designated producers and consumers. the read-head points to</h2>
+</div>
+<div id="outline-container-org578a6e2" class="outline-2">
+<h2 id="org578a6e2"><span class="section-number-2">3.</span> the location of the next insertion, and the read-head points to the location</h2>
+</div>
+<div id="outline-container-orga67993c" class="outline-2">
+<h2 id="orga67993c"><span class="section-number-2">4.</span> before the next read.</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+**
+</p>
+</div>
+</div>
+<div id="outline-container-org35d72a2" class="outline-2">
+<h2 id="org35d72a2"><span class="section-number-2">5.</span> every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</h2>
+</div>
+<div id="outline-container-orgd5260c3" class="outline-2">
+<h2 id="orgd5260c3"><span class="section-number-2">6.</span> incremented.</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<b>/
+struct RingBuffer {
+    char</b> _buffer;
+    size<sub>t</sub> length;
+    size<sub>t</sub> element<sub>size</sub>;
+</p>
+
+<p>
+    int write<sub>head</sub>;
+    int read<sub>head</sub>;
+};
+</p>
+
+<p>
+<i>/</i> wrapper struct. This struct is what is passed to the producer thread.
+<i>/</i> the ringbuffer field is not meant to be directly accessed.
+struct Producer {
+    struct RingBuffer* _ringbuf;
+};
+</p>
+
+<p>
+<i>/</i> wrapper struct. This struct is what is passed to the consumer thread.
+<i>/</i> the ringbuffer field is not meant to be directly accessed.
+struct Consumer {
+    struct RingBuffer* _ringbuf;
+};
+</p>
+
+<p>
+struct RingBuffer ringbuf<sub>new</sub>(size<sub>t</sub> len, size<sub>t</sub> element<sub>size</sub>);
+void ringbuf<sub>del</sub>(struct RingBuffer* ringbuf);
+</p>
+
+<p>
+int ringbuf<sub>next</sub><sub>index</sub>(const struct RingBuffer* rb, int index);
+void ringbuf<sub>print</sub>(struct RingBuffer* rb);
+</p>
+
+<p>
+struct Producer ringbuf<sub>make</sub><sub>producer</sub>(struct RingBuffer* ringbuf);
+</p>
+
+<p>
+<i>/</i> pushes value into the ringbuffer returns 0 on success.
+<i>/</i> may fail if the ring buffer is full (ie, write-head runs into read-head).
+<i>/</i> returns -1 on fail
+int producer<sub>push</sub>(struct Producer* producer, void* val);
+</p>
+
+<p>
+struct Consumer ringbuf<sub>make</sub><sub>consumer</sub>(struct RingBuffer* ringbuf);
+</p>
+
+<p>
+void* consumer<sub>pop</sub>(struct Consumer* consumer);
+void* consumer<sub>peek</sub>(struct Consumer* consumer);
+</p>
+
+
+<p>
+#endif // RINGBUF<sub>H</sub>
+</p>
+
+<p>
+#+end<sub>src</sub>
+</p>
+</div>
+</div>
 </div>
 </body>
 </html>

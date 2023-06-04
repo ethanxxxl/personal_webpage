@@ -8,6 +8,46 @@ Here I have compiled a subset of the things I have worked on throughout my life.
 It is certainly not comprehensive and many projects are unfinished. I have
 included things I have worked on both in school and on my own time.
 
+* This Website
+I write this site using Emacs ~org-mode~, making good use of its fantastic
+export capabilities. My workflow is a little different for how emacs is
+configured by default, however. ~org-publish~ is sort of set up for someone who
+uses a single computer. My workflow involves a plethora of devices. I actively
+edit this site on my macbook, and my desktop running Arch. I can foresee myself
+also editing it on my desktop under Windows, or on other laptops running
+whatever operating system I decide to run at that time.
+
+Because this workflow, I wanted to be able to contain all the information
+related to this website, including export information, inside of a single
+directory tree. This immediately presents challenges, because ~org-publish~
+makes use of several global variables which add state to its export functions.
+The main varaible of concern, however, is ~org-publish-project-alist~. This
+variable is intended to contain *all* projects that you ever work on. In theory,
+there are benefits to this, but in practice, it just means my config files for
+the website are spread all over my computer.
+
+To solve this, I wrote some elisp which is bound to ~SPC m P l~. Simply put, it
+looks for a file named ~export-config.el~ in the root directory of your project.
+This file defines a varaible called ~org-publish-project-local-alist~, which
+does the same thing as ~org-publish-project-alist~, but /it's local/ (real
+complex stuff, I know).
+
+There is one problem though. In the local alist, I can't use absolute paths,
+because that would sort of defeat the purpose of being able to clone the git
+repo anywhere and work on it. I don't really need absolute paths, because all
+the files I reference in ~export-config.el~ are relative to the website root
+directory. But when the publishing function runs, it gets really confused with
+the relative paths (especially when using ~#+include: ...~ in my files.)
+
+At this point, I pull an India Jones with these two variables, and swap them
+before calling the ~org-publish-all~ function. This publishes the entire website
+with a local configuration.
+
+I moved the elisp I wrote for this modification into a separate file which is
+loaded during startup for emacs. This file is shown below.
+
+#+include: "./portfolio/org-publish-local.el.org"
+
 * Courses at Penn State
 There were a few classes that I learned anything of substance during college.
 
@@ -1229,7 +1269,29 @@ rtiisr
                                  ; lines below are ignored - not assembled/compiled
 #+end_src
 
+
 ** Computer Engineering 473
+This course was also taught by Professor Choi, the course webpage can be found
+[[https://www.cse.psu.edu/~kxc104/class/cmpen473/22s/][here]]. We spent the semester designing and building an autonomous robotic car
+from scratch, using a Raspberry Pi 4. We started by learning how to access the
+GPIO registers on the Pi in memory, using the ~mmap~ C function. From that point
+on, continued to iterate on the design, constantly adding new features.
+
+This course heavily incorporated multithreaded programming and interthread
+communication. Most of my peers used the professors FIFO implementtion, but I
+had already made a ringbuffer implentation by the time he distributed his
+solution.
+
+#+include: "portfolio/ringbuf.h.org"
+#+html: <object data="portfolio/ringbuf.h"></object>
+*** Manual Driving Mode
+
+
+*** Line Follow Mode (IR sensor)
+
+*** IMU Sensor Balence Board
+
+*** Line Follow Mode (Computer Vision)
 
 * Programming
 The projects I have listed below, along with others, can be found on my [[https://github.com/ethanxxxl][github]].
@@ -1286,8 +1348,10 @@ $ cargo run --bin client
 
 An example of the program running and working is shown in the image below.
 
+# this is a bit of a hack, this path won't work unless the org files are
+# included in the website.
 #+attr_html: :width 700px :margin auto
-[[../resources/portfolio-images/hackchat-demo.png]]
+[[../resources/portfolio/hackchat-demo.png]]
 
 Note, that I am running this on Arch Linux. It may work on MacOS, but I'm pretty
 sure it won't work on Windows.

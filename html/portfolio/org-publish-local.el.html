@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-06-04 Sun 05:52 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="Ethan Smith" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-local.el -*- lexical-binding: t; -*-</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #a626a4;">add-hook</span>
+ <span style="color: #4078f2;">'</span><span style="color: #6a1868;">org-mode-hook</span>
+ <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+   <span style="color: #50a14f;">(</span><span style="color: #e45649;">evil-define-key</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">(</span>normal visual<span style="color: #b751b6;">)</span> <span style="color: #6a1868;">org-mode-map</span> <span style="color: #b751b6;">(</span><span style="color: #a626a4;">kbd</span> <span style="color: #50a14f;">"SPC m P l"</span><span style="color: #b751b6;">)</span> <span style="color: #4078f2;">#'</span><span style="color: #986801;">org-publish-local-project</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #9ca0a4;">;;; </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> every file in a project is loaded into a buffer, and made current in</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the org-publish-to function. That function tries to use existing buffers if</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">available, otherwise it will just create a new one, temporarily.</span>
+<span style="color: #9ca0a4;">;;;</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">If a buffer already exists, but its path is screwed up, that will screw up</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the path of its includes.</span>
+
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">state variable for local publish function</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root nil<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">org-publish-local-project</span> <span style="color: #a626a4;">(</span><span style="color: #a626a4;">project-root</span><span style="color: #a626a4;">)</span>
+  <span style="color: #84888b; font-style: italic;">"command to publish projects not listed in ~org-publish-project-alist~.</span>
+
+<span style="color: #84888b; font-style: italic;">This requrires the project alist to be defined as</span>
+<span style="color: #84888b; font-style: italic;">org-publish-local-alist in a file called export-config.el in the</span>
+<span style="color: #84888b; font-style: italic;">project root directory. When this command is called for the first</span>
+<span style="color: #84888b; font-style: italic;">time during a session, the user will be prompted to select the</span>
+<span style="color: #84888b; font-style: italic;">root directory for their project. This directory is remembered</span>
+<span style="color: #84888b; font-style: italic;">between calls"</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> <span style="color: #b751b6;">(</span><span style="color: #e45649;">if</span> org-publish-local-root org-publish-local-root
+                       <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root
+                             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">read-directory-name</span> <span style="color: #50a14f;">"Select project root: "</span> <span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>config-file <span style="color: #4078f2;">(</span><span style="color: #b751b6;">concat</span> project-root <span style="color: #50a14f;">"export-config.el"</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">file-exists-p</span> config-file<span style="color: #b751b6;">)</span>
+      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">file exists, so get the code from it</span>
+      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">require</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">ox-publish</span><span style="color: #b751b6;">)</span>
+      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">load</span> config-file nil nil t<span style="color: #b751b6;">)</span>
+      <span style="color: #b751b6;">(</span><span style="color: #e45649;">let</span> <span style="color: #4078f2;">(</span>tmp-alist
+            <span style="color: #a626a4;">(</span><span style="color: #6a1868;">org-publish-use-timestamps-flag</span> nil<span style="color: #a626a4;">)</span>
+            <span style="color: #a626a4;">(</span>buffer-directory <span style="color: #50a14f;">(</span><span style="color: #b751b6;">file-name-directory</span> <span style="color: #b751b6;">(</span><span style="color: #6a1868;">buffer-file-name</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span> <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">force all files to be published</span>
+
+        <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-alist
+              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">map</span> <span style="color: #4078f2;">'</span><span style="color: #986801;">list</span>
+                   <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">(</span>project<span style="color: #b751b6;">)</span>
+                     <span style="color: #b751b6;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #4078f2;">(</span><span style="color: #b751b6;">car</span> project<span style="color: #4078f2;">)</span>
+                           <span style="color: #4078f2;">(</span><span style="color: #a626a4;">publish-local-fix-base-dir</span> org-publish-local-root
+                                                           <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cdr</span> project<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
+                   org-publish-local-alist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">the org-publish-expand-project function requires that</span>
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">org-publish-project-alist contain all projects. save the current</span>
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">value of org-publish-project-alist, and restore it after this</span>
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">function is ran.</span>
+        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span>
+
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">publish all files in the project. </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> this might not actually work.</span>
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd org-publish-local-root)</span>
+        <span style="color: #4078f2;">(</span><span style="color: #a626a4;">org-publish-projects</span> org-publish-local-alist<span style="color: #4078f2;">)</span>
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd buffer-directory)</span>
+
+        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">restore project-alist variable</span>
+        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">publish-local-fix-base-dir</span> <span style="color: #a626a4;">(</span>root-dir plist<span style="color: #a626a4;">)</span>
+  <span style="color: #84888b; font-style: italic;">"updates :base-directory in project plist to be a subdirectory of root-dir.</span>
+
+<span style="color: #84888b; font-style: italic;">if :base-directory is absolute, then then this function simply</span>
+<span style="color: #84888b; font-style: italic;">returns a copy of project. when :base-directory is relative, that</span>
+<span style="color: #84888b; font-style: italic;">key is updated in a copy of project, which is returned.</span>
+
+<span style="color: #84888b; font-style: italic;">root-dir is the directory where export-config.el is located. It</span>
+<span style="color: #84888b; font-style: italic;">should be in the form of /foo/bar/</span>
+
+<span style="color: #84888b; font-style: italic;">project is the project plist"</span>
+<span style="color: #9ca0a4;">;;;</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-fix-base-dir</span>
+<span style="color: #9ca0a4;">;;;</span>
+
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>new-plist <span style="color: #4078f2;">(</span><span style="color: #a626a4;">copy-tree</span> plist<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+        relative-dir<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #b751b6;">(</span>key <span style="color: #4078f2;">'</span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">:base-directory</span> <span style="color: #a626a4;">:publishing-directory</span><span style="color: #4078f2;">)</span> new-plist<span style="color: #b751b6;">)</span>
+      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> relative-dir <span style="color: #4078f2;">(</span><span style="color: #b751b6;">plist-get</span> plist key<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+      <span style="color: #b751b6;">(</span><span style="color: #e45649;">cond</span> <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #a626a4;">f-relative-p</span> root-dir<span style="color: #a626a4;">)</span>
+             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"root-dir must be absolute: %S"</span> root-dir<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+            <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">don't return error if base-directory is nil</span>
+            <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
+                  <span style="color: #50a14f;">(</span><span style="color: #b751b6;">not</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">directory-name-p</span> relative-dir<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"%S must be a directory. (did you mean  %S?)"</span>
+                    relative-dir
+                    <span style="color: #50a14f;">(</span><span style="color: #b751b6;">concat</span> relative-dir <span style="color: #50a14f;">"/"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+
+      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">update key with either expanded or replaced filename</span>
+      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> new-plist
+            <span style="color: #4078f2;">(</span><span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
+                     <span style="color: #50a14f;">(</span><span style="color: #a626a4;">f-relative-p</span> relative-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+                <span style="color: #a626a4;">(</span><span style="color: #b751b6;">plist-put</span> <span style="color: #50a14f;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #50a14f;">)</span> key
+                           <span style="color: #50a14f;">(</span><span style="color: #b751b6;">expand-file-name</span> relative-dir root-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> my-proj <span style="color: #a626a4;">(</span><span style="color: #a626a4;">copy-tree</span> org-publish-local-alist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #a626a4;">publish-local-fix-base-dir</span> <span style="color: #50a14f;">"~/Documents/personal_webpage/"</span> <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cdr</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">car</span> my-proj<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+my-proj
+
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">this function is no longer used in this file, but I like it so much, I can't</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">bring myself to delete it.</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">alist-update-key</span> <span style="color: #a626a4;">(</span>key value alist<span style="color: #a626a4;">)</span>
+  <span style="color: #84888b; font-style: italic;">"returns a new alist with the value at key updated.</span>
+
+<span style="color: #84888b; font-style: italic;">The whole structure of the alist is copied over (ie copy-tree vs</span>
+<span style="color: #84888b; font-style: italic;">copy-list). the result is an alist with key removed, and a new</span>
+<span style="color: #84888b; font-style: italic;">element with key pushed to the front of the alist. "</span>
+<span style="color: #9ca0a4;">;;;</span>
+<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">alist-update-key</span>
+<span style="color: #9ca0a4;">;;;</span>
+  <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> key value<span style="color: #50a14f;">)</span>
+        <span style="color: #50a14f;">(</span><span style="color: #a626a4;">assq-delete-all</span> key <span style="color: #b751b6;">(</span><span style="color: #a626a4;">copy-tree</span> alist<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+</div>
+</body>
+</html>
