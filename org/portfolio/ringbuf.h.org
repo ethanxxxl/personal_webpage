@@ -1,0 +1,60 @@
+#+begin_src c
+
+#ifndef RINGBUF_H
+#define RINGBUF_H
+
+#include <stdlib.h>
+
+/*
+** Lock-Free thread messaging.
+**
+** ring-buffer has designated producers and consumers. the read-head points to
+** the location of the next insertion, and the read-head points to the location
+** before the next read.
+**
+** every time an element is inserted into the ringbuffer, the write_head is
+** incremented.
+*/
+struct RingBuffer {
+    char* _buffer;
+    size_t length;
+    size_t element_size;
+
+    int write_head;
+    int read_head;
+};
+
+/// wrapper struct. This struct is what is passed to the producer thread.
+/// the ringbuffer field is not meant to be directly accessed.
+struct Producer {
+    struct RingBuffer* _ringbuf;
+};
+
+/// wrapper struct. This struct is what is passed to the consumer thread.
+/// the ringbuffer field is not meant to be directly accessed.
+struct Consumer {
+    struct RingBuffer* _ringbuf;
+};
+
+struct RingBuffer ringbuf_new(size_t len, size_t element_size);
+void ringbuf_del(struct RingBuffer* ringbuf);
+
+int ringbuf_next_index(const struct RingBuffer* rb, int index);
+void ringbuf_print(struct RingBuffer* rb);
+
+struct Producer ringbuf_make_producer(struct RingBuffer* ringbuf);
+
+/// pushes value into the ringbuffer returns 0 on success.
+/// may fail if the ring buffer is full (ie, write-head runs into read-head).
+/// returns -1 on fail
+int producer_push(struct Producer* producer, void* val);
+
+struct Consumer ringbuf_make_consumer(struct RingBuffer* ringbuf);
+
+void* consumer_pop(struct Consumer* consumer);
+void* consumer_peek(struct Consumer* consumer);
+
+
+#endif // RINGBUF_H
+
+#+end_src

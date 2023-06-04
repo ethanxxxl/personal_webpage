@@ -1,0 +1,117 @@
+#+begin_src c
+
+#include "ringbuf.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+/// allocates/creates a new ringbuffer
+///
+/// len must be at least 3
+struct RingBuffer ringbuf_new(size_t len, size_t element_size) {
+    struct RingBuffer rb;
+
+    // allocate space for the ring-buffer
+    rb._buffer = malloc(len * element_size);
+    rb.length = len;
+    rb.element_size = element_size;
+
+    rb.write_head = 1;
+    rb.read_head = 0;
+
+    return rb;
+}
+
+// debug function, prints the ring-buffer
+void ringbuf_print(struct RingBuffer* rb) {
+    printf("ringbuf: < ");
+    for (char* c = rb->_buffer; c <= &rb->_buffer[rb->length - 1]; c++) {
+        printf("%d ", *c);
+    }
+
+    printf(">\n");
+}
+/// frees the ringbuffer zeros it's fields
+void ringbuf_del(struct RingBuffer *rb) {
+    free((void *)rb->_buffer);
+    rb->element_size = 0;
+    rb->length = 0;
+    rb->_buffer = NULL;
+    rb->write_head = 0;
+    rb->read_head = 0;
+}
+
+int ringbuf_next_index(const struct RingBuffer* rb, int index) {
+    int new = index + 1;
+    if (new >= rb->length) {
+        return 0;
+    } else {
+        return new;
+    }
+}
+
+struct Producer ringbuf_make_producer(struct RingBuffer *rb) {
+    struct Producer prod;
+
+    prod._ringbuf = rb;
+
+    return prod;
+}
+
+int producer_push(struct Producer* producer, void* val) {
+    // get an easy handle to the ring-buffer
+    struct RingBuffer rb = *producer->_ringbuf;
+
+    // ringbuffer is full, need to wait until consumer increments the read head.
+    if (ringbuf_next_index(&rb, rb.write_head) == rb.read_head) {
+        return -1;
+    }
+
+    // copy the data into the ring-buffer
+    char* dest = rb._buffer + rb.write_head*rb.element_size;
+    memcpy(dest, val, rb.element_size);
+
+    // wrap the write head around if it is past the upper bound
+    producer->_ringbuf->write_head = ringbuf_next_index(&rb, rb.write_head);
+
+    return 0;
+}
+
+struct Consumer ringbuf_make_consumer(struct RingBuffer *rb) {
+    struct Consumer con;
+
+    con._ringbuf = rb;
+
+    return con;
+}
+
+// increments the read head and returns the value.
+// returns NULL if buffer is empty
+void* consumer_pop(struct Consumer* consumer) {
+    void* val = consumer_peek(consumer);
+
+    if (val == NULL) {
+        return NULL;
+    }
+
+    // get an easy handle to the ring-buffer
+    struct RingBuffer rb = *consumer->_ringbuf;
+
+    // wrap the write head around if it is past the upper bound
+    consumer->_ringbuf->read_head = ringbuf_next_index(&rb, rb.read_head);
+    return val;
+}
+
+// returns the value after the read head.
+// returns NULL if buffer is empty
+void* consumer_peek(struct Consumer* consumer) {
+    // get an easy handle to the ring-buffer
+    struct RingBuffer rb = *consumer->_ringbuf;
+
+    if (ringbuf_next_index(&rb, rb.read_head) == rb.write_head) {
+        return NULL;
+    }
+
+    return rb._buffer + ringbuf_next_index(&rb, rb.read_head)*rb.element_size;
+}
+#end_src
