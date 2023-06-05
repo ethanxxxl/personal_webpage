@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-06-04 Sun 05:52 -->
+<!-- 2023-06-05 Mon 01:28 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -195,120 +195,130 @@
 <body>
 <div id="content" class="content">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-local.el -*- lexical-binding: t; -*-</span>
-
-<span style="color: #4078f2;">(</span><span style="color: #a626a4;">add-hook</span>
- <span style="color: #4078f2;">'</span><span style="color: #6a1868;">org-mode-hook</span>
- <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
-   <span style="color: #50a14f;">(</span><span style="color: #e45649;">evil-define-key</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">(</span>normal visual<span style="color: #b751b6;">)</span> <span style="color: #6a1868;">org-mode-map</span> <span style="color: #b751b6;">(</span><span style="color: #a626a4;">kbd</span> <span style="color: #50a14f;">"SPC m P l"</span><span style="color: #b751b6;">)</span> <span style="color: #4078f2;">#'</span><span style="color: #986801;">org-publish-local-project</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-
-<span style="color: #9ca0a4;">;;; </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> every file in a project is loaded into a buffer, and made current in</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the org-publish-to function. That function tries to use existing buffers if</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">available, otherwise it will just create a new one, temporarily.</span>
-<span style="color: #9ca0a4;">;;;</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">If a buffer already exists, but its path is screwed up, that will screw up</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the path of its includes.</span>
-
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">state variable for local publish function</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root nil<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">org-publish-local-project</span> <span style="color: #a626a4;">(</span><span style="color: #a626a4;">project-root</span><span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"command to publish projects not listed in ~org-publish-project-alist~.</span>
-
-<span style="color: #84888b; font-style: italic;">This requrires the project alist to be defined as</span>
-<span style="color: #84888b; font-style: italic;">org-publish-local-alist in a file called export-config.el in the</span>
-<span style="color: #84888b; font-style: italic;">project root directory. When this command is called for the first</span>
-<span style="color: #84888b; font-style: italic;">time during a session, the user will be prompted to select the</span>
-<span style="color: #84888b; font-style: italic;">root directory for their project. This directory is remembered</span>
-<span style="color: #84888b; font-style: italic;">between calls"</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> <span style="color: #b751b6;">(</span><span style="color: #e45649;">if</span> org-publish-local-root org-publish-local-root
-                       <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root
-                             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">read-directory-name</span> <span style="color: #50a14f;">"Select project root: "</span> <span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>config-file <span style="color: #4078f2;">(</span><span style="color: #b751b6;">concat</span> project-root <span style="color: #50a14f;">"export-config.el"</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">file-exists-p</span> config-file<span style="color: #b751b6;">)</span>
-      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">file exists, so get the code from it</span>
-      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">require</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">ox-publish</span><span style="color: #b751b6;">)</span>
-      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">load</span> config-file nil nil t<span style="color: #b751b6;">)</span>
-      <span style="color: #b751b6;">(</span><span style="color: #e45649;">let</span> <span style="color: #4078f2;">(</span>tmp-alist
-            <span style="color: #a626a4;">(</span><span style="color: #6a1868;">org-publish-use-timestamps-flag</span> nil<span style="color: #a626a4;">)</span>
-            <span style="color: #a626a4;">(</span>buffer-directory <span style="color: #50a14f;">(</span><span style="color: #b751b6;">file-name-directory</span> <span style="color: #b751b6;">(</span><span style="color: #6a1868;">buffer-file-name</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span> <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">force all files to be published</span>
-
-        <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-alist
-              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">map</span> <span style="color: #4078f2;">'</span><span style="color: #986801;">list</span>
-                   <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">(</span>project<span style="color: #b751b6;">)</span>
-                     <span style="color: #b751b6;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #4078f2;">(</span><span style="color: #b751b6;">car</span> project<span style="color: #4078f2;">)</span>
-                           <span style="color: #4078f2;">(</span><span style="color: #a626a4;">publish-local-fix-base-dir</span> org-publish-local-root
-                                                           <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cdr</span> project<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
-                   org-publish-local-alist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">the org-publish-expand-project function requires that</span>
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">org-publish-project-alist contain all projects. save the current</span>
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">value of org-publish-project-alist, and restore it after this</span>
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">function is ran.</span>
-        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span>
-
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">publish all files in the project. </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> this might not actually work.</span>
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd org-publish-local-root)</span>
-        <span style="color: #4078f2;">(</span><span style="color: #a626a4;">org-publish-projects</span> org-publish-local-alist<span style="color: #4078f2;">)</span>
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd buffer-directory)</span>
-
-        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">restore project-alist variable</span>
-        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">publish-local-fix-base-dir</span> <span style="color: #a626a4;">(</span>root-dir plist<span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"updates :base-directory in project plist to be a subdirectory of root-dir.</span>
-
-<span style="color: #84888b; font-style: italic;">if :base-directory is absolute, then then this function simply</span>
-<span style="color: #84888b; font-style: italic;">returns a copy of project. when :base-directory is relative, that</span>
-<span style="color: #84888b; font-style: italic;">key is updated in a copy of project, which is returned.</span>
-
-<span style="color: #84888b; font-style: italic;">root-dir is the directory where export-config.el is located. It</span>
-<span style="color: #84888b; font-style: italic;">should be in the form of /foo/bar/</span>
-
-<span style="color: #84888b; font-style: italic;">project is the project plist"</span>
-<span style="color: #9ca0a4;">;;;</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-fix-base-dir</span>
-<span style="color: #9ca0a4;">;;;</span>
-
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>new-plist <span style="color: #4078f2;">(</span><span style="color: #a626a4;">copy-tree</span> plist<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
-        relative-dir<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #b751b6;">(</span>key <span style="color: #4078f2;">'</span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">:base-directory</span> <span style="color: #a626a4;">:publishing-directory</span><span style="color: #4078f2;">)</span> new-plist<span style="color: #b751b6;">)</span>
-      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> relative-dir <span style="color: #4078f2;">(</span><span style="color: #b751b6;">plist-get</span> plist key<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
-      <span style="color: #b751b6;">(</span><span style="color: #e45649;">cond</span> <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #a626a4;">f-relative-p</span> root-dir<span style="color: #a626a4;">)</span>
-             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"root-dir must be absolute: %S"</span> root-dir<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-            <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">don't return error if base-directory is nil</span>
-            <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
-                  <span style="color: #50a14f;">(</span><span style="color: #b751b6;">not</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">directory-name-p</span> relative-dir<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"%S must be a directory. (did you mean  %S?)"</span>
-                    relative-dir
-                    <span style="color: #50a14f;">(</span><span style="color: #b751b6;">concat</span> relative-dir <span style="color: #50a14f;">"/"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
-
-      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">update key with either expanded or replaced filename</span>
-      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> new-plist
-            <span style="color: #4078f2;">(</span><span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
-                     <span style="color: #50a14f;">(</span><span style="color: #a626a4;">f-relative-p</span> relative-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-                <span style="color: #a626a4;">(</span><span style="color: #b751b6;">plist-put</span> <span style="color: #50a14f;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #50a14f;">)</span> key
-                           <span style="color: #50a14f;">(</span><span style="color: #b751b6;">expand-file-name</span> relative-dir root-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> my-proj <span style="color: #a626a4;">(</span><span style="color: #a626a4;">copy-tree</span> org-publish-local-alist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-
-<span style="color: #4078f2;">(</span><span style="color: #a626a4;">publish-local-fix-base-dir</span> <span style="color: #50a14f;">"~/Documents/personal_webpage/"</span> <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cdr</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">car</span> my-proj<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-my-proj
-
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">this function is no longer used in this file, but I like it so much, I can't</span>
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">bring myself to delete it.</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">alist-update-key</span> <span style="color: #a626a4;">(</span>key value alist<span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"returns a new alist with the value at key updated.</span>
-
-<span style="color: #84888b; font-style: italic;">The whole structure of the alist is copied over (ie copy-tree vs</span>
-<span style="color: #84888b; font-style: italic;">copy-list). the result is an alist with key removed, and a new</span>
-<span style="color: #84888b; font-style: italic;">element with key pushed to the front of the alist. "</span>
-<span style="color: #9ca0a4;">;;;</span>
-<span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">alist-update-key</span>
-<span style="color: #9ca0a4;">;;;</span>
-  <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> key value<span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span><span style="color: #a626a4;">assq-delete-all</span> key <span style="color: #b751b6;">(</span><span style="color: #a626a4;">copy-tree</span> alist<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span class="linenr">  1: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-local.el -*- lexical-binding: t; -*-</span>
+<span class="linenr">  2: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr">  3: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">PROGRAMMER: Ethan Smith</span>
+<span class="linenr">  4: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr">  5: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">DATE: 5 June 2023</span>
+<span class="linenr">  6: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr">  7: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">DESCRIPTION: this file is an extention to org-publish. Project export</span>
+<span class="linenr">  8: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">configuration is placed in a file caled export-config.el. this file must set</span>
+<span class="linenr">  9: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">a variable called ~org-publish-local-project-alist~. it should be an alist</span>
+<span class="linenr"> 10: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">in the same format as ~org-publish-project-alist~, for details see its</span>
+<span class="linenr"> 11: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">documentation. The only difference between these two variables is that the</span>
+<span class="linenr"> 12: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">local one may use relative paths for its base directories, and the export</span>
+<span class="linenr"> 13: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">local command will resolve those paths.</span>
+<span class="linenr"> 14: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr"> 15: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">BINDINGS:</span>
+<span class="linenr"> 16: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">"SPC m P l"  org-publish-local-project</span>
+<span class="linenr"> 17: </span>
+<span class="linenr"> 18: </span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">add-hook</span>
+<span class="linenr"> 19: </span> <span style="color: #4078f2;">'</span><span style="color: #6a1868;">org-mode-hook</span>
+<span class="linenr"> 20: </span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+<span class="linenr"> 21: </span>   <span style="color: #50a14f;">(</span><span style="color: #e45649;">evil-define-key</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">(</span>normal visual<span style="color: #b751b6;">)</span> <span style="color: #6a1868;">org-mode-map</span> <span style="color: #b751b6;">(</span><span style="color: #a626a4;">kbd</span> <span style="color: #50a14f;">"SPC m P l"</span><span style="color: #b751b6;">)</span> <span style="color: #4078f2;">#'</span><span style="color: #986801;">org-publish-local-project</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span class="linenr"> 22: </span>
+<span class="linenr"> 23: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> every file in a project is loaded into a buffer, and made current in</span>
+<span class="linenr"> 24: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the org-publish-to function. That function tries to use existing buffers if</span>
+<span class="linenr"> 25: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">available, otherwise it will just create a new one, temporarily.</span>
+<span class="linenr"> 26: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr"> 27: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">If a buffer already exists, but its path is screwed up, that will screw up</span>
+<span class="linenr"> 28: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">the path of its includes.</span>
+<span class="linenr"> 29: </span>
+<span class="linenr"> 30: </span><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">state variable for local publish function</span>
+<span class="linenr"> 31: </span><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root nil<span style="color: #4078f2;">)</span>
+<span class="linenr"> 32: </span><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">org-publish-local-project</span> <span style="color: #a626a4;">(</span><span style="color: #a626a4;">project-root</span><span style="color: #a626a4;">)</span>
+<span class="linenr"> 33: </span>  <span style="color: #84888b; font-style: italic;">"command to publish projects not listed in ~org-publish-project-alist~.</span>
+<span class="linenr"> 34: </span>
+<span class="linenr"> 35: </span><span style="color: #84888b; font-style: italic;">This requrires the project alist to be defined as</span>
+<span class="linenr"> 36: </span><span style="color: #84888b; font-style: italic;">org-publish-local-alist in a file called export-config.el in the</span>
+<span class="linenr"> 37: </span><span style="color: #84888b; font-style: italic;">project root directory. When this command is called for the first</span>
+<span class="linenr"> 38: </span><span style="color: #84888b; font-style: italic;">time during a session, the user will be prompted to select the</span>
+<span class="linenr"> 39: </span><span style="color: #84888b; font-style: italic;">root directory for their project. This directory is remembered</span>
+<span class="linenr"> 40: </span><span style="color: #84888b; font-style: italic;">between calls"</span>
+<span class="linenr"> 41: </span>  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> <span style="color: #b751b6;">(</span><span style="color: #e45649;">if</span> org-publish-local-root org-publish-local-root
+<span class="linenr"> 42: </span>                       <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-root
+<span class="linenr"> 43: </span>                             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">read-directory-name</span> <span style="color: #50a14f;">"Select project root: "</span> <span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<span class="linenr"> 44: </span>
+<span class="linenr"> 45: </span>  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>config-file <span style="color: #4078f2;">(</span><span style="color: #b751b6;">concat</span> project-root <span style="color: #50a14f;">"export-config.el"</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
+<span class="linenr"> 46: </span>    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">file-exists-p</span> config-file<span style="color: #b751b6;">)</span>
+<span class="linenr"> 47: </span>      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">file exists, so get the code from it</span>
+<span class="linenr"> 48: </span>      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">require</span> <span style="color: #4078f2;">'</span><span style="color: #b751b6;">ox-publish</span><span style="color: #b751b6;">)</span>
+<span class="linenr"> 49: </span>      <span style="color: #b751b6;">(</span><span style="color: #b751b6;">load</span> config-file nil nil t<span style="color: #b751b6;">)</span>
+<span class="linenr"> 50: </span>      <span style="color: #b751b6;">(</span><span style="color: #e45649;">let</span> <span style="color: #4078f2;">(</span>tmp-alist
+<span class="linenr"> 51: </span>            <span style="color: #a626a4;">(</span><span style="color: #6a1868;">org-publish-use-timestamps-flag</span> nil<span style="color: #a626a4;">)</span>
+<span class="linenr"> 52: </span>            <span style="color: #a626a4;">(</span>buffer-directory <span style="color: #50a14f;">(</span><span style="color: #b751b6;">file-name-directory</span> <span style="color: #b751b6;">(</span><span style="color: #6a1868;">buffer-file-name</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span> <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">force all files to be published</span>
+<span class="linenr"> 53: </span>
+<span class="linenr"> 54: </span>        <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-local-alist
+<span class="linenr"> 55: </span>              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">map</span> <span style="color: #4078f2;">'</span><span style="color: #986801;">list</span>
+<span class="linenr"> 56: </span>                   <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">(</span>project<span style="color: #b751b6;">)</span>
+<span class="linenr"> 57: </span>                     <span style="color: #b751b6;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #4078f2;">(</span><span style="color: #b751b6;">car</span> project<span style="color: #4078f2;">)</span>
+<span class="linenr"> 58: </span>                           <span style="color: #4078f2;">(</span><span style="color: #a626a4;">publish-local-fix-base-dir</span> org-publish-local-root
+<span class="linenr"> 59: </span>                                                           <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cdr</span> project<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span>
+<span class="linenr"> 60: </span>                   org-publish-local-alist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span class="linenr"> 61: </span>
+<span class="linenr"> 62: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">the org-publish-expand-project function requires that</span>
+<span class="linenr"> 63: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">org-publish-project-alist contain all projects. save the current</span>
+<span class="linenr"> 64: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">value of org-publish-project-alist, and restore it after this</span>
+<span class="linenr"> 65: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">function is ran.</span>
+<span class="linenr"> 66: </span>        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span>
+<span class="linenr"> 67: </span>
+<span class="linenr"> 68: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">publish all files in the project. </span><span style="color: #50a14f; font-weight: bold;">NOTE:</span><span style="color: #9ca0a4;"> this might not actually work.</span>
+<span class="linenr"> 69: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd org-publish-local-root)</span>
+<span class="linenr"> 70: </span>        <span style="color: #4078f2;">(</span><span style="color: #a626a4;">org-publish-all</span> t<span style="color: #4078f2;">)</span>
+<span class="linenr"> 71: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(cd buffer-directory)</span>
+<span class="linenr"> 72: </span>
+<span class="linenr"> 73: </span>        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">restore project-alist variable</span>
+<span class="linenr"> 74: </span>        <span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-rotatef</span> org-publish-local-alist <span style="color: #6a1868;">org-publish-project-alist</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span class="linenr"> 75: </span>
+<span class="linenr"> 76: </span><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">publish-local-fix-base-dir</span> <span style="color: #a626a4;">(</span>root-dir plist<span style="color: #a626a4;">)</span>
+<span class="linenr"> 77: </span>  <span style="color: #84888b; font-style: italic;">"updates :base-directory in project plist to be a subdirectory of root-dir.</span>
+<span class="linenr"> 78: </span>
+<span class="linenr"> 79: </span><span style="color: #84888b; font-style: italic;">if :base-directory is absolute, then then this function simply</span>
+<span class="linenr"> 80: </span><span style="color: #84888b; font-style: italic;">returns a copy of project. when :base-directory is relative, that</span>
+<span class="linenr"> 81: </span><span style="color: #84888b; font-style: italic;">key is updated in a copy of project, which is returned.</span>
+<span class="linenr"> 82: </span>
+<span class="linenr"> 83: </span><span style="color: #84888b; font-style: italic;">root-dir is the directory where export-config.el is located. It</span>
+<span class="linenr"> 84: </span><span style="color: #84888b; font-style: italic;">should be in the form of /foo/bar/</span>
+<span class="linenr"> 85: </span>
+<span class="linenr"> 86: </span><span style="color: #84888b; font-style: italic;">project is the project plist"</span>
+<span class="linenr"> 87: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr"> 88: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">org-publish-fix-base-dir</span>
+<span class="linenr"> 89: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr"> 90: </span>
+<span class="linenr"> 91: </span>  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">(</span>new-plist <span style="color: #4078f2;">(</span><span style="color: #a626a4;">copy-tree</span> plist<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+<span class="linenr"> 92: </span>        relative-dir<span style="color: #50a14f;">)</span>
+<span class="linenr"> 93: </span>    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #b751b6;">(</span>key <span style="color: #4078f2;">'</span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">:base-directory</span> <span style="color: #a626a4;">:publishing-directory</span><span style="color: #4078f2;">)</span> new-plist<span style="color: #b751b6;">)</span>
+<span class="linenr"> 94: </span>      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> relative-dir <span style="color: #4078f2;">(</span><span style="color: #b751b6;">plist-get</span> plist key<span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+<span class="linenr"> 95: </span>      <span style="color: #b751b6;">(</span><span style="color: #e45649;">cond</span> <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #a626a4;">f-relative-p</span> root-dir<span style="color: #a626a4;">)</span>
+<span class="linenr"> 96: </span>             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"root-dir must be absolute: %S"</span> root-dir<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span class="linenr"> 97: </span>            <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">don't return error if base-directory is nil</span>
+<span class="linenr"> 98: </span>            <span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
+<span class="linenr"> 99: </span>                  <span style="color: #50a14f;">(</span><span style="color: #b751b6;">not</span> <span style="color: #b751b6;">(</span><span style="color: #b751b6;">directory-name-p</span> relative-dir<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<span class="linenr">100: </span>             <span style="color: #a626a4;">(</span><span style="color: #a626a4;">error</span> <span style="color: #50a14f;">"%S must be a directory. (did you mean  %S?)"</span>
+<span class="linenr">101: </span>                    relative-dir
+<span class="linenr">102: </span>                    <span style="color: #50a14f;">(</span><span style="color: #b751b6;">concat</span> relative-dir <span style="color: #50a14f;">"/"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span>
+<span class="linenr">103: </span>
+<span class="linenr">104: </span>      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">update key with either expanded or replaced filename</span>
+<span class="linenr">105: </span>      <span style="color: #b751b6;">(</span><span style="color: #e45649;">setf</span> new-plist
+<span class="linenr">106: </span>            <span style="color: #4078f2;">(</span><span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">and</span> relative-dir
+<span class="linenr">107: </span>                     <span style="color: #50a14f;">(</span><span style="color: #a626a4;">f-relative-p</span> relative-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<span class="linenr">108: </span>                <span style="color: #a626a4;">(</span><span style="color: #b751b6;">plist-put</span> <span style="color: #50a14f;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #50a14f;">)</span> key
+<span class="linenr">109: </span>                           <span style="color: #50a14f;">(</span><span style="color: #b751b6;">expand-file-name</span> relative-dir root-dir<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<span class="linenr">110: </span>              <span style="color: #a626a4;">(</span><span style="color: #a626a4;">copy-tree</span> new-plist<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span><span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span class="linenr">111: </span>
+<span class="linenr">112: </span><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">this function is no longer used in this file, but I like it so much, I can't</span>
+<span class="linenr">113: </span><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">bring myself to delete it.</span>
+<span class="linenr">114: </span><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">alist-update-key</span> <span style="color: #a626a4;">(</span>key value alist<span style="color: #a626a4;">)</span>
+<span class="linenr">115: </span>  <span style="color: #84888b; font-style: italic;">"returns a new alist with the value at key updated.</span>
+<span class="linenr">116: </span>
+<span class="linenr">117: </span><span style="color: #84888b; font-style: italic;">The whole structure of the alist is copied over (ie copy-tree vs</span>
+<span class="linenr">118: </span><span style="color: #84888b; font-style: italic;">copy-list). the result is an alist with key removed, and a new</span>
+<span class="linenr">119: </span><span style="color: #84888b; font-style: italic;">element with key pushed to the front of the alist. "</span>
+<span class="linenr">120: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr">121: </span><span style="color: #9ca0a4;">;;; </span><span style="color: #9ca0a4;">alist-update-key</span>
+<span class="linenr">122: </span><span style="color: #9ca0a4;">;;;</span>
+<span class="linenr">123: </span>  <span style="color: #a626a4;">(</span><span style="color: #b751b6;">cons</span> <span style="color: #50a14f;">(</span><span style="color: #b751b6;">list</span> key value<span style="color: #50a14f;">)</span>
+<span class="linenr">124: </span>        <span style="color: #50a14f;">(</span><span style="color: #a626a4;">assq-delete-all</span> key <span style="color: #b751b6;">(</span><span style="color: #a626a4;">copy-tree</span> alist<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>

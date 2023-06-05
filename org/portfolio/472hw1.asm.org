@@ -1,0 +1,80 @@
+#+begin_src asm -n 1
+;***********************************
+;*
+;* Title: StarFill (in Memory lane)
+;*
+;* Objective: COMPEN472 Homework 1
+;*
+;* Revision: V2
+;*
+;* Date: 27 Aug 2022
+;*
+;* Programmer: Ethan Smith
+;*
+;* Company: The Pennsylvania State University
+;* Electrical Engineering and Computer Science
+;*
+;* Algorithm: Simple while-loop demo of HCS12 assembly program
+;*
+;* Register use: A accumulator: character data to be filled
+;*               B accumulator: counter, number of filled locations
+;*               X register: memory address pointer
+;*
+;* Memory Use: RAM Locations from $3000 to $30C9
+;*
+;* Input: Parameters hard coded in the program
+;*
+;* Output: Data filled in memory locations, from $3000 to $30C9
+;*
+;* Observation: This program is designed for instruction purpose.
+;* This program can be used as a 'loop' template
+;*
+;* Note: This is a good example of program comments
+;* All Homework programs MUST have comments similar
+;* to this Homework 1 Program. So, please use this
+;* comment format for all your subsequent CMPEN 472
+;* Homework programs.
+;*
+;* Adding more explanations and comments help you and
+;* others to understand your program later.
+;*
+;* Comments: This program is developed and simulated using CodeWarrior
+;* development software
+;*
+;*********************************************************
+;* Parameter Declearation Section
+;*
+;* Export Symbols
+        XDEF        Entry   ; export 'pgstart' symbol
+        ABSENTRY    Entry   ; for assembly entry point
+;* Symbols and Macros
+PORTA   equ         $0000   ; i/o port addresses
+PORTB   equ         $0001
+DDRA    equ         $0002
+DDRB    equ         $0003
+;*********************************************************
+;* Data Section
+;*
+        org     $3000   ; reserved memory starting address
+here    DS.B    $CA     ; 202 memory locations reserved
+count   DC.B    $CA     ; constant. star count = 202
+;*********************************************************
+;* Program Section
+;*
+        org     $3100   ; program start address, in RAM
+Entry   ldaa    #'*'    ; load '*' into accumulator A
+        ldab    count   ; load star counter into B
+        ldx     #here   ; load address pointer into X
+loop    staa    0, x    ; put a star
+        inx             ; point to next location
+        decb            ; decrease counter
+        bne     loop    ; if not done, repeat
+done    bra     done    ; task finished
+                        ;  do nothing
+
+;*
+;* Add any subroutines here
+;*
+
+        END             ; last line of a file
+#+end_src
