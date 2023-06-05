@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-06-04 Sun 05:52 -->
+<!-- 2023-06-05 Mon 01:28 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -198,17 +198,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org36f9e57">1. Lock-Free thread messaging.</a></li>
-<li><a href="#org6152f2e">2. ring-buffer has designated producers and consumers. the read-head points to</a></li>
-<li><a href="#org578a6e2">3. the location of the next insertion, and the read-head points to the location</a></li>
-<li><a href="#orga67993c">4. before the next read.</a></li>
-<li><a href="#org35d72a2">5. every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</a></li>
-<li><a href="#orgd5260c3">6. incremented.</a></li>
+<li><a href="#orgcbff9a8">1. Lock-Free thread messaging.</a></li>
+<li><a href="#org1df73a4">2. ring-buffer has designated producers and consumers. the read-head points to</a></li>
+<li><a href="#org10ce998">3. the location of the next insertion, and the read-head points to the location</a></li>
+<li><a href="#org9f5151b">4. before the next read.</a></li>
+<li><a href="#org78e5159">5. every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</a></li>
+<li><a href="#orgbd385d0">6. incremented.</a></li>
 </ul>
 </div>
 </div>
 <p>
-#+begin<sub>src</sub> c
+#+begin<sub>src</sub> c -n 1
 </p>
 
 <p>
@@ -223,33 +223,33 @@
 <p>
 /*
 </p>
-<div id="outline-container-org36f9e57" class="outline-2">
-<h2 id="org36f9e57"><span class="section-number-2">1.</span> Lock-Free thread messaging.</h2>
+<div id="outline-container-orgcbff9a8" class="outline-2">
+<h2 id="orgcbff9a8"><span class="section-number-2">1.</span> Lock-Free thread messaging.</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 **
 </p>
 </div>
 </div>
-<div id="outline-container-org6152f2e" class="outline-2">
-<h2 id="org6152f2e"><span class="section-number-2">2.</span> ring-buffer has designated producers and consumers. the read-head points to</h2>
+<div id="outline-container-org1df73a4" class="outline-2">
+<h2 id="org1df73a4"><span class="section-number-2">2.</span> ring-buffer has designated producers and consumers. the read-head points to</h2>
 </div>
-<div id="outline-container-org578a6e2" class="outline-2">
-<h2 id="org578a6e2"><span class="section-number-2">3.</span> the location of the next insertion, and the read-head points to the location</h2>
+<div id="outline-container-org10ce998" class="outline-2">
+<h2 id="org10ce998"><span class="section-number-2">3.</span> the location of the next insertion, and the read-head points to the location</h2>
 </div>
-<div id="outline-container-orga67993c" class="outline-2">
-<h2 id="orga67993c"><span class="section-number-2">4.</span> before the next read.</h2>
+<div id="outline-container-org9f5151b" class="outline-2">
+<h2 id="org9f5151b"><span class="section-number-2">4.</span> before the next read.</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 **
 </p>
 </div>
 </div>
-<div id="outline-container-org35d72a2" class="outline-2">
-<h2 id="org35d72a2"><span class="section-number-2">5.</span> every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</h2>
+<div id="outline-container-org78e5159" class="outline-2">
+<h2 id="org78e5159"><span class="section-number-2">5.</span> every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</h2>
 </div>
-<div id="outline-container-orgd5260c3" class="outline-2">
-<h2 id="orgd5260c3"><span class="section-number-2">6.</span> incremented.</h2>
+<div id="outline-container-orgbd385d0" class="outline-2">
+<h2 id="orgbd385d0"><span class="section-number-2">6.</span> incremented.</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>/

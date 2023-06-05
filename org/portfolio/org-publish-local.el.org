@@ -1,5 +1,20 @@
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp -n 1
 ;;; org-publish-local.el -*- lexical-binding: t; -*-
+;;;
+;;; PROGRAMMER: Ethan Smith
+;;;
+;;; DATE: 5 June 2023
+;;;
+;;; DESCRIPTION: this file is an extention to org-publish. Project export
+;;; configuration is placed in a file caled export-config.el. this file must set
+;;; a variable called ~org-publish-local-project-alist~. it should be an alist
+;;; in the same format as ~org-publish-project-alist~, for details see its
+;;; documentation. The only difference between these two variables is that the
+;;; local one may use relative paths for its base directories, and the export
+;;; local command will resolve those paths.
+;;;
+;;; BINDINGS:
+;;; "SPC m P l"  org-publish-local-project
 
 (add-hook
  'org-mode-hook
@@ -53,7 +68,7 @@ between calls"
 
         ;; publish all files in the project. NOTE: this might not actually work.
         ;; (cd org-publish-local-root)
-        (org-publish-projects org-publish-local-alist)
+        (org-publish-all t)
         ;; (cd buffer-directory)
 
         ;; restore project-alist variable
@@ -94,11 +109,6 @@ project is the project plist"
                 (plist-put (copy-tree new-plist) key
                            (expand-file-name relative-dir root-dir))
               (copy-tree new-plist))))))
-
-(setq my-proj (copy-tree org-publish-local-alist))
-
-(publish-local-fix-base-dir "~/Documents/personal_webpage/" (cdr (car my-proj)))
-my-proj
 
 ;; this function is no longer used in this file, but I like it so much, I can't
 ;; bring myself to delete it.
