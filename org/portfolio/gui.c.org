@@ -1,0 +1,443 @@
+#+begin_src c -n 1
+#include <curses.h>
+#include <fcntl.h>
+#include <gui.h>
+#include <ncurses.h>
+#include <stdio.h>
+#include <string.h>
+#include <pthread.h>
+#include <termios.h>
+#include <unistd.h>
+
+Gui gui_init() {
+    Gui wins;
+    #define CMD_WIN_HEIGHT 3
+
+    // set terminal settings
+    initscr();
+    raw();
+    refresh();
+
+    int xpos, ypos, width, height;
+    // place cmd window at bottom of screen
+    height = CMD_WIN_HEIGHT;
+    width = COLS;
+    ypos = (LINES - height);
+    xpos = 0;
+
+    wins.cmd = newwin(height, width, ypos, xpos);
+    box(wins.cmd, 0,0);
+    mvwprintw(wins.cmd, 0, 2, "[Command Input]");
+    mvwprintw(wins.cmd, 1, 1, COMMAND_PROMPT);
+
+    // place help at top-left, taking half the screen
+    height = LINES - CMD_WIN_HEIGHT;
+    width = COLS / 2;
+    ypos = 0;
+    xpos = 0;
+
+    wins.help_master = newwin(height, width, ypos, xpos);
+    wins.help = newwin(height-2, width-2, ypos+1, xpos+1);
+    help_set_title(&wins, "Default");
+
+
+    // place status at top-right, taking half the screen
+    height = LINES - CMD_WIN_HEIGHT;
+    width = COLS / 2;
+    ypos = 0;
+    xpos = COLS / 2;
+
+    wins.status_master = newwin(height, width, ypos, xpos);
+    wins.status = newwin(height-2, width-2, ypos+1, xpos+1);
+    status_set_title(&wins, "Default");
+
+
+    wrefresh(wins.cmd);
+    wrefresh(wins.help_master);
+    wrefresh(wins.help);
+    wrefresh(wins.status_master);
+    wrefresh(wins.status);
+
+    return wins;
+}
+
+void gui_del(Gui* gui) {
+    delwin(gui->cmd);
+    delwin(gui->status);
+    delwin(gui->help);
+
+    clear();
+    refresh();
+
+    endwin();
+}
+
+void window_title_helper(WINDOW* win, char* winname, char* title) {
+    // redraw the border.
+    box(win, 0,0);
+
+    mvwprintw(win, 0, 2, "[");
+
+    // make the window name bold
+    wattron(win, A_BOLD);
+    mvwprintw(win, 0, 3, "%s", winname);
+    wattroff(win, A_BOLD);
+
+    // print the custom name. it shouldn't be bold.
+    mvwprintw(win, 0, 3+strlen(winname), ": %s]", title);
+}
+
+char get_input(Gui* wins) {
+    mvwprintw(wins->cmd, 1, 1, COMMAND_PROMPT);
+    wrefresh(wins->cmd);
+    char c = mvwgetch(wins->cmd, 1, strlen(COMMAND_PROMPT) + 1);
+    wrefresh(wins->cmd);
+    return c;
+}
+
+void status_set_title(Gui* wins, char *title) {
+    window_title_helper(wins->status_master, "Status", title);
+    wins->status_title = title;
+
+    wrefresh(wins->status_master);
+}
+void status_clear(Gui* wins) {
+    wclear(wins->status);
+
+    wrefresh(wins->status);
+
+    wins->status_x = 0;
+    wins->status_y = 0;
+}
+void help_set_title(Gui* wins, char* title) {
+    window_title_helper(wins->help_master, "Help", title);
+    wins->help_title = title;
+
+    wrefresh(wins->help_master);
+}
+
+void help_clear(Gui* wins) {
+    wclear(wins->help);
+    wrefresh(wins->help);
+
+    wins->help_x = 0;
+    wins->help_y = 0;
+}
+
+void wprintw_file(WINDOW* win, char* filename) {
+    FILE* file = fopen(filename, "r");
+
+    // attempt to open file, print error if fail
+    if (file == NULL) {
+        wprintw(win, "No help file found at: \"%s\"", filename);
+        return;
+    }
+
+    // read the help text file
+    char buf[513] = {0};
+    int bytes_read;
+    while ((bytes_read = fread(buf, sizeof(char), 512, file)) != 0) {
+        // null terminate the position after the last byte.
+        buf[bytes_read] = '\0';
+        wprintw(win, "%s", buf);
+    }
+
+    fclose(file);
+}
+
+// neat function to package and send a GUI command
+void gui_command(Producer* gui_cmd, enum GuiControl ctrl, char* data) {
+    // if the ringbuf is full, wait until it isn't
+    while (producer_push(gui_cmd, &(GuiCommand){ctrl, data}) == -1);
+}
+
+// neat function to package and send a GUI command, however, this function will
+// copy the data in the data string instead of passing a pointer.
+void gui_print_cmd(Producer* gui_cmd, enum GuiControl ctrl, char* data) {
+    while (producer_push(gui_cmd, &(GuiCommand){ctrl, NULL}) == -1);
+
+    while (*data != '\0') {
+        GuiCommand cmd;
+        cmd.cmd = DATA;
+        cmd.c = *(data++); // assign and increment
+
+        // if the ringbuf is full, wait until it isn't.
+        while (producer_push(gui_cmd, &cmd) == -1);
+    }
+}
+
+void get_string_helper(Consumer* command_rb, void (*print)(char*)) {
+    char data[512] = {};
+    char* data_p = data;
+    GuiCommand* cmd;
+    while (true) {
+        cmd = consumer_peek(command_rb);
+
+        // keep checking for more data
+        if (cmd == NULL) {
+            continue;
+        // if the next command isn't data, end the loop.
+        } else if (cmd->cmd != DATA) {
+            break;
+        }
+
+        consumer_pop(command_rb);
+
+        // set and increment the data
+        *(data_p++) = cmd->c;
+
+        if (data_p >= data+511) {
+            *data_p = '\0'; // ensure string is null-terminated
+            (*print)(data); // print the string using the provided function
+            data_p = data; // reset the pointer
+        }
+    }
+
+    // print the remaining data in the the buffer
+    *data_p = '\0'; // ensure the string is null-terminated
+    (*print)(data); // print the string using the provided function
+
+    return;
+}
+
+void gui_thread(struct GuiThreadParams* params) {
+    Producer* input_rb = params->input_rb;
+    Consumer* command_rb = params->command_rb;
+
+    Gui gui = gui_init();
+    nodelay(gui.cmd, true);
+
+    FILE* elog = fopen("gui_error_log.txt", "w");
+
+    // get the total elapsed time from the monotonic epoch (arbitrary)
+    struct timespec elapsed_time;
+    clock_gettime(CLOCK_MONOTONIC, &elapsed_time);
+
+    // ms precision
+    long last_refresh = elapsed_time.tv_sec*1000 + elapsed_time.tv_nsec / 1000000;
+
+    // this limits the amount of times a refresh can be conducted per second.
+    // there are 5 windows, each window has a field.
+    bool refresh_scheduled[5] = {false};
+    bool exit = false;
+    bool term_mode = false;
+    while (!exit) {
+        struct GuiCommand* cmd = consumer_pop(command_rb);
+
+        if (cmd != NULL) {
+            bool throw_cmd = term_mode && (cmd->cmd == REFRESH
+                                           || cmd->cmd == PRINT_HELP
+                                           || cmd->cmd == PRINT_FILE_HELP
+                                           || cmd->cmd == PRINT_STATUS
+                                           || cmd->cmd == SET_TITLE_HELP
+                                           || cmd->cmd == SET_TITLE_STATUS
+                                           || cmd->cmd == CLEAR_HELP
+                                           || cmd->cmd == CLEAR_STATUS
+                                           || cmd->cmd == REFRESH
+                                           || cmd->cmd == CMD_ECHO_ON
+                                           || cmd->cmd == CMD_ECHO_OFF);
+
+            // if any of the above commands are recieved in terminal mode,
+            // the command must be thrown out, because they are attempting to
+            // modify a context which doesn't exist.
+            if (throw_cmd) {
+                continue;
+            }
+
+            switch (cmd->cmd) {
+            case PRINT_HELP :
+            {
+                void print (char* data) {
+                    mvwprintw(gui.help, gui.help_y, gui.help_x, "%s", data);
+                }
+
+                if (cmd->data == NULL) {
+                    get_string_helper(command_rb, &print);
+                } else {
+                    mvwprintw(gui.help, gui.help_y, gui.help_x, "%s", cmd->data);
+                }
+
+                getyx(gui.help, gui.help_y, gui.help_x);
+                break;
+            }
+            case PRINT_FILE_HELP :
+                wprintw_file(gui.help, cmd->data);
+                break;
+            case PRINT_STATUS :
+            {
+                void print (char* data) {
+                    mvwprintw(gui.status, gui.status_y, gui.status_x, "%s", data);
+                }
+
+                if (cmd->data == NULL) {
+                    get_string_helper(command_rb, &print);
+                } else {
+                    mvwprintw(gui.status, gui.status_y, gui.status_x, "%s", cmd->data);
+                }
+
+                //fprintf(elog, "printing to status...\n");
+
+                getyx(gui.status, gui.status_y, gui.status_x);
+                break;
+            }
+            case TERMINAL_ENTER:
+            {
+                // stop the fancy GUI, and
+                gui_del(&gui);
+                term_mode = true;
+
+                break;
+            }
+            case TERMINAL_PRINT :
+            {
+                void print (char* data) {
+                    fprintf(stdout, "%s", data);
+                }
+
+                if (cmd->data == NULL) {
+                    get_string_helper(command_rb, &print);
+                } else {
+                    printf("%s", cmd->data);
+                }
+
+                fflush(stdout);
+                break;
+            }
+            case TERMINAL_RETURN :
+            {
+                // reinit the GUI, and update the windows in the old structure.
+                Gui new_gui = gui_init();
+                nodelay(gui.cmd, true);
+
+                gui.cmd = new_gui.cmd;
+                gui.help = new_gui.help;
+                gui.status = new_gui.status;
+                gui.help_master = new_gui.help_master;
+                gui.help_master = new_gui.help_master;
+
+                help_set_title(&gui, gui.help_title);
+                status_set_title(&gui, gui.status_title);
+
+                term_mode = false;
+
+                // schedule refresh for everything.
+                for (int p = 0; p < 5; p++)
+                    refresh_scheduled[p] = true;
+
+                break;
+            }
+            case SET_TITLE_HELP :
+                help_set_title(&gui, cmd->data);
+                break;
+            case SET_TITLE_STATUS :
+                status_set_title(&gui, cmd->data);
+                break;
+            case CLEAR_STATUS :
+                wclear(gui.status);
+
+                gui.status_y = 0;
+                gui.status_x = 0;
+                break;
+            case CLEAR_HELP :
+                wclear(gui.help);
+
+                gui.help_y = 0;
+                gui.help_x = 0;
+                break;
+            case REFRESH :
+                if (cmd->data == NULL || strlen(cmd->data) == 0) {
+                    // if the user doesn't provide a string specifier, or
+                    // if they provide an empty string, refresh all windows.
+                    for (int p = 0; p < 5; p++)
+                        refresh_scheduled[p] = true;
+                }
+
+                if (strstr(cmd->data, "s") != NULL)
+                    refresh_scheduled[0] = true;
+
+                if (strstr(cmd->data, "h") != NULL)
+                    refresh_scheduled[1] = true;
+
+                if (strstr(cmd->data, "c") != NULL)
+                    refresh_scheduled[2] = true;
+
+                if (strstr(cmd->data, "S") != NULL)
+                    refresh_scheduled[3] = true;
+
+                if (strstr(cmd->data, "H") != NULL)
+                    refresh_scheduled[4] = true;
+
+                break;
+            case CMD_ECHO_ON :
+                break;
+            case CMD_ECHO_OFF :
+                break;
+            case GUI_EXIT :
+                exit = true;
+                break;
+
+            case DATA :
+                printf("\\033[31m%c\\033[0m", cmd->c);
+                break;
+            }
+        }
+
+        // we don't need to refresh or anything if we are in term mode, but we do
+        // still need to get input.
+        if ( term_mode ) {
+            int c = 0;
+
+            int flags = fcntl(0, F_GETFL, 0);
+            fcntl(0, F_SETFL, flags | O_NONBLOCK);
+
+            if (read(0, &c, 1) < 0)
+                continue;
+
+            producer_push(input_rb, &c);
+            continue;
+        }
+
+        struct timespec elapsed_time;
+        clock_gettime(CLOCK_MONOTONIC, &elapsed_time);
+        long current_time = elapsed_time.tv_sec*1000 + elapsed_time.tv_nsec / 1000000;
+
+        // get input and push it into the input buffer
+        int c = mvwgetch(gui.cmd, 1, 7);
+        if (c != ERR) {
+            producer_push(input_rb, &c);
+        }
+
+        // dont refresh more often than 4 times per second.
+        if (current_time - last_refresh >= 250) {
+            // only refresh the windows which were scheduled
+            if (refresh_scheduled[0])
+                wrefresh(gui.status);
+
+            if (refresh_scheduled[1])
+                wrefresh(gui.help);
+
+            if (refresh_scheduled[2])
+                wrefresh(gui.cmd);
+
+            if (refresh_scheduled[3])
+                wrefresh(gui.status_master);
+
+            if (refresh_scheduled[4])
+                wrefresh(gui.help_master);
+
+            last_refresh = current_time;
+
+            // reset trackers
+            for (int p = 0; p < 5; p++)
+                refresh_scheduled[p] = false;
+
+        }
+    }
+
+    // don't need to delete the GUI if in term mode, since it is already deleted.
+    if (!term_mode)
+        gui_del(&gui);
+
+    pthread_exit(NULL);
+}
+#+end_src

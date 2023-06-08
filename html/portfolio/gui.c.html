@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-06-08 Thu 12:15 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="Ethan Smith" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div class="org-src-container">
+<pre class="src src-c"><span class="linenr">  1: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">curses.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  2: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">fcntl.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  3: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">gui.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  4: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">ncurses.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  5: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">stdio.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  6: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">string.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  7: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">pthread.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  8: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">termios.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  9: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">unistd.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr"> 10: </span>
+<span class="linenr"> 11: </span><span style="color: #986801;">Gui</span> <span style="color: #a626a4;">gui_init</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 12: </span>    <span style="color: #986801;">Gui</span> <span style="color: #6a1868;">wins</span>;
+<span class="linenr"> 13: </span><span style="color: #4078f2; font-weight: bold;">    #define</span> <span style="color: #6a1868;">CMD_WIN_HEIGHT</span> <span style="color: #da8548; font-weight: bold;">3</span>
+<span class="linenr"> 14: </span>
+<span class="linenr"> 15: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">set terminal settings</span>
+<span class="linenr"> 16: </span>    initscr<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 17: </span>    raw<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 18: </span>    refresh<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 19: </span>
+<span class="linenr"> 20: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">xpos</span>, <span style="color: #6a1868;">ypos</span>, <span style="color: #6a1868;">width</span>, <span style="color: #6a1868;">height</span>;
+<span class="linenr"> 21: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">place cmd window at bottom of screen</span>
+<span class="linenr"> 22: </span>    height = <span style="color: #b751b6;">CMD_WIN_HEIGHT</span>;
+<span class="linenr"> 23: </span>    width = <span style="color: #b751b6;">COLS</span>;
+<span class="linenr"> 24: </span>    ypos = <span style="color: #a626a4;">(</span><span style="color: #b751b6;">LINES</span> - height<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 25: </span>    xpos = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 26: </span>
+<span class="linenr"> 27: </span>    wins.cmd = newwin<span style="color: #a626a4;">(</span>height, width, ypos, xpos<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 28: </span>    box<span style="color: #a626a4;">(</span>wins.cmd, <span style="color: #da8548; font-weight: bold;">0</span>,<span style="color: #da8548; font-weight: bold;">0</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 29: </span>    mvwprintw<span style="color: #a626a4;">(</span>wins.cmd, <span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">2</span>, <span style="color: #50a14f;">"[Command Input]"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 30: </span>    mvwprintw<span style="color: #a626a4;">(</span>wins.cmd, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #b751b6;">COMMAND_PROMPT</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 31: </span>
+<span class="linenr"> 32: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">place help at top-left, taking half the screen</span>
+<span class="linenr"> 33: </span>    height = <span style="color: #b751b6;">LINES</span> - <span style="color: #b751b6;">CMD_WIN_HEIGHT</span>;
+<span class="linenr"> 34: </span>    width = <span style="color: #b751b6;">COLS</span> / <span style="color: #da8548; font-weight: bold;">2</span>;
+<span class="linenr"> 35: </span>    ypos = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 36: </span>    xpos = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 37: </span>
+<span class="linenr"> 38: </span>    wins.help_master = newwin<span style="color: #a626a4;">(</span>height, width, ypos, xpos<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 39: </span>    wins.help = newwin<span style="color: #a626a4;">(</span>height-<span style="color: #da8548; font-weight: bold;">2</span>, width-<span style="color: #da8548; font-weight: bold;">2</span>, ypos+<span style="color: #da8548; font-weight: bold;">1</span>, xpos+<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 40: </span>    help_set_title<span style="color: #a626a4;">(</span>&amp;wins, <span style="color: #50a14f;">"Default"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 41: </span>
+<span class="linenr"> 42: </span>
+<span class="linenr"> 43: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">place status at top-right, taking half the screen</span>
+<span class="linenr"> 44: </span>    height = <span style="color: #b751b6;">LINES</span> - <span style="color: #b751b6;">CMD_WIN_HEIGHT</span>;
+<span class="linenr"> 45: </span>    width = <span style="color: #b751b6;">COLS</span> / <span style="color: #da8548; font-weight: bold;">2</span>;
+<span class="linenr"> 46: </span>    ypos = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 47: </span>    xpos = <span style="color: #b751b6;">COLS</span> / <span style="color: #da8548; font-weight: bold;">2</span>;
+<span class="linenr"> 48: </span>
+<span class="linenr"> 49: </span>    wins.status_master = newwin<span style="color: #a626a4;">(</span>height, width, ypos, xpos<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 50: </span>    wins.status = newwin<span style="color: #a626a4;">(</span>height-<span style="color: #da8548; font-weight: bold;">2</span>, width-<span style="color: #da8548; font-weight: bold;">2</span>, ypos+<span style="color: #da8548; font-weight: bold;">1</span>, xpos+<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 51: </span>    status_set_title<span style="color: #a626a4;">(</span>&amp;wins, <span style="color: #50a14f;">"Default"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 52: </span>
+<span class="linenr"> 53: </span>
+<span class="linenr"> 54: </span>    wrefresh<span style="color: #a626a4;">(</span>wins.cmd<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 55: </span>    wrefresh<span style="color: #a626a4;">(</span>wins.help_master<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 56: </span>    wrefresh<span style="color: #a626a4;">(</span>wins.help<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 57: </span>    wrefresh<span style="color: #a626a4;">(</span>wins.status_master<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 58: </span>    wrefresh<span style="color: #a626a4;">(</span>wins.status<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 59: </span>
+<span class="linenr"> 60: </span>    <span style="color: #e45649;">return</span> wins;
+<span class="linenr"> 61: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 62: </span>
+<span class="linenr"> 63: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">gui_del</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">gui</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 64: </span>    delwin<span style="color: #a626a4;">(</span>gui-&gt;cmd<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 65: </span>    delwin<span style="color: #a626a4;">(</span>gui-&gt;status<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 66: </span>    delwin<span style="color: #a626a4;">(</span>gui-&gt;help<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 67: </span>
+<span class="linenr"> 68: </span>    clear<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 69: </span>    refresh<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 70: </span>
+<span class="linenr"> 71: </span>    endwin<span style="color: #a626a4;">()</span>;
+<span class="linenr"> 72: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 73: </span>
+<span class="linenr"> 74: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">window_title_helper</span><span style="color: #4078f2;">(</span><span style="color: #986801;">WINDOW</span>* <span style="color: #6a1868;">win</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">winname</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">title</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 75: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">redraw the border.</span>
+<span class="linenr"> 76: </span>    box<span style="color: #a626a4;">(</span>win, <span style="color: #da8548; font-weight: bold;">0</span>,<span style="color: #da8548; font-weight: bold;">0</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 77: </span>
+<span class="linenr"> 78: </span>    mvwprintw<span style="color: #a626a4;">(</span>win, <span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">2</span>, <span style="color: #50a14f;">"["</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 79: </span>
+<span class="linenr"> 80: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">make the window name bold</span>
+<span class="linenr"> 81: </span>    wattron<span style="color: #a626a4;">(</span>win, <span style="color: #b751b6;">A_BOLD</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 82: </span>    mvwprintw<span style="color: #a626a4;">(</span>win, <span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">3</span>, <span style="color: #50a14f;">"%s"</span>, winname<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 83: </span>    wattroff<span style="color: #a626a4;">(</span>win, <span style="color: #b751b6;">A_BOLD</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 84: </span>
+<span class="linenr"> 85: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">print the custom name. it shouldn't be bold.</span>
+<span class="linenr"> 86: </span>    mvwprintw<span style="color: #a626a4;">(</span>win, <span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">3</span>+strlen<span style="color: #50a14f;">(</span>winname<span style="color: #50a14f;">)</span>, <span style="color: #50a14f;">": %s]"</span>, title<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 87: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 88: </span>
+<span class="linenr"> 89: </span><span style="color: #986801;">char</span> <span style="color: #a626a4;">get_input</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">wins</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 90: </span>    mvwprintw<span style="color: #a626a4;">(</span>wins-&gt;cmd, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #b751b6;">COMMAND_PROMPT</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 91: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;cmd<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 92: </span>    <span style="color: #986801;">char</span> <span style="color: #6a1868;">c</span> = mvwgetch<span style="color: #a626a4;">(</span>wins-&gt;cmd, <span style="color: #da8548; font-weight: bold;">1</span>, strlen<span style="color: #50a14f;">(</span><span style="color: #b751b6;">COMMAND_PROMPT</span><span style="color: #50a14f;">)</span> + <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 93: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;cmd<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 94: </span>    <span style="color: #e45649;">return</span> c;
+<span class="linenr"> 95: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 96: </span>
+<span class="linenr"> 97: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">status_set_title</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">wins</span>, <span style="color: #986801;">char</span> *<span style="color: #6a1868;">title</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 98: </span>    window_title_helper<span style="color: #a626a4;">(</span>wins-&gt;status_master, <span style="color: #50a14f;">"Status"</span>, title<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 99: </span>    wins-&gt;status_title = title;
+<span class="linenr">100: </span>
+<span class="linenr">101: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;status_master<span style="color: #a626a4;">)</span>;
+<span class="linenr">102: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">103: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">status_clear</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">wins</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">104: </span>    wclear<span style="color: #a626a4;">(</span>wins-&gt;status<span style="color: #a626a4;">)</span>;
+<span class="linenr">105: </span>
+<span class="linenr">106: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;status<span style="color: #a626a4;">)</span>;
+<span class="linenr">107: </span>
+<span class="linenr">108: </span>    wins-&gt;status_x = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">109: </span>    wins-&gt;status_y = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">110: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">111: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">help_set_title</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">wins</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">title</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">112: </span>    window_title_helper<span style="color: #a626a4;">(</span>wins-&gt;help_master, <span style="color: #50a14f;">"Help"</span>, title<span style="color: #a626a4;">)</span>;
+<span class="linenr">113: </span>    wins-&gt;help_title = title;
+<span class="linenr">114: </span>
+<span class="linenr">115: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;help_master<span style="color: #a626a4;">)</span>;
+<span class="linenr">116: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">117: </span>
+<span class="linenr">118: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">help_clear</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Gui</span>* <span style="color: #6a1868;">wins</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">119: </span>    wclear<span style="color: #a626a4;">(</span>wins-&gt;help<span style="color: #a626a4;">)</span>;
+<span class="linenr">120: </span>    wrefresh<span style="color: #a626a4;">(</span>wins-&gt;help<span style="color: #a626a4;">)</span>;
+<span class="linenr">121: </span>
+<span class="linenr">122: </span>    wins-&gt;help_x = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">123: </span>    wins-&gt;help_y = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">124: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">125: </span>
+<span class="linenr">126: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">wprintw_file</span><span style="color: #4078f2;">(</span><span style="color: #986801;">WINDOW</span>* <span style="color: #6a1868;">win</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">filename</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">127: </span>    <span style="color: #986801;">FILE</span>* <span style="color: #6a1868;">file</span> = fopen<span style="color: #a626a4;">(</span>filename, <span style="color: #50a14f;">"r"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">128: </span>
+<span class="linenr">129: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">attempt to open file, print error if fail</span>
+<span class="linenr">130: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>file == <span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">131: </span>        wprintw<span style="color: #50a14f;">(</span>win, <span style="color: #50a14f;">"No help file found at: \"%s\""</span>, filename<span style="color: #50a14f;">)</span>;
+<span class="linenr">132: </span>        <span style="color: #e45649;">return</span>;
+<span class="linenr">133: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">134: </span>
+<span class="linenr">135: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">read the help text file</span>
+<span class="linenr">136: </span>    <span style="color: #986801;">char</span> <span style="color: #6a1868;">buf</span><span style="color: #a626a4;">[</span><span style="color: #da8548; font-weight: bold;">513</span><span style="color: #a626a4;">]</span> = <span style="color: #a626a4;">{</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #a626a4;">}</span>;
+<span class="linenr">137: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">bytes_read</span>;
+<span class="linenr">138: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>bytes_read = fread<span style="color: #b751b6;">(</span>buf, <span style="color: #e45649;">sizeof</span><span style="color: #4078f2;">(</span><span style="color: #986801;">char</span><span style="color: #4078f2;">)</span>, <span style="color: #da8548; font-weight: bold;">512</span>, file<span style="color: #b751b6;">)</span><span style="color: #50a14f;">)</span> != <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">139: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">null terminate the position after the last byte.</span>
+<span class="linenr">140: </span>        buf<span style="color: #50a14f;">[</span>bytes_read<span style="color: #50a14f;">]</span> = <span style="color: #50a14f;">'\0'</span>;
+<span class="linenr">141: </span>        wprintw<span style="color: #50a14f;">(</span>win, <span style="color: #50a14f;">"%s"</span>, buf<span style="color: #50a14f;">)</span>;
+<span class="linenr">142: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">143: </span>
+<span class="linenr">144: </span>    fclose<span style="color: #a626a4;">(</span>file<span style="color: #a626a4;">)</span>;
+<span class="linenr">145: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">146: </span>
+<span class="linenr">147: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">neat function to package and send a GUI command</span>
+<span class="linenr">148: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">gui_command</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Producer</span>* <span style="color: #6a1868;">gui_cmd</span>, <span style="color: #e45649;">enum</span> <span style="color: #986801;">GuiControl</span> <span style="color: #6a1868;">ctrl</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">data</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">149: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if the ringbuf is full, wait until it isn't</span>
+<span class="linenr">150: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span>producer_push<span style="color: #50a14f;">(</span>gui_cmd, &amp;<span style="color: #b751b6;">(</span>GuiCommand<span style="color: #b751b6;">){</span>ctrl, data<span style="color: #b751b6;">}</span><span style="color: #50a14f;">)</span> == -<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">151: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">152: </span>
+<span class="linenr">153: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">neat function to package and send a GUI command, however, this function will</span>
+<span class="linenr">154: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">copy the data in the data string instead of passing a pointer.</span>
+<span class="linenr">155: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">gui_print_cmd</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Producer</span>* <span style="color: #6a1868;">gui_cmd</span>, <span style="color: #e45649;">enum</span> <span style="color: #986801;">GuiControl</span> <span style="color: #6a1868;">ctrl</span>, <span style="color: #986801;">char</span>* <span style="color: #6a1868;">data</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">156: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span>producer_push<span style="color: #50a14f;">(</span>gui_cmd, &amp;<span style="color: #b751b6;">(</span>GuiCommand<span style="color: #b751b6;">){</span>ctrl, <span style="color: #b751b6;">NULL</span><span style="color: #b751b6;">}</span><span style="color: #50a14f;">)</span> == -<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">157: </span>
+<span class="linenr">158: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span>*data != <span style="color: #50a14f;">'\0'</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">159: </span>        <span style="color: #986801;">GuiCommand</span> <span style="color: #6a1868;">cmd</span>;
+<span class="linenr">160: </span>        cmd.cmd = <span style="color: #b751b6;">DATA</span>;
+<span class="linenr">161: </span>        cmd.c = *<span style="color: #50a14f;">(</span>data++<span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">assign and increment</span>
+<span class="linenr">162: </span>
+<span class="linenr">163: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if the ringbuf is full, wait until it isn't.</span>
+<span class="linenr">164: </span>        <span style="color: #e45649;">while</span> <span style="color: #50a14f;">(</span>producer_push<span style="color: #b751b6;">(</span>gui_cmd, &amp;cmd<span style="color: #b751b6;">)</span> == -<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">165: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">166: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">167: </span>
+<span class="linenr">168: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">get_string_helper</span><span style="color: #4078f2;">(</span><span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">command_rb</span>, <span style="color: #986801;">void</span> <span style="color: #a626a4;">(</span>*<span style="color: #a626a4;">print</span><span style="color: #a626a4;">)(</span><span style="color: #986801;">char</span>*<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">169: </span>    <span style="color: #986801;">char</span> <span style="color: #6a1868;">data</span><span style="color: #a626a4;">[</span><span style="color: #da8548; font-weight: bold;">512</span><span style="color: #a626a4;">]</span> = <span style="color: #a626a4;">{}</span>;
+<span class="linenr">170: </span>    <span style="color: #986801;">char</span>* <span style="color: #6a1868;">data_p</span> = data;
+<span class="linenr">171: </span>    <span style="color: #986801;">GuiCommand</span>* <span style="color: #6a1868;">cmd</span>;
+<span class="linenr">172: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span><span style="color: #b751b6;">true</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">173: </span>        cmd = consumer_peek<span style="color: #50a14f;">(</span>command_rb<span style="color: #50a14f;">)</span>;
+<span class="linenr">174: </span>
+<span class="linenr">175: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">keep checking for more data</span>
+<span class="linenr">176: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>cmd == <span style="color: #b751b6;">NULL</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">177: </span>            <span style="color: #e45649;">continue</span>;
+<span class="linenr">178: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if the next command isn't data, end the loop.</span>
+<span class="linenr">179: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>cmd-&gt;cmd != <span style="color: #b751b6;">DATA</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">180: </span>            <span style="color: #e45649;">break</span>;
+<span class="linenr">181: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">182: </span>
+<span class="linenr">183: </span>        consumer_pop<span style="color: #50a14f;">(</span>command_rb<span style="color: #50a14f;">)</span>;
+<span class="linenr">184: </span>
+<span class="linenr">185: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">set and increment the data</span>
+<span class="linenr">186: </span>        *<span style="color: #50a14f;">(</span>data_p++<span style="color: #50a14f;">)</span> = cmd-&gt;c;
+<span class="linenr">187: </span>
+<span class="linenr">188: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>data_p &gt;= data+<span style="color: #da8548; font-weight: bold;">511</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">189: </span>            *data_p = <span style="color: #50a14f;">'\0'</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ensure string is null-terminated</span>
+<span class="linenr">190: </span>            <span style="color: #b751b6;">(</span>*print<span style="color: #b751b6;">)(</span>data<span style="color: #b751b6;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">print the string using the provided function</span>
+<span class="linenr">191: </span>            data_p = data; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">reset the pointer</span>
+<span class="linenr">192: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">193: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">194: </span>
+<span class="linenr">195: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">print the remaining data in the the buffer</span>
+<span class="linenr">196: </span>    *data_p = <span style="color: #50a14f;">'\0'</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ensure the string is null-terminated</span>
+<span class="linenr">197: </span>    <span style="color: #a626a4;">(</span>*print<span style="color: #a626a4;">)(</span>data<span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">print the string using the provided function</span>
+<span class="linenr">198: </span>
+<span class="linenr">199: </span>    <span style="color: #e45649;">return</span>;
+<span class="linenr">200: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">201: </span>
+<span class="linenr">202: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">gui_thread</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">GuiThreadParams</span>* <span style="color: #6a1868;">params</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">203: </span>    <span style="color: #986801;">Producer</span>* <span style="color: #6a1868;">input_rb</span> = params-&gt;input_rb;
+<span class="linenr">204: </span>    <span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">command_rb</span> = params-&gt;command_rb;
+<span class="linenr">205: </span>
+<span class="linenr">206: </span>    <span style="color: #986801;">Gui</span> <span style="color: #6a1868;">gui</span> = gui_init<span style="color: #a626a4;">()</span>;
+<span class="linenr">207: </span>    nodelay<span style="color: #a626a4;">(</span>gui.cmd, <span style="color: #b751b6;">true</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">208: </span>
+<span class="linenr">209: </span>    <span style="color: #986801;">FILE</span>* <span style="color: #6a1868;">elog</span> = fopen<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"gui_error_log.txt"</span>, <span style="color: #50a14f;">"w"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">210: </span>
+<span class="linenr">211: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">get the total elapsed time from the monotonic epoch (arbitrary)</span>
+<span class="linenr">212: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">timespec</span> <span style="color: #6a1868;">elapsed_time</span>;
+<span class="linenr">213: </span>    clock_gettime<span style="color: #a626a4;">(</span><span style="color: #b751b6;">CLOCK_MONOTONIC</span>, &amp;elapsed_time<span style="color: #a626a4;">)</span>;
+<span class="linenr">214: </span>
+<span class="linenr">215: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ms precision</span>
+<span class="linenr">216: </span>    <span style="color: #986801;">long</span> <span style="color: #6a1868;">last_refresh</span> = elapsed_time.tv_sec*<span style="color: #da8548; font-weight: bold;">1000</span> + elapsed_time.tv_nsec / <span style="color: #da8548; font-weight: bold;">1000000</span>;
+<span class="linenr">217: </span>
+<span class="linenr">218: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">this limits the amount of times a refresh can be conducted per second.</span>
+<span class="linenr">219: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">there are 5 windows, each window has a field.</span>
+<span class="linenr">220: </span>    <span style="color: #986801;">bool</span> <span style="color: #6a1868;">refresh_scheduled</span><span style="color: #a626a4;">[</span><span style="color: #da8548; font-weight: bold;">5</span><span style="color: #a626a4;">]</span> = <span style="color: #a626a4;">{</span><span style="color: #b751b6;">false</span><span style="color: #a626a4;">}</span>;
+<span class="linenr">221: </span>    <span style="color: #986801;">bool</span> <span style="color: #6a1868;">exit</span> = <span style="color: #b751b6;">false</span>;
+<span class="linenr">222: </span>    <span style="color: #986801;">bool</span> <span style="color: #6a1868;">term_mode</span> = <span style="color: #b751b6;">false</span>;
+<span class="linenr">223: </span>    <span style="color: #e45649;">while</span> <span style="color: #a626a4;">(</span><span style="color: #4078f2; font-weight: bold;">!</span>exit<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">224: </span>        <span style="color: #e45649;">struct</span> <span style="color: #986801;">GuiCommand</span>* <span style="color: #6a1868;">cmd</span> = consumer_pop<span style="color: #50a14f;">(</span>command_rb<span style="color: #50a14f;">)</span>;
+<span class="linenr">225: </span>
+<span class="linenr">226: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>cmd != <span style="color: #b751b6;">NULL</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">227: </span>            <span style="color: #986801;">bool</span> <span style="color: #6a1868;">throw_cmd</span> = term_mode &amp;&amp; <span style="color: #b751b6;">(</span>cmd-&gt;cmd == <span style="color: #b751b6;">REFRESH</span>
+<span class="linenr">228: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">PRINT_HELP</span>
+<span class="linenr">229: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">PRINT_FILE_HELP</span>
+<span class="linenr">230: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">PRINT_STATUS</span>
+<span class="linenr">231: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">SET_TITLE_HELP</span>
+<span class="linenr">232: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">SET_TITLE_STATUS</span>
+<span class="linenr">233: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">CLEAR_HELP</span>
+<span class="linenr">234: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">CLEAR_STATUS</span>
+<span class="linenr">235: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">REFRESH</span>
+<span class="linenr">236: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">CMD_ECHO_ON</span>
+<span class="linenr">237: </span>                                           || cmd-&gt;cmd == <span style="color: #b751b6;">CMD_ECHO_OFF</span><span style="color: #b751b6;">)</span>;
+<span class="linenr">238: </span>
+<span class="linenr">239: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if any of the above commands are recieved in terminal mode,</span>
+<span class="linenr">240: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">the command must be thrown out, because they are attempting to</span>
+<span class="linenr">241: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">modify a context which doesn't exist.</span>
+<span class="linenr">242: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>throw_cmd<span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+<span class="linenr">243: </span>                <span style="color: #e45649;">continue</span>;
+<span class="linenr">244: </span>            <span style="color: #b751b6;">}</span>
+<span class="linenr">245: </span>
+<span class="linenr">246: </span>            <span style="color: #e45649;">switch</span> <span style="color: #b751b6;">(</span>cmd-&gt;cmd<span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+<span class="linenr">247: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">PRINT_HELP</span> :
+<span class="linenr">248: </span>            <span style="color: #4078f2;">{</span>
+<span class="linenr">249: </span>                <span style="color: #986801;">void</span> <span style="color: #a626a4;">print</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">char</span>* <span style="color: #6a1868;">data</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">250: </span>                    mvwprintw<span style="color: #50a14f;">(</span>gui.help, gui.help_y, gui.help_x, <span style="color: #50a14f;">"%s"</span>, data<span style="color: #50a14f;">)</span>;
+<span class="linenr">251: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">252: </span>
+<span class="linenr">253: </span>                <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>cmd-&gt;data == <span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">254: </span>                    get_string_helper<span style="color: #50a14f;">(</span>command_rb, &amp;print<span style="color: #50a14f;">)</span>;
+<span class="linenr">255: </span>                <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">256: </span>                    mvwprintw<span style="color: #50a14f;">(</span>gui.help, gui.help_y, gui.help_x, <span style="color: #50a14f;">"%s"</span>, cmd-&gt;data<span style="color: #50a14f;">)</span>;
+<span class="linenr">257: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">258: </span>
+<span class="linenr">259: </span>                getyx<span style="color: #a626a4;">(</span>gui.help, gui.help_y, gui.help_x<span style="color: #a626a4;">)</span>;
+<span class="linenr">260: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">261: </span>            <span style="color: #4078f2;">}</span>
+<span class="linenr">262: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">PRINT_FILE_HELP</span> :
+<span class="linenr">263: </span>                wprintw_file<span style="color: #4078f2;">(</span>gui.help, cmd-&gt;data<span style="color: #4078f2;">)</span>;
+<span class="linenr">264: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">265: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">PRINT_STATUS</span> :
+<span class="linenr">266: </span>            <span style="color: #4078f2;">{</span>
+<span class="linenr">267: </span>                <span style="color: #986801;">void</span> <span style="color: #a626a4;">print</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">char</span>* <span style="color: #6a1868;">data</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">268: </span>                    mvwprintw<span style="color: #50a14f;">(</span>gui.status, gui.status_y, gui.status_x, <span style="color: #50a14f;">"%s"</span>, data<span style="color: #50a14f;">)</span>;
+<span class="linenr">269: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">270: </span>
+<span class="linenr">271: </span>                <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>cmd-&gt;data == <span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">272: </span>                    get_string_helper<span style="color: #50a14f;">(</span>command_rb, &amp;print<span style="color: #50a14f;">)</span>;
+<span class="linenr">273: </span>                <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">274: </span>                    mvwprintw<span style="color: #50a14f;">(</span>gui.status, gui.status_y, gui.status_x, <span style="color: #50a14f;">"%s"</span>, cmd-&gt;data<span style="color: #50a14f;">)</span>;
+<span class="linenr">275: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">276: </span>
+<span class="linenr">277: </span>                <span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">fprintf(elog, "printing to status...\n");</span>
+<span class="linenr">278: </span>
+<span class="linenr">279: </span>                getyx<span style="color: #a626a4;">(</span>gui.status, gui.status_y, gui.status_x<span style="color: #a626a4;">)</span>;
+<span class="linenr">280: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">281: </span>            <span style="color: #4078f2;">}</span>
+<span class="linenr">282: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">TERMINAL_ENTER</span>:
+<span class="linenr">283: </span>            <span style="color: #4078f2;">{</span>
+<span class="linenr">284: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">stop the fancy GUI, and</span>
+<span class="linenr">285: </span>                gui_del<span style="color: #a626a4;">(</span>&amp;gui<span style="color: #a626a4;">)</span>;
+<span class="linenr">286: </span>                term_mode = <span style="color: #b751b6;">true</span>;
+<span class="linenr">287: </span>
+<span class="linenr">288: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">289: </span>            <span style="color: #4078f2;">}</span>
+<span class="linenr">290: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">TERMINAL_PRINT</span> :
+<span class="linenr">291: </span>            <span style="color: #4078f2;">{</span>
+<span class="linenr">292: </span>                <span style="color: #986801;">void</span> <span style="color: #a626a4;">print</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">char</span>* <span style="color: #6a1868;">data</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">293: </span>                    fprintf<span style="color: #50a14f;">(</span>stdout, <span style="color: #50a14f;">"%s"</span>, data<span style="color: #50a14f;">)</span>;
+<span class="linenr">294: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">295: </span>
+<span class="linenr">296: </span>                <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>cmd-&gt;data == <span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">297: </span>                    get_string_helper<span style="color: #50a14f;">(</span>command_rb, &amp;print<span style="color: #50a14f;">)</span>;
+<span class="linenr">298: </span>                <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">299: </span>                    printf<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"%s"</span>, cmd-&gt;data<span style="color: #50a14f;">)</span>;
+<span class="linenr">300: </span>                <span style="color: #a626a4;">}</span>
+<span class="linenr">301: </span>
+<span class="linenr">302: </span>                fflush<span style="color: #a626a4;">(</span>stdout<span style="color: #a626a4;">)</span>;
+<span class="linenr">303: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">304: </span>            <span style="color: #4078f2;">}</span>
+<span class="linenr">305: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">TERMINAL_RETURN</span> :
+<span class="linenr">306: </span>            <span style="color: #4078f2;">{</span>
+<span class="linenr">307: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">reinit the GUI, and update the windows in the old structure.</span>
+<span class="linenr">308: </span>                <span style="color: #986801;">Gui</span> <span style="color: #6a1868;">new_gui</span> = gui_init<span style="color: #a626a4;">()</span>;
+<span class="linenr">309: </span>                nodelay<span style="color: #a626a4;">(</span>gui.cmd, <span style="color: #b751b6;">true</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">310: </span>
+<span class="linenr">311: </span>                gui.cmd = new_gui.cmd;
+<span class="linenr">312: </span>                gui.help = new_gui.help;
+<span class="linenr">313: </span>                gui.status = new_gui.status;
+<span class="linenr">314: </span>                gui.help_master = new_gui.help_master;
+<span class="linenr">315: </span>                gui.help_master = new_gui.help_master;
+<span class="linenr">316: </span>
+<span class="linenr">317: </span>                help_set_title<span style="color: #a626a4;">(</span>&amp;gui, gui.help_title<span style="color: #a626a4;">)</span>;
+<span class="linenr">318: </span>                status_set_title<span style="color: #a626a4;">(</span>&amp;gui, gui.status_title<span style="color: #a626a4;">)</span>;
+<span class="linenr">319: </span>
+<span class="linenr">320: </span>                term_mode = <span style="color: #b751b6;">false</span>;
+<span class="linenr">321: </span>
+<span class="linenr">322: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">schedule refresh for everything.</span>
+<span class="linenr">323: </span>                <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">p</span> = <span style="color: #da8548; font-weight: bold;">0</span>; p &lt; <span style="color: #da8548; font-weight: bold;">5</span>; p++<span style="color: #a626a4;">)</span>
+<span class="linenr">324: </span>                    refresh_scheduled<span style="color: #a626a4;">[</span>p<span style="color: #a626a4;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">325: </span>
+<span class="linenr">326: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">327: </span>            <span style="color: #4078f2;">}</span>
+<span class="linenr">328: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">SET_TITLE_HELP</span> :
+<span class="linenr">329: </span>                help_set_title<span style="color: #4078f2;">(</span>&amp;gui, cmd-&gt;data<span style="color: #4078f2;">)</span>;
+<span class="linenr">330: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">331: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">SET_TITLE_STATUS</span> :
+<span class="linenr">332: </span>                status_set_title<span style="color: #4078f2;">(</span>&amp;gui, cmd-&gt;data<span style="color: #4078f2;">)</span>;
+<span class="linenr">333: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">334: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">CLEAR_STATUS</span> :
+<span class="linenr">335: </span>                wclear<span style="color: #4078f2;">(</span>gui.status<span style="color: #4078f2;">)</span>;
+<span class="linenr">336: </span>
+<span class="linenr">337: </span>                gui.status_y = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">338: </span>                gui.status_x = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">339: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">340: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">CLEAR_HELP</span> :
+<span class="linenr">341: </span>                wclear<span style="color: #4078f2;">(</span>gui.help<span style="color: #4078f2;">)</span>;
+<span class="linenr">342: </span>
+<span class="linenr">343: </span>                gui.help_y = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">344: </span>                gui.help_x = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">345: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">346: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">REFRESH</span> :
+<span class="linenr">347: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>cmd-&gt;data == <span style="color: #b751b6;">NULL</span> || strlen<span style="color: #a626a4;">(</span>cmd-&gt;data<span style="color: #a626a4;">)</span> == <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">348: </span>                    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if the user doesn't provide a string specifier, or</span>
+<span class="linenr">349: </span>                    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">if they provide an empty string, refresh all windows.</span>
+<span class="linenr">350: </span>                    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">p</span> = <span style="color: #da8548; font-weight: bold;">0</span>; p &lt; <span style="color: #da8548; font-weight: bold;">5</span>; p++<span style="color: #a626a4;">)</span>
+<span class="linenr">351: </span>                        refresh_scheduled<span style="color: #a626a4;">[</span>p<span style="color: #a626a4;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">352: </span>                <span style="color: #4078f2;">}</span>
+<span class="linenr">353: </span>
+<span class="linenr">354: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>strstr<span style="color: #a626a4;">(</span>cmd-&gt;data, <span style="color: #50a14f;">"s"</span><span style="color: #a626a4;">)</span> != <span style="color: #b751b6;">NULL</span><span style="color: #4078f2;">)</span>
+<span class="linenr">355: </span>                    refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #4078f2;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">356: </span>
+<span class="linenr">357: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>strstr<span style="color: #a626a4;">(</span>cmd-&gt;data, <span style="color: #50a14f;">"h"</span><span style="color: #a626a4;">)</span> != <span style="color: #b751b6;">NULL</span><span style="color: #4078f2;">)</span>
+<span class="linenr">358: </span>                    refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #4078f2;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">359: </span>
+<span class="linenr">360: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>strstr<span style="color: #a626a4;">(</span>cmd-&gt;data, <span style="color: #50a14f;">"c"</span><span style="color: #a626a4;">)</span> != <span style="color: #b751b6;">NULL</span><span style="color: #4078f2;">)</span>
+<span class="linenr">361: </span>                    refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">2</span><span style="color: #4078f2;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">362: </span>
+<span class="linenr">363: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>strstr<span style="color: #a626a4;">(</span>cmd-&gt;data, <span style="color: #50a14f;">"S"</span><span style="color: #a626a4;">)</span> != <span style="color: #b751b6;">NULL</span><span style="color: #4078f2;">)</span>
+<span class="linenr">364: </span>                    refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">3</span><span style="color: #4078f2;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">365: </span>
+<span class="linenr">366: </span>                <span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>strstr<span style="color: #a626a4;">(</span>cmd-&gt;data, <span style="color: #50a14f;">"H"</span><span style="color: #a626a4;">)</span> != <span style="color: #b751b6;">NULL</span><span style="color: #4078f2;">)</span>
+<span class="linenr">367: </span>                    refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">4</span><span style="color: #4078f2;">]</span> = <span style="color: #b751b6;">true</span>;
+<span class="linenr">368: </span>
+<span class="linenr">369: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">370: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">CMD_ECHO_ON</span> :
+<span class="linenr">371: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">372: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">CMD_ECHO_OFF</span> :
+<span class="linenr">373: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">374: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">GUI_EXIT</span> :
+<span class="linenr">375: </span>                exit = <span style="color: #b751b6;">true</span>;
+<span class="linenr">376: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">377: </span>
+<span class="linenr">378: </span>            <span style="color: #e45649;">case</span> <span style="color: #b751b6;">DATA</span> :
+<span class="linenr">379: </span>                printf<span style="color: #4078f2;">(</span><span style="color: #50a14f;">"\\033[31m%c\\033[0m"</span>, cmd-&gt;c<span style="color: #4078f2;">)</span>;
+<span class="linenr">380: </span>                <span style="color: #e45649;">break</span>;
+<span class="linenr">381: </span>            <span style="color: #b751b6;">}</span>
+<span class="linenr">382: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">383: </span>
+<span class="linenr">384: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">we don't need to refresh or anything if we are in term mode, but we do</span>
+<span class="linenr">385: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">still need to get input.</span>
+<span class="linenr">386: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span> term_mode <span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">387: </span>            <span style="color: #986801;">int</span> <span style="color: #6a1868;">c</span> = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr">388: </span>
+<span class="linenr">389: </span>            <span style="color: #986801;">int</span> <span style="color: #6a1868;">flags</span> = fcntl<span style="color: #b751b6;">(</span><span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #b751b6;">F_GETFL</span>, <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #b751b6;">)</span>;
+<span class="linenr">390: </span>            fcntl<span style="color: #b751b6;">(</span><span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #b751b6;">F_SETFL</span>, flags | <span style="color: #b751b6;">O_NONBLOCK</span><span style="color: #b751b6;">)</span>;
+<span class="linenr">391: </span>
+<span class="linenr">392: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>read<span style="color: #4078f2;">(</span><span style="color: #da8548; font-weight: bold;">0</span>, &amp;c, <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #4078f2;">)</span> &lt; <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #b751b6;">)</span>
+<span class="linenr">393: </span>                <span style="color: #e45649;">continue</span>;
+<span class="linenr">394: </span>
+<span class="linenr">395: </span>            producer_push<span style="color: #b751b6;">(</span>input_rb, &amp;c<span style="color: #b751b6;">)</span>;
+<span class="linenr">396: </span>            <span style="color: #e45649;">continue</span>;
+<span class="linenr">397: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">398: </span>
+<span class="linenr">399: </span>        <span style="color: #e45649;">struct</span> <span style="color: #986801;">timespec</span> <span style="color: #6a1868;">elapsed_time</span>;
+<span class="linenr">400: </span>        clock_gettime<span style="color: #50a14f;">(</span><span style="color: #b751b6;">CLOCK_MONOTONIC</span>, &amp;elapsed_time<span style="color: #50a14f;">)</span>;
+<span class="linenr">401: </span>        <span style="color: #986801;">long</span> <span style="color: #6a1868;">current_time</span> = elapsed_time.tv_sec*<span style="color: #da8548; font-weight: bold;">1000</span> + elapsed_time.tv_nsec / <span style="color: #da8548; font-weight: bold;">1000000</span>;
+<span class="linenr">402: </span>
+<span class="linenr">403: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">get input and push it into the input buffer</span>
+<span class="linenr">404: </span>        <span style="color: #986801;">int</span> <span style="color: #6a1868;">c</span> = mvwgetch<span style="color: #50a14f;">(</span>gui.cmd, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">7</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">405: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>c != <span style="color: #b751b6;">ERR</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">406: </span>            producer_push<span style="color: #b751b6;">(</span>input_rb, &amp;c<span style="color: #b751b6;">)</span>;
+<span class="linenr">407: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">408: </span>
+<span class="linenr">409: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">dont refresh more often than 4 times per second.</span>
+<span class="linenr">410: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>current_time - last_refresh &gt;= <span style="color: #da8548; font-weight: bold;">250</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">411: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">only refresh the windows which were scheduled</span>
+<span class="linenr">412: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #4078f2;">]</span><span style="color: #b751b6;">)</span>
+<span class="linenr">413: </span>                wrefresh<span style="color: #b751b6;">(</span>gui.status<span style="color: #b751b6;">)</span>;
+<span class="linenr">414: </span>
+<span class="linenr">415: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #4078f2;">]</span><span style="color: #b751b6;">)</span>
+<span class="linenr">416: </span>                wrefresh<span style="color: #b751b6;">(</span>gui.help<span style="color: #b751b6;">)</span>;
+<span class="linenr">417: </span>
+<span class="linenr">418: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">2</span><span style="color: #4078f2;">]</span><span style="color: #b751b6;">)</span>
+<span class="linenr">419: </span>                wrefresh<span style="color: #b751b6;">(</span>gui.cmd<span style="color: #b751b6;">)</span>;
+<span class="linenr">420: </span>
+<span class="linenr">421: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">3</span><span style="color: #4078f2;">]</span><span style="color: #b751b6;">)</span>
+<span class="linenr">422: </span>                wrefresh<span style="color: #b751b6;">(</span>gui.status_master<span style="color: #b751b6;">)</span>;
+<span class="linenr">423: </span>
+<span class="linenr">424: </span>            <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>refresh_scheduled<span style="color: #4078f2;">[</span><span style="color: #da8548; font-weight: bold;">4</span><span style="color: #4078f2;">]</span><span style="color: #b751b6;">)</span>
+<span class="linenr">425: </span>                wrefresh<span style="color: #b751b6;">(</span>gui.help_master<span style="color: #b751b6;">)</span>;
+<span class="linenr">426: </span>
+<span class="linenr">427: </span>            last_refresh = current_time;
+<span class="linenr">428: </span>
+<span class="linenr">429: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">reset trackers</span>
+<span class="linenr">430: </span>            <span style="color: #e45649;">for</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">p</span> = <span style="color: #da8548; font-weight: bold;">0</span>; p &lt; <span style="color: #da8548; font-weight: bold;">5</span>; p++<span style="color: #b751b6;">)</span>
+<span class="linenr">431: </span>                refresh_scheduled<span style="color: #b751b6;">[</span>p<span style="color: #b751b6;">]</span> = <span style="color: #b751b6;">false</span>;
+<span class="linenr">432: </span>
+<span class="linenr">433: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">434: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">435: </span>
+<span class="linenr">436: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">don't need to delete the GUI if in term mode, since it is already deleted.</span>
+<span class="linenr">437: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span><span style="color: #4078f2; font-weight: bold;">!</span>term_mode<span style="color: #a626a4;">)</span>
+<span class="linenr">438: </span>        gui_del<span style="color: #a626a4;">(</span>&amp;gui<span style="color: #a626a4;">)</span>;
+<span class="linenr">439: </span>
+<span class="linenr">440: </span>    pthread_exit<span style="color: #a626a4;">(</span><span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">441: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</body>
+</html>

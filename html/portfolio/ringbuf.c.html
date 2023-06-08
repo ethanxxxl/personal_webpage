@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-06-05 Mon 01:28 -->
+<!-- 2023-06-08 Thu 12:15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -191,212 +191,126 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<script>
-  window.MathJax = {
-    tex: {
-      ams: {
-        multlineWidth: '85%'
-      },
-      tags: 'ams',
-      tagSide: 'right',
-      tagIndent: '.8em'
-    },
-    chtml: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    svg: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    output: {
-      font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
-  };
-</script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
 </head>
 <body>
 <div id="content" class="content">
-<p>
-#+begin<sub>src</sub> c -n 1
-</p>
-
-<p>
-#include &ldquo;ringbuf.h&rdquo;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;stdio.h&gt;
-</p>
-
-<p>
-<i>/</i> allocates/creates a new ringbuffer
-<i>/</i>
-<i>/</i> len must be at least 3
-struct RingBuffer ringbuf<sub>new</sub>(size<sub>t</sub> len, size<sub>t</sub> element<sub>size</sub>) {
-    struct RingBuffer rb;
-</p>
-
-<p>
-// allocate space for the ring-buffer
-rb.<sub>buffer</sub> = malloc(len * element<sub>size</sub>);
-rb.length = len;
-rb.element<sub>size</sub> = element<sub>size</sub>;
-</p>
-
-<p>
-rb.write<sub>head</sub> = 1;
-rb.read<sub>head</sub> = 0;
-</p>
-
-<p>
-    return rb;
-}
-</p>
-
-<p>
-// debug function, prints the ring-buffer
-void ringbuf<sub>print</sub>(struct RingBuffer* rb) {
-    printf(&ldquo;ringbuf: &lt; &rdquo;);
-    for (char* c = rb-&gt;<sub>buffer</sub>; c &lt;= &amp;rb-&gt;<sub>buffer</sub>[rb-&gt;length - 1]; c++) {
-        printf(&ldquo;%d &rdquo;, *c);
-    }
-</p>
-
-<p>
-    printf(&ldquo;&gt;\n&rdquo;);
-}
-<i>/</i> frees the ringbuffer zeros it&rsquo;s fields
-void ringbuf<sub>del</sub>(struct RingBuffer *rb) {
-    free((void *)rb-&gt;<sub>buffer</sub>);
-    rb-&gt;element<sub>size</sub> = 0;
-    rb-&gt;length = 0;
-    rb-&gt;<sub>buffer</sub> = NULL;
-    rb-&gt;write<sub>head</sub> = 0;
-    rb-&gt;read<sub>head</sub> = 0;
-}
-</p>
-
-<p>
-int ringbuf<sub>next</sub><sub>index</sub>(const struct RingBuffer* rb, int index) {
-    int new = index + 1;
-    if (new &gt;= rb-&gt;length) {
-        return 0;
-    } else {
-        return new;
-    }
-}
-</p>
-
-<p>
-struct Producer ringbuf<sub>make</sub><sub>producer</sub>(struct RingBuffer *rb) {
-    struct Producer prod;
-</p>
-
-<p>
-prod.<sub>ringbuf</sub> = rb;
-</p>
-
-<p>
-    return prod;
-}
-</p>
-
-<p>
-int producer<sub>push</sub>(struct Producer* producer, void* val) {
-    // get an easy handle to the ring-buffer
-    struct RingBuffer rb = *producer-&gt;<sub>ringbuf</sub>;
-</p>
-
-<p>
-// ringbuffer is full, need to wait until consumer increments the read head.
-if (ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.write<sub>head</sub>) == rb.read<sub>head</sub>) {
-    return -1;
-}
-</p>
-
-<p>
-// copy the data into the ring-buffer
-char* dest = rb.<sub>buffer</sub> + rb.write<sub>head</sub>*rb.element<sub>size</sub>;
-memcpy(dest, val, rb.element<sub>size</sub>);
-</p>
-
-<p>
-// wrap the write head around if it is past the upper bound
-producer-&gt;<sub>ringbuf</sub>-&gt;write<sub>head</sub> = ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.write<sub>head</sub>);
-</p>
-
-<p>
-    return 0;
-}
-</p>
-
-<p>
-struct Consumer ringbuf<sub>make</sub><sub>consumer</sub>(struct RingBuffer *rb) {
-    struct Consumer con;
-</p>
-
-<p>
-con.<sub>ringbuf</sub> = rb;
-</p>
-
-<p>
-    return con;
-}
-</p>
-
-<p>
-<i>/ increments the read head and returns the value.
-/</i> returns NULL if buffer is empty
-void* consumer<sub>pop</sub>(struct Consumer* consumer) {
-    void* val = consumer<sub>peek</sub>(consumer);
-</p>
-
-<p>
-if (val == NULL) {
-    return NULL;
-}
-</p>
-
-<p>
-// get an easy handle to the ring-buffer
-struct RingBuffer rb = *consumer-&gt;<sub>ringbuf</sub>;
-</p>
-
-<p>
-    // wrap the write head around if it is past the upper bound
-    consumer-&gt;<sub>ringbuf</sub>-&gt;read<sub>head</sub> = ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>);
-    return val;
-}
-</p>
-
-<p>
-<i>/ returns the value after the read head.
-/</i> returns NULL if buffer is empty
-void* consumer<sub>peek</sub>(struct Consumer* consumer) {
-    // get an easy handle to the ring-buffer
-    struct RingBuffer rb = *consumer-&gt;<sub>ringbuf</sub>;
-</p>
-
-<p>
-if (ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>) == rb.write<sub>head</sub>) {
-    return NULL;
-}
-</p>
-
-<p>
-    return rb.<sub>buffer</sub> + ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>)*rb.element<sub>size</sub>;
-}
-#end<sub>src</sub>
-</p>
+<div class="org-src-container">
+<pre class="src src-c"><span class="linenr">  1: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #50a14f;">"ringbuf.h"</span>
+<span class="linenr">  2: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">stdlib.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  3: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">string.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  4: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">stdio.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">  5: </span>
+<span class="linenr">  6: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">allocates/creates a new ringbuffer</span>
+<span class="linenr">  7: </span><span style="color: #9ca0a4;">///</span>
+<span class="linenr">  8: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">len must be at least 3</span>
+<span class="linenr">  9: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #a626a4;">ringbuf_new</span><span style="color: #4078f2;">(</span><span style="color: #986801;">size_t</span> <span style="color: #6a1868;">len</span>, <span style="color: #986801;">size_t</span> <span style="color: #6a1868;">element_size</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 10: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #6a1868;">rb</span>;
+<span class="linenr"> 11: </span>
+<span class="linenr"> 12: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">allocate space for the ring-buffer</span>
+<span class="linenr"> 13: </span>    rb._buffer = malloc<span style="color: #a626a4;">(</span>len * element_size<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 14: </span>    rb.length = len;
+<span class="linenr"> 15: </span>    rb.element_size = element_size;
+<span class="linenr"> 16: </span>
+<span class="linenr"> 17: </span>    rb.write_head = <span style="color: #da8548; font-weight: bold;">1</span>;
+<span class="linenr"> 18: </span>    rb.read_head = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 19: </span>
+<span class="linenr"> 20: </span>    <span style="color: #e45649;">return</span> rb;
+<span class="linenr"> 21: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 22: </span>
+<span class="linenr"> 23: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">debug function, prints the ring-buffer</span>
+<span class="linenr"> 24: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">ringbuf_print</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">rb</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 25: </span>    printf<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"ringbuf: &lt; "</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 26: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">char</span>* <span style="color: #6a1868;">c</span> = rb-&gt;_buffer; c &lt;= &amp;rb-&gt;_buffer<span style="color: #50a14f;">[</span>rb-&gt;length - <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #50a14f;">]</span>; c++<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 27: </span>        printf<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"%d "</span>, *c<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 28: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 29: </span>
+<span class="linenr"> 30: </span>    printf<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"&gt;\n"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 31: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 32: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">frees the ringbuffer zeros it's fields</span>
+<span class="linenr"> 33: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">ringbuf_del</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> *<span style="color: #6a1868;">rb</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 34: </span>    free<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #986801;">void</span> *<span style="color: #50a14f;">)</span>rb-&gt;_buffer<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 35: </span>    rb-&gt;element_size = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 36: </span>    rb-&gt;length = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 37: </span>    rb-&gt;_buffer = <span style="color: #b751b6;">NULL</span>;
+<span class="linenr"> 38: </span>    rb-&gt;write_head = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 39: </span>    rb-&gt;read_head = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 40: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 41: </span>
+<span class="linenr"> 42: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">ringbuf_next_index</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">const</span> <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">rb</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">index</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 43: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">new</span> = index + <span style="color: #da8548; font-weight: bold;">1</span>;
+<span class="linenr"> 44: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>new &gt;= rb-&gt;length<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 45: </span>        <span style="color: #e45649;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 46: </span>    <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 47: </span>        <span style="color: #e45649;">return</span> new;
+<span class="linenr"> 48: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 49: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 50: </span>
+<span class="linenr"> 51: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span> <span style="color: #a626a4;">ringbuf_make_producer</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> *<span style="color: #6a1868;">rb</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 52: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span> <span style="color: #6a1868;">prod</span>;
+<span class="linenr"> 53: </span>
+<span class="linenr"> 54: </span>    prod._ringbuf = rb;
+<span class="linenr"> 55: </span>
+<span class="linenr"> 56: </span>    <span style="color: #e45649;">return</span> prod;
+<span class="linenr"> 57: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 58: </span>
+<span class="linenr"> 59: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">producer_push</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span>* <span style="color: #6a1868;">producer</span>, <span style="color: #986801;">void</span>* <span style="color: #6a1868;">val</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 60: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">get an easy handle to the ring-buffer</span>
+<span class="linenr"> 61: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #6a1868;">rb</span> = *producer-&gt;_ringbuf;
+<span class="linenr"> 62: </span>
+<span class="linenr"> 63: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ringbuffer is full, need to wait until consumer increments the read head.</span>
+<span class="linenr"> 64: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>ringbuf_next_index<span style="color: #50a14f;">(</span>&amp;rb, rb.write_head<span style="color: #50a14f;">)</span> == rb.read_head<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 65: </span>        <span style="color: #e45649;">return</span> -<span style="color: #da8548; font-weight: bold;">1</span>;
+<span class="linenr"> 66: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 67: </span>
+<span class="linenr"> 68: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">copy the data into the ring-buffer</span>
+<span class="linenr"> 69: </span>    <span style="color: #986801;">char</span>* <span style="color: #6a1868;">dest</span> = rb._buffer + rb.write_head*rb.element_size;
+<span class="linenr"> 70: </span>    memcpy<span style="color: #a626a4;">(</span>dest, val, rb.element_size<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 71: </span>
+<span class="linenr"> 72: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">wrap the write head around if it is past the upper bound</span>
+<span class="linenr"> 73: </span>    producer-&gt;_ringbuf-&gt;write_head = ringbuf_next_index<span style="color: #a626a4;">(</span>&amp;rb, rb.write_head<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 74: </span>
+<span class="linenr"> 75: </span>    <span style="color: #e45649;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>;
+<span class="linenr"> 76: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 77: </span>
+<span class="linenr"> 78: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span> <span style="color: #a626a4;">ringbuf_make_consumer</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> *<span style="color: #6a1868;">rb</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 79: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span> <span style="color: #6a1868;">con</span>;
+<span class="linenr"> 80: </span>
+<span class="linenr"> 81: </span>    con._ringbuf = rb;
+<span class="linenr"> 82: </span>
+<span class="linenr"> 83: </span>    <span style="color: #e45649;">return</span> con;
+<span class="linenr"> 84: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 85: </span>
+<span class="linenr"> 86: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">increments the read head and returns the value.</span>
+<span class="linenr"> 87: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">returns NULL if buffer is empty</span>
+<span class="linenr"> 88: </span><span style="color: #986801;">void</span>* <span style="color: #a626a4;">consumer_pop</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">consumer</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 89: </span>    <span style="color: #986801;">void</span>* <span style="color: #6a1868;">val</span> = consumer_peek<span style="color: #a626a4;">(</span>consumer<span style="color: #a626a4;">)</span>;
+<span class="linenr"> 90: </span>
+<span class="linenr"> 91: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>val == <span style="color: #b751b6;">NULL</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 92: </span>        <span style="color: #e45649;">return</span> <span style="color: #b751b6;">NULL</span>;
+<span class="linenr"> 93: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 94: </span>
+<span class="linenr"> 95: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">get an easy handle to the ring-buffer</span>
+<span class="linenr"> 96: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #6a1868;">rb</span> = *consumer-&gt;_ringbuf;
+<span class="linenr"> 97: </span>
+<span class="linenr"> 98: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">wrap the write head around if it is past the upper bound</span>
+<span class="linenr"> 99: </span>    consumer-&gt;_ringbuf-&gt;read_head = ringbuf_next_index<span style="color: #a626a4;">(</span>&amp;rb, rb.read_head<span style="color: #a626a4;">)</span>;
+<span class="linenr">100: </span>    <span style="color: #e45649;">return</span> val;
+<span class="linenr">101: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">102: </span>
+<span class="linenr">103: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">returns the value after the read head.</span>
+<span class="linenr">104: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">returns NULL if buffer is empty</span>
+<span class="linenr">105: </span><span style="color: #986801;">void</span>* <span style="color: #a626a4;">consumer_peek</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">consumer</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">106: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">get an easy handle to the ring-buffer</span>
+<span class="linenr">107: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #6a1868;">rb</span> = *consumer-&gt;_ringbuf;
+<span class="linenr">108: </span>
+<span class="linenr">109: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>ringbuf_next_index<span style="color: #50a14f;">(</span>&amp;rb, rb.read_head<span style="color: #50a14f;">)</span> == rb.write_head<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">110: </span>        <span style="color: #e45649;">return</span> <span style="color: #b751b6;">NULL</span>;
+<span class="linenr">111: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">112: </span>
+<span class="linenr">113: </span>    <span style="color: #e45649;">return</span> rb._buffer + ringbuf_next_index<span style="color: #a626a4;">(</span>&amp;rb, rb.read_head<span style="color: #a626a4;">)</span>*rb.element_size;
+<span class="linenr">114: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 </div>
 </body>
 </html>

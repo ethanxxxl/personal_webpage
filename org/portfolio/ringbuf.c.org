@@ -1,5 +1,4 @@
-#+begin_src c -n 1
-
+#+begin_src c -n 1 :name gui.c
 #include "ringbuf.h"
 #include <stdlib.h>
 #include <string.h>
@@ -114,4 +113,4 @@ void* consumer_peek(struct Consumer* consumer) {
 
     return rb._buffer + ringbuf_next_index(&rb, rb.read_head)*rb.element_size;
 }
-#end_src
+#+end_src

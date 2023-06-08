@@ -1,0 +1,154 @@
+#+begin_src c -n 1
+#ifndef GUI_H_
+#define GUI_H_
+
+#include <ncurses.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ringbuf.h>
+
+#define COMMAND_PROMPT "hw11> "
+
+// GUI data structure. This structure holds all the data that the GUI needs in
+// order to operate. it contains WINDOW* fields which refer to ncurses windows.
+// the help and status windows have additional "master" windows. The master
+// windows are a little larger than the regular window, and contain the border
+// and window title.
+//
+// there are strings associated with the title of the status and help windows.
+// This string contains additional title data. For each window the title will
+// read as follows:
+//  "[window: window_title]"
+//  where "window" is either "help" or "status".
+//
+// To add text to the status or help windows, one should use the wprintw
+// function provided by ncurses.
+//
+// the cmd window is used for command input. the "line_mode" option allows line
+// mode to be turned on/off. When line mode is off, only one character will ever
+// be entered onto the command line. with line mode on, successive key presses
+// will append the typed character onto the command line.
+typedef struct Gui {
+    WINDOW *cmd;
+    bool line_mode;
+
+    WINDOW *help;
+    WINDOW *status;
+
+    WINDOW *help_master;
+    WINDOW *status_master;
+
+    int status_x, status_y;
+    int help_x, help_y;
+
+    char* status_title;
+    char* help_title;
+} Gui;
+
+// allocate and initialize the GUI structure. This data must be free'ed at the
+// end of the program using the gui_del function.
+Gui gui_init();
+
+// frees data allocated by the GUI free function, and ends ncurses instance
+void gui_del(Gui* gui);
+
+// gets input from the command line, returning the character. this is a blocking
+// function. if non-blocking behavior is desired, a separate thread must be used.
+char get_input(Gui* wins);
+
+// Changes the title of the status window. You cannot just replace the string in
+// the structure, because the title/border isn't updated very often. this
+// function updates the relative fields in the GUI structure, and then refreshes
+// the window to display the changes
+void status_set_title(Gui* wins, char* title);
+
+// clears the contents of the window. this function updates the relavant fields
+// in the gui structure, and then refreshes the window to reflect those changes.
+void status_clear(Gui* wins);
+
+// Changes the title of the status window. You cannot just replace the string in
+// the structure, because the title/border isn't updated very often. this
+// function updates the relative fields in the GUI structure, and then refreshes
+// the window to display the changes
+void help_set_title(Gui* wins, char* title);
+
+// clears the contents of the window. this function updates the relavant fields
+// in the gui structure, and then refreshes the window to reflect those changes.
+void help_clear(Gui* wins);
+
+void wprintw_file(WINDOW* win, char* filename);
+
+// command which is used to print data to the GUI. Commands that print stuff may take
+// either a c string (char*), or if the c-string is NULL, then the subsequent command
+// entries will be DATA packets, each of which contain the c member of the union.
+// this allows data to be copied over rather than referenced.
+typedef struct GuiCommand {
+    enum GuiControl {
+        PRINT_HELP,
+        PRINT_FILE_HELP,
+        PRINT_STATUS,
+        TERMINAL_PRINT,
+        TERMINAL_ENTER,
+        TERMINAL_RETURN,
+        SET_TITLE_HELP,
+        SET_TITLE_STATUS,
+        CLEAR_HELP,
+        CLEAR_STATUS,
+        REFRESH,
+        CMD_ECHO_ON,
+        CMD_ECHO_OFF,
+        GUI_EXIT,
+
+        DATA
+    } cmd;
+
+    union {
+        char* data;
+        char c;
+    };
+
+} GuiCommand;
+
+struct GuiThreadParams {
+    Producer* input_rb;
+    Consumer* command_rb;
+};
+
+// helper function to fascilitate printing and otherwise controlling the GUI
+// from other threads
+//
+// for the window refresh command, an optional string can be provided to refresh
+// specific windows.
+//
+//   's' = status
+//   'h' = help
+//   'c' = command
+//   'S' = status border
+//   'H' = help border
+//
+// multiple windows can be refreshed in the same command string, for example,
+// all the following are valid:
+//
+//   "shc"
+//   "Ss"
+//   "SH"
+//
+// one thing to note is that all three of the following will refresh all of the
+// windows in one command:
+//
+//   "shcSH"
+//   ""
+//   NULL
+//
+void gui_command(Producer* gui_cmd, enum GuiControl ctrl, char* data);
+
+// neat function to package and send a GUI command, however, this function will
+// copy the data in the data string instead of passing a pointer.
+void gui_print_cmd(Producer* gui_cmd, enum GuiControl ctrl, char* data);
+
+
+
+void gui_thread(struct GuiThreadParams* params);
+
+#endif // GUI_H_
+#+end_src

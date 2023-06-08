@@ -1,20 +1,18 @@
 #+begin_src c -n 1
-
 #ifndef RINGBUF_H
 #define RINGBUF_H
 
 #include <stdlib.h>
 
-/*
-** Lock-Free thread messaging.
-**
-** ring-buffer has designated producers and consumers. the read-head points to
-** the location of the next insertion, and the read-head points to the location
-** before the next read.
-**
-** every time an element is inserted into the ringbuffer, the write_head is
-** incremented.
-*/
+/* Lock-Free thread messaging.
+ *
+ * ring-buffer has designated producers and consumers. the read-head points to
+ * the location of the next insertion, and the read-head points to the location
+ * before the next read.
+ *
+ * every time an element is inserted into the ringbuffer, the write_head is
+ * incremented.
+**/
 struct RingBuffer {
     char* _buffer;
     size_t length;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-06-05 Mon 01:28 -->
+<!-- 2023-06-08 Thu 12:15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -194,132 +194,64 @@
 </head>
 <body>
 <div id="content" class="content">
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgcbff9a8">1. Lock-Free thread messaging.</a></li>
-<li><a href="#org1df73a4">2. ring-buffer has designated producers and consumers. the read-head points to</a></li>
-<li><a href="#org10ce998">3. the location of the next insertion, and the read-head points to the location</a></li>
-<li><a href="#org9f5151b">4. before the next read.</a></li>
-<li><a href="#org78e5159">5. every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</a></li>
-<li><a href="#orgbd385d0">6. incremented.</a></li>
-</ul>
-</div>
-</div>
-<p>
-#+begin<sub>src</sub> c -n 1
-</p>
-
-<p>
-#ifndef RINGBUF<sub>H</sub>
-#define RINGBUF<sub>H</sub>
-</p>
-
-<p>
-#include &lt;stdlib.h&gt;
-</p>
-
-<p>
-/*
-</p>
-<div id="outline-container-orgcbff9a8" class="outline-2">
-<h2 id="orgcbff9a8"><span class="section-number-2">1.</span> Lock-Free thread messaging.</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-**
-</p>
-</div>
-</div>
-<div id="outline-container-org1df73a4" class="outline-2">
-<h2 id="org1df73a4"><span class="section-number-2">2.</span> ring-buffer has designated producers and consumers. the read-head points to</h2>
-</div>
-<div id="outline-container-org10ce998" class="outline-2">
-<h2 id="org10ce998"><span class="section-number-2">3.</span> the location of the next insertion, and the read-head points to the location</h2>
-</div>
-<div id="outline-container-org9f5151b" class="outline-2">
-<h2 id="org9f5151b"><span class="section-number-2">4.</span> before the next read.</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-**
-</p>
-</div>
-</div>
-<div id="outline-container-org78e5159" class="outline-2">
-<h2 id="org78e5159"><span class="section-number-2">5.</span> every time an element is inserted into the ringbuffer, the write<sub>head</sub> is</h2>
-</div>
-<div id="outline-container-orgbd385d0" class="outline-2">
-<h2 id="orgbd385d0"><span class="section-number-2">6.</span> incremented.</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-<b>/
-struct RingBuffer {
-    char</b> _buffer;
-    size<sub>t</sub> length;
-    size<sub>t</sub> element<sub>size</sub>;
-</p>
-
-<p>
-    int write<sub>head</sub>;
-    int read<sub>head</sub>;
-};
-</p>
-
-<p>
-<i>/</i> wrapper struct. This struct is what is passed to the producer thread.
-<i>/</i> the ringbuffer field is not meant to be directly accessed.
-struct Producer {
-    struct RingBuffer* _ringbuf;
-};
-</p>
-
-<p>
-<i>/</i> wrapper struct. This struct is what is passed to the consumer thread.
-<i>/</i> the ringbuffer field is not meant to be directly accessed.
-struct Consumer {
-    struct RingBuffer* _ringbuf;
-};
-</p>
-
-<p>
-struct RingBuffer ringbuf<sub>new</sub>(size<sub>t</sub> len, size<sub>t</sub> element<sub>size</sub>);
-void ringbuf<sub>del</sub>(struct RingBuffer* ringbuf);
-</p>
-
-<p>
-int ringbuf<sub>next</sub><sub>index</sub>(const struct RingBuffer* rb, int index);
-void ringbuf<sub>print</sub>(struct RingBuffer* rb);
-</p>
-
-<p>
-struct Producer ringbuf<sub>make</sub><sub>producer</sub>(struct RingBuffer* ringbuf);
-</p>
-
-<p>
-<i>/</i> pushes value into the ringbuffer returns 0 on success.
-<i>/</i> may fail if the ring buffer is full (ie, write-head runs into read-head).
-<i>/</i> returns -1 on fail
-int producer<sub>push</sub>(struct Producer* producer, void* val);
-</p>
-
-<p>
-struct Consumer ringbuf<sub>make</sub><sub>consumer</sub>(struct RingBuffer* ringbuf);
-</p>
-
-<p>
-void* consumer<sub>pop</sub>(struct Consumer* consumer);
-void* consumer<sub>peek</sub>(struct Consumer* consumer);
-</p>
-
-
-<p>
-#endif // RINGBUF<sub>H</sub>
-</p>
-
-<p>
-#+end<sub>src</sub>
-</p>
-</div>
+<div class="org-src-container">
+<pre class="src src-c"><span class="linenr"> 1: </span><span style="color: #4078f2; font-weight: bold;">#if</span><span style="color: #4078f2; font-weight: bold;">n</span><span style="color: #4078f2; font-weight: bold;">def</span> <span style="color: #b751b6;">RINGBUF_H</span>
+<span class="linenr"> 2: </span><span style="color: #4078f2; font-weight: bold;">#define</span> <span style="color: #6a1868;">RINGBUF_H</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #4078f2; font-weight: bold;">#include</span> <span style="color: #4078f2;">&lt;</span><span style="color: #50a14f;">stdlib.h</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">Lock-Free thread messaging.</span>
+<span class="linenr"> 7: </span><span style="color: #9ca0a4;"> *</span>
+<span class="linenr"> 8: </span><span style="color: #9ca0a4;"> * ring-buffer has designated producers and consumers. the read-head points to</span>
+<span class="linenr"> 9: </span><span style="color: #9ca0a4;"> * the location of the next insertion, and the read-head points to the location</span>
+<span class="linenr">10: </span><span style="color: #9ca0a4;"> * before the next read.</span>
+<span class="linenr">11: </span><span style="color: #9ca0a4;"> *</span>
+<span class="linenr">12: </span><span style="color: #9ca0a4;"> * every time an element is inserted into the ringbuffer, the write_head is</span>
+<span class="linenr">13: </span><span style="color: #9ca0a4;"> * incremented.</span>
+<span class="linenr">14: </span><span style="color: #9ca0a4;">*</span><span style="color: #9ca0a4;">*/</span>
+<span class="linenr">15: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">16: </span>    <span style="color: #986801;">char</span>* <span style="color: #6a1868;">_buffer</span>;
+<span class="linenr">17: </span>    <span style="color: #986801;">size_t</span> <span style="color: #6a1868;">length</span>;
+<span class="linenr">18: </span>    <span style="color: #986801;">size_t</span> <span style="color: #6a1868;">element_size</span>;
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">write_head</span>;
+<span class="linenr">21: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">read_head</span>;
+<span class="linenr">22: </span><span style="color: #4078f2;">}</span>;
+<span class="linenr">23: </span>
+<span class="linenr">24: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">wrapper struct. This struct is what is passed to the producer thread.</span>
+<span class="linenr">25: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">the ringbuffer field is not meant to be directly accessed.</span>
+<span class="linenr">26: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">27: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">_ringbuf</span>;
+<span class="linenr">28: </span><span style="color: #4078f2;">}</span>;
+<span class="linenr">29: </span>
+<span class="linenr">30: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">wrapper struct. This struct is what is passed to the consumer thread.</span>
+<span class="linenr">31: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">the ringbuffer field is not meant to be directly accessed.</span>
+<span class="linenr">32: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">33: </span>    <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">_ringbuf</span>;
+<span class="linenr">34: </span><span style="color: #4078f2;">}</span>;
+<span class="linenr">35: </span>
+<span class="linenr">36: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span> <span style="color: #a626a4;">ringbuf_new</span><span style="color: #4078f2;">(</span><span style="color: #986801;">size_t</span> <span style="color: #6a1868;">len</span>, <span style="color: #986801;">size_t</span> <span style="color: #6a1868;">element_size</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">37: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">ringbuf_del</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">ringbuf</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">38: </span>
+<span class="linenr">39: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">ringbuf_next_index</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">const</span> <span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">rb</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">index</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">40: </span><span style="color: #986801;">void</span> <span style="color: #a626a4;">ringbuf_print</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">rb</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">41: </span>
+<span class="linenr">42: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span> <span style="color: #a626a4;">ringbuf_make_producer</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">ringbuf</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">43: </span>
+<span class="linenr">44: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">pushes value into the ringbuffer returns 0 on success.</span>
+<span class="linenr">45: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">may fail if the ring buffer is full (ie, write-head runs into read-head).</span>
+<span class="linenr">46: </span><span style="color: #9ca0a4;">/// </span><span style="color: #9ca0a4;">returns -1 on fail</span>
+<span class="linenr">47: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">producer_push</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Producer</span>* <span style="color: #6a1868;">producer</span>, <span style="color: #986801;">void</span>* <span style="color: #6a1868;">val</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">48: </span>
+<span class="linenr">49: </span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span> <span style="color: #a626a4;">ringbuf_make_consumer</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">RingBuffer</span>* <span style="color: #6a1868;">ringbuf</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">50: </span>
+<span class="linenr">51: </span><span style="color: #986801;">void</span>* <span style="color: #a626a4;">consumer_pop</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">consumer</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">52: </span><span style="color: #986801;">void</span>* <span style="color: #a626a4;">consumer_peek</span><span style="color: #4078f2;">(</span><span style="color: #e45649;">struct</span> <span style="color: #986801;">Consumer</span>* <span style="color: #6a1868;">consumer</span><span style="color: #4078f2;">)</span>;
+<span class="linenr">53: </span>
+<span class="linenr">54: </span>
+<span class="linenr">55: </span><span style="color: #4078f2; font-weight: bold;">#endif</span> <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">RINGBUF_H</span>
+<span class="linenr">56: </span>
+</pre>
 </div>
 </div>
 </body>

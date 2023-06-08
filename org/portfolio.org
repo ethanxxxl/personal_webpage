@@ -83,28 +83,189 @@ class to show the progression of program complexity.
 #+include: "portfolio/472hw11.asm.org"
 
 ** Computer Engineering 473
+#+attr_html: :width 700px :margin auto
+[[../resources/portfolio/car_demo.jpg]]
+
 This course was also taught by Professor Choi, the course webpage can be found
 [[https://www.cse.psu.edu/~kxc104/class/cmpen473/22s/][here]]. We spent the semester designing and building an autonomous robotic car
 from scratch, using a Raspberry Pi 4. We started by learning how to access the
 GPIO registers on the Pi in memory, using the ~mmap~ C function. From that point
 on, continued to iterate on the design, constantly adding new features.
 
+*** Ring Buffer Implmentation
 This course heavily incorporated multithreaded programming and interthread
 communication. Most of my peers used the professor's FIFO implementation, but I
-had already made a ringbuffer implementation by the time he distributed his
+had already made a ring-buffer implementation by the time he distributed his
 solution.
 
+**** ringbuf.h
 #+include: "portfolio/ringbuf.h.org"
-#+html: <object data="portfolio/ringbuf.h"></object>
+
+**** ringub.c
+#+include: "portfolio/ringbuf.c.org"
+
+*** Curses Asynchronous User Interface (for debugging)
+One of the problems I faced while debugging this program was data visibility. I
+often needed to see the state of many variables across many threads. This would
+clog up the standard output during debugging, which prevented me from being able
+to understand everything going on in my code. I decided to create a graphical
+user interface using the ncurses API to help format all the data better.
+
+Since ncurses is not an async library, this presented some challenges for me,
+since I could no longer simply use print statements for debugging. I had to
+create a custom API for the display so that it could be controlled
+asynchronously from many threads. This API ended up being a source of
+frustration for me, however, since my implementation had data races/unsafe
+pointer utilization which I didn't discover until later in the semester.
+
+This problem can be found on /line 148/ of ~gui.c~. As you can see here, I am
+storing the pointer of the command or *data* to be written to the screen in a
+queue, which will be processed at some point in the future. This is a problem,
+because if that pointer is changed before the GUI prints the data at its
+address, then it will start printing garbage and mess up the whole graphical
+interface.
+
+**** gui.h
+#+include: "portfolio/gui.h.org"
+
+**** gui.c
+#+include: "portfolio/gui.c.org"
 
 *** Manual Driving Mode
+One of the first things we designed the car to do was to drive around manually
+using keyboard commands. The exact method of achieving this didn't matter, as
+long as some form of wireless communication was used. My preferred method was
+SSH since it allowed me to control the robot and edit/run the program.
 
+I conducted all development over ssh. I would write the code on my desktop (or
+laptop sometimes), and then copy it over ssh to my robot. After about a week of
+doing this, I decided to write some scripts to help me upload and run the code:
+
+#+begin_src bash
+#!/usr/bin/env sh
+
+echo "tar'ing the directory..."
+tar czvf code.tar ${1}/{Makefile,help_files/*,src/*,include/*}
+echo "scp'ing the tarball..."
+scp code.tar pi@192.168.179.151:~/
+#+end_src
+
+I had another script on the raspberry pi that would compile and run the program
+for me. This workflow worked well since I could compile and run the code with
+only two commands from my computer. My robot would be across the room, and I
+could change the code from my desk, drive it to where it needed to be using
+manual mode, then start the part of the program I was testing.
 
 *** Line Follow Mode (IR sensor)
+The next big thing we worked on was adding a mode that would allow the robot to
+follow a line using an IR sensor mounted on the front of the robot. I don't have
+any videos from this part of the demonstration, unfortunately.
 
-*** IMU Sensor Balence Board
+*** IMU Sensor Balance Board
+Our task was to make the robot balance on a clipboard with a pen (or any
+otherwise cylindrical object) glued to the bottom. We attached an IMU (Inertial
+Measurement Unit) sensor to the robot, which recorded the rotation and
+acceleration of the car.
+
+Since the data from the sensor was pretty noisy, we had to use filtering to make
+it usable. I did a lot of research into this and decided that a [[https://vanhunteradams.com/Pico/ReactionWheel/Complementary_Filters.html#:~:text=A%20complementary%20filter%20is%20a,filters%20that%20you%20might%20consider.][complementary
+filter]] would be most suitable for this task. Most students used their IMU data
+as the input to a bang-bang controller or some variation of it. I went another
+route and used a PID controller, and was the closest to getting the robot to
+balance on the board.
+
+Even though I think that the task was ultimately impossible, I enjoyed this
+assignment because I learned so much about PID controllers. Professor Choi told
+me that my robot came the closest to balancing, which was a huge win in my book.
+Late one night while I was working on the robot, I did film a video of it trying
+and failing (yet coming so close!) to balance.
+
+#+begin_export html
+<video width="320" height="240" controls>
+  <source src="../resources/portfolio/vid1.mp4">
+</video>
+#+end_export
 
 *** Line Follow Mode (Computer Vision)
+This final part of the project required us to use computer vision to
+1. Track a laser pointer
+2. Follow a black line on a whiteboard
+
+We used a USB camera and did all the image processing on the CPU. I tried to
+optimize my program as much as I could, but this was certainly at the limits of
+what can be accomplished with the CPU on the Raspberry Pi. My program was able
+to process video at about 10 frames per second.
+
+For the laser tracker, after applying a [[https://en.wikipedia.org/wiki/Gamma_correction][gamma function]], I used a recursive
+algorithm to locate the location of the laser pointer. This seemed to work
+pretty well, though there were some oscillation issues due to the low frame
+rate. The car had trouble putting the laser in the center of the frame in the
+forward/backward axis.
+
+#+begin_src c -n 35
+// recursive function to find the area of an area whose pixels are brighter
+// than thresh.
+int find_neighbors(struct image_t* image, uint8_t thresh, int x, int y) {
+    uint8_t c = image->row[y].column[x].r;
+
+    if (c < thresh)
+        return 0;
+
+    // keep future iterations from revisiting this pixel
+    image->row[y].column[x].r = 0;
+    image->row[y].column[x].g = 0;
+    image->row[y].column[x].b = 0;
+
+    int num_neighbors = 1;
+    if (x > 0)
+        num_neighbors += find_neighbors(image, thresh, x-1, y);
+
+    if (x < IMAGE_WIDTH-1)
+        num_neighbors += find_neighbors(image, thresh, x+1, y);
+
+    if (y > 0)
+        num_neighbors += find_neighbors(image, thresh, x, y);
+
+    if (y < IMAGE_HEIGHT-1)
+        num_neighbors += find_neighbors(image, thresh, x, y+1);
+
+    return num_neighbors;
+}
+#+end_src
+
+Since the line had a much larger search area, the recursive algorithm was too
+slow. I ended up finding a simple solution. First, average the position of the
+pixels along the width of the frame. Then, navigate the robot so that this value
+approaches zero while continuing to move forward.
+
+#+begin_src c -n 64
+float avg_position(struct image_t* image) {
+    int accumulator = 0;
+    int mass = 1;
+    for (int i = 0; i < IMAGE_WIDTH; i++) {
+        int x = i % IMAGE_WIDTH;
+        int y = IMAGE_HEIGHT-1;
+
+        if (image->row[y].column[x].r == 0) {
+            accumulator += x;
+            mass += 1;
+        }
+    }
+
+    float average = (float)accumulator / mass;
+
+    return (average/IMAGE_WIDTH)*2 - 1.0;
+}
+#+end_src
+
+Overall, the program ended up working fairly well. I recorded a video of it the
+night before the assignment was graded.
+
+#+begin_export html
+<video width="320" height="240" controls>
+  <source src="../resources/portfolio/vid2.mp4">
+</video>
+#+end_export
 
 * Programming
 The projects I have listed below, along with others, can be found on my [[https://github.com/ethanxxxl][github]].
