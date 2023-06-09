@@ -83,15 +83,19 @@ class to show the progression of program complexity.
 #+include: "portfolio/472hw11.asm.org"
 
 ** Computer Engineering 473
+<<<<<<< HEAD
 #+attr_html: :width 700px :margin auto
 [[../resources/portfolio/car_demo.jpg]]
 
+=======
+>>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 This course was also taught by Professor Choi, the course webpage can be found
 [[https://www.cse.psu.edu/~kxc104/class/cmpen473/22s/][here]]. We spent the semester designing and building an autonomous robotic car
 from scratch, using a Raspberry Pi 4. We started by learning how to access the
 GPIO registers on the Pi in memory, using the ~mmap~ C function. From that point
 on, continued to iterate on the design, constantly adding new features.
 
+<<<<<<< HEAD
 *** Ring Buffer Implmentation
 This course heavily incorporated multithreaded programming and interthread
 communication. Most of my peers used the professor's FIFO implementation, but I
@@ -266,6 +270,24 @@ night before the assignment was graded.
   <source src="../resources/portfolio/vid2.mp4">
 </video>
 #+end_export
+=======
+This course heavily incorporated multithreaded programming and interthread
+communication. Most of my peers used the professor's FIFO implementation, but I
+had already made a ringbuffer implementation by the time he distributed his
+solution.
+
+#+include: "portfolio/ringbuf.h.org"
+#+html: <object data="portfolio/ringbuf.h"></object>
+
+*** Manual Driving Mode
+
+
+*** Line Follow Mode (IR sensor)
+
+*** IMU Sensor Balence Board
+
+*** Line Follow Mode (Computer Vision)
+>>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 
 * Programming
 The projects I have listed below, along with others, can be found on my [[https://github.com/ethanxxxl][github]].

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
 <!-- 2023-06-08 Thu 12:15 -->
+=======
+<!-- 2023-06-05 Mon 01:28 -->
+>>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -191,6 +195,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
+<<<<<<< HEAD
 </head>
 <body>
 <div id="content" class="content">
@@ -311,6 +316,214 @@
 <span class="linenr">114: </span><span style="color: #4078f2;">}</span>
 </pre>
 </div>
+=======
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<p>
+#+begin<sub>src</sub> c -n 1
+</p>
+
+<p>
+#include &ldquo;ringbuf.h&rdquo;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+</p>
+
+<p>
+<i>/</i> allocates/creates a new ringbuffer
+<i>/</i>
+<i>/</i> len must be at least 3
+struct RingBuffer ringbuf<sub>new</sub>(size<sub>t</sub> len, size<sub>t</sub> element<sub>size</sub>) {
+    struct RingBuffer rb;
+</p>
+
+<p>
+// allocate space for the ring-buffer
+rb.<sub>buffer</sub> = malloc(len * element<sub>size</sub>);
+rb.length = len;
+rb.element<sub>size</sub> = element<sub>size</sub>;
+</p>
+
+<p>
+rb.write<sub>head</sub> = 1;
+rb.read<sub>head</sub> = 0;
+</p>
+
+<p>
+    return rb;
+}
+</p>
+
+<p>
+// debug function, prints the ring-buffer
+void ringbuf<sub>print</sub>(struct RingBuffer* rb) {
+    printf(&ldquo;ringbuf: &lt; &rdquo;);
+    for (char* c = rb-&gt;<sub>buffer</sub>; c &lt;= &amp;rb-&gt;<sub>buffer</sub>[rb-&gt;length - 1]; c++) {
+        printf(&ldquo;%d &rdquo;, *c);
+    }
+</p>
+
+<p>
+    printf(&ldquo;&gt;\n&rdquo;);
+}
+<i>/</i> frees the ringbuffer zeros it&rsquo;s fields
+void ringbuf<sub>del</sub>(struct RingBuffer *rb) {
+    free((void *)rb-&gt;<sub>buffer</sub>);
+    rb-&gt;element<sub>size</sub> = 0;
+    rb-&gt;length = 0;
+    rb-&gt;<sub>buffer</sub> = NULL;
+    rb-&gt;write<sub>head</sub> = 0;
+    rb-&gt;read<sub>head</sub> = 0;
+}
+</p>
+
+<p>
+int ringbuf<sub>next</sub><sub>index</sub>(const struct RingBuffer* rb, int index) {
+    int new = index + 1;
+    if (new &gt;= rb-&gt;length) {
+        return 0;
+    } else {
+        return new;
+    }
+}
+</p>
+
+<p>
+struct Producer ringbuf<sub>make</sub><sub>producer</sub>(struct RingBuffer *rb) {
+    struct Producer prod;
+</p>
+
+<p>
+prod.<sub>ringbuf</sub> = rb;
+</p>
+
+<p>
+    return prod;
+}
+</p>
+
+<p>
+int producer<sub>push</sub>(struct Producer* producer, void* val) {
+    // get an easy handle to the ring-buffer
+    struct RingBuffer rb = *producer-&gt;<sub>ringbuf</sub>;
+</p>
+
+<p>
+// ringbuffer is full, need to wait until consumer increments the read head.
+if (ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.write<sub>head</sub>) == rb.read<sub>head</sub>) {
+    return -1;
+}
+</p>
+
+<p>
+// copy the data into the ring-buffer
+char* dest = rb.<sub>buffer</sub> + rb.write<sub>head</sub>*rb.element<sub>size</sub>;
+memcpy(dest, val, rb.element<sub>size</sub>);
+</p>
+
+<p>
+// wrap the write head around if it is past the upper bound
+producer-&gt;<sub>ringbuf</sub>-&gt;write<sub>head</sub> = ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.write<sub>head</sub>);
+</p>
+
+<p>
+    return 0;
+}
+</p>
+
+<p>
+struct Consumer ringbuf<sub>make</sub><sub>consumer</sub>(struct RingBuffer *rb) {
+    struct Consumer con;
+</p>
+
+<p>
+con.<sub>ringbuf</sub> = rb;
+</p>
+
+<p>
+    return con;
+}
+</p>
+
+<p>
+<i>/ increments the read head and returns the value.
+/</i> returns NULL if buffer is empty
+void* consumer<sub>pop</sub>(struct Consumer* consumer) {
+    void* val = consumer<sub>peek</sub>(consumer);
+</p>
+
+<p>
+if (val == NULL) {
+    return NULL;
+}
+</p>
+
+<p>
+// get an easy handle to the ring-buffer
+struct RingBuffer rb = *consumer-&gt;<sub>ringbuf</sub>;
+</p>
+
+<p>
+    // wrap the write head around if it is past the upper bound
+    consumer-&gt;<sub>ringbuf</sub>-&gt;read<sub>head</sub> = ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>);
+    return val;
+}
+</p>
+
+<p>
+<i>/ returns the value after the read head.
+/</i> returns NULL if buffer is empty
+void* consumer<sub>peek</sub>(struct Consumer* consumer) {
+    // get an easy handle to the ring-buffer
+    struct RingBuffer rb = *consumer-&gt;<sub>ringbuf</sub>;
+</p>
+
+<p>
+if (ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>) == rb.write<sub>head</sub>) {
+    return NULL;
+}
+</p>
+
+<p>
+    return rb.<sub>buffer</sub> + ringbuf<sub>next</sub><sub>index</sub>(&amp;rb, rb.read<sub>head</sub>)*rb.element<sub>size</sub>;
+}
+#end<sub>src</sub>
+</p>
+>>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 </div>
 </body>
 </html>
