@@ -1,14 +1,9 @@
 #+begin_src c -n 1
-<<<<<<< HEAD
-=======
-
->>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 #ifndef RINGBUF_H
 #define RINGBUF_H
 
 #include <stdlib.h>
 
-<<<<<<< HEAD
 /* Lock-Free thread messaging.
  *
  * ring-buffer has designated producers and consumers. the read-head points to
@@ -18,18 +13,7 @@
  * every time an element is inserted into the ringbuffer, the write_head is
  * incremented.
 **/
-=======
-/*
-** Lock-Free thread messaging.
-**
-** ring-buffer has designated producers and consumers. the read-head points to
-** the location of the next insertion, and the read-head points to the location
-** before the next read.
-**
-** every time an element is inserted into the ringbuffer, the write_head is
-** incremented.
-*/
->>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
+
 struct RingBuffer {
     char* _buffer;
     size_t length;
@@ -69,7 +53,5 @@ struct Consumer ringbuf_make_consumer(struct RingBuffer* ringbuf);
 void* consumer_pop(struct Consumer* consumer);
 void* consumer_peek(struct Consumer* consumer);
 
-
 #endif // RINGBUF_H
-
 #+end_src

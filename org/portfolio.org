@@ -29,16 +29,16 @@ the website are spread all over my computer.
 
 To solve this, I wrote some elisp which is bound to ~SPC m P l~. Simply put, it
 looks for a file named ~export-config.el~ in the root directory of your project.
-This file defines a varaible called ~org-publish-project-local-alist~, which
+This file defines a variable called ~org-publish-project-local-alist~, which
 does the same thing as ~org-publish-project-alist~, but /it's local/ (real
 complex stuff, I know).
 
 There is one problem though. In the local alist, I can't use absolute paths,
 because that would sort of defeat the purpose of being able to clone the git
-repo anywhere and work on it. I don't really need absolute paths, because all
-the files I reference in ~export-config.el~ are relative to the website root
-directory. But when the publishing function runs, it gets really confused with
-the relative paths (especially when using ~#+include: ...~ in my files.)
+repo anywhere and work on it. I don't need absolute paths, because all the files
+I reference in ~export-config.el~ are relative to the website root directory.
+But when the publishing function runs, it gets confused with the relative
+paths (especially when using ~#+include: ...~ in my files.)
 
 At this point, I pull an India Jones with these two variables and swap them
 before calling the ~org-publish-all~ function. This publishes the entire website
@@ -83,19 +83,15 @@ class to show the progression of program complexity.
 #+include: "portfolio/472hw11.asm.org"
 
 ** Computer Engineering 473
-<<<<<<< HEAD
 #+attr_html: :width 700px :margin auto
 [[../resources/portfolio/car_demo.jpg]]
 
-=======
->>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 This course was also taught by Professor Choi, the course webpage can be found
 [[https://www.cse.psu.edu/~kxc104/class/cmpen473/22s/][here]]. We spent the semester designing and building an autonomous robotic car
 from scratch, using a Raspberry Pi 4. We started by learning how to access the
 GPIO registers on the Pi in memory, using the ~mmap~ C function. From that point
 on, continued to iterate on the design, constantly adding new features.
 
-<<<<<<< HEAD
 *** Ring Buffer Implmentation
 This course heavily incorporated multithreaded programming and interthread
 communication. Most of my peers used the professor's FIFO implementation, but I
@@ -105,7 +101,7 @@ solution.
 **** ringbuf.h
 #+include: "portfolio/ringbuf.h.org"
 
-**** ringub.c
+**** ringbuf.c
 #+include: "portfolio/ringbuf.c.org"
 
 *** Curses Asynchronous User Interface (for debugging)
@@ -186,7 +182,7 @@ and failing (yet coming so close!) to balance.
 
 #+begin_export html
 <video width="320" height="240" controls>
-  <source src="../resources/portfolio/vid1.mp4">
+  <source src="../../videos/vid1.mp4">
 </video>
 #+end_export
 
@@ -267,27 +263,9 @@ night before the assignment was graded.
 
 #+begin_export html
 <video width="320" height="240" controls>
-  <source src="../resources/portfolio/vid2.mp4">
+  <source src="../../videos/vid2.mp4">
 </video>
 #+end_export
-=======
-This course heavily incorporated multithreaded programming and interthread
-communication. Most of my peers used the professor's FIFO implementation, but I
-had already made a ringbuffer implementation by the time he distributed his
-solution.
-
-#+include: "portfolio/ringbuf.h.org"
-#+html: <object data="portfolio/ringbuf.h"></object>
-
-*** Manual Driving Mode
-
-
-*** Line Follow Mode (IR sensor)
-
-*** IMU Sensor Balence Board
-
-*** Line Follow Mode (Computer Vision)
->>>>>>> ad413559b3c4275fe9c56e0f1661e10b508c7068
 
 * Programming
 The projects I have listed below, along with others, can be found on my [[https://github.com/ethanxxxl][github]].
@@ -322,11 +300,10 @@ programming skills, and pick up new languages.
 I developed this application during the Summer of 2022, while I was at AFIT
 learning about cyber warfare, network defense, and other topics. The idea is
 simple: multiple clients can enter a chat room on the server. I had great ideas
-for this project that never came to fruition, but I did leave implement the
-fundumental features. I even had the courtesy to leave it in a working state!
+for this project that never came to fruition, but I did implement the
+fundamental features. I even had the courtesy to leave it in a working state!
 
-Since hackchat is written in rust, you can try this for yourself by running the
-following code (assuming your machine has cargo installed):
+Since ~hackchat~ is working and written in Rust, you can try this for yourself by running the following code (assuming your machine has cargo installed):
 
 #+begin_src bash
 $ git clone https://github.com/ethanxxxl/hackchat.git
@@ -344,7 +321,7 @@ $ cargo run --bin client
 
 An example of the program running and working is shown in the image below.
 
-# this is a bit of a hack, this path won't work unless the org files are
+# This is a bit of a hack, this path won't work unless the org files are
 # included in the website.
 #+attr_html: :width 700px :margin auto
 [[../resources/portfolio/hackchat-demo.png]]
@@ -354,7 +331,7 @@ sure it won't work on Windows.
 
 ** Rust-Snake
 This was the first real program I wrote using Rust; A rudimentary implementation
-of the classic game Snake. I Learned a lot about the language from this project.
+of the classic game Snake. I learned a lot about the language from this project.
 Unfortunately, time has not been kind to this project. It is hosted on [[https://github.com/ethanxxxl/rust-snake][github]],
 so you can peruse my code if you wish, but unfortunately, when I wrote this
 program, I didn't have the forethought to create a binary, or even take pictures
